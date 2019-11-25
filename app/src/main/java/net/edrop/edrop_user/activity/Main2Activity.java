@@ -15,8 +15,8 @@ public class Main2Activity extends AppCompatActivity {
     private String [] tabStrArr = {"主页", "服务", "消息","社区"};
     //类信息，通过类信息可以创建对象，对象之中包含视图，用来填充fragment
     private Class[] fragmentArr = {HomePageFragment.class, ServicePageFragment.class, MsgPageFragment.class,CommunityPageFragment.class};
-    private int [] imageNormalArr = {R.drawable.home_normal, R.drawable.service_normal, R.drawable.message_normal,R.drawable.community_normal};
-    private int[] imageSelectArr= {R.drawable.home_select, R.drawable.service_select, R.drawable.message_select,R.drawable.community_select};
+    private int [] imageArr = {R.drawable.tab_home_channel, R.drawable.tab_service_channel, R.drawable.tab_msg_channel,R.drawable.tab_community_channel};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +42,11 @@ public class Main2Activity extends AppCompatActivity {
             tabHost.addTab(tabSpec, fragmentArr[i], null);
         }
     }
-
     // 创建TabSpec显示的View
     private View getTabSpecView(int i) {
         View view = getLayoutInflater().inflate(R.layout.item_main_layout, null);
         ImageView imageView = view.findViewById(R.id.iv_image);
-        imageView.setImageResource(imageNormalArr[i]);
+        imageView.setImageResource(imageArr[i]);
 
         TextView textView = view.findViewById(R.id.tv_text);
         textView.setText(tabStrArr[i]);

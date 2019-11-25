@@ -20,7 +20,7 @@ public class ServicePageFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View newView = inflater.inflate(R.layout.fragment_home_page, container, false);
+        View newView = inflater.inflate(R.layout.fragment_service_page, container, false);
         return newView;
     }
 }

@@ -1,53 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.app.FragmentTabHost xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.app.FragmentTabHost
     android:id="@android:id/tabhost"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <!-- 页面底部的选项卡控件 -->
-        <TabWidget
-            android:id="@android:id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true" />
-
-        <!-- 选项卡的内容控件 -->
         <FrameLayout
             android:id="@android:id/tabcontent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@android:id/tabs">
-
-            <LinearLayout android:id="@+id/tab1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-            </LinearLayout>
-
-            <LinearLayout android:id="@+id/tab2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-            </LinearLayout>
-
-            <LinearLayout android:id="@+id/tab3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-            </LinearLayout>
-
-            <LinearLayout android:id="@+id/tab4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-            </LinearLayout>
-
-        </FrameLayout>
-
-    </RelativeLayout>
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"/>
+    </LinearLayout>
 
 </android.support.v4.app.FragmentTabHost>

@@ -20,7 +20,7 @@ public class CommunityPageFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View newView = inflater.inflate(R.layout.fragment_home_page, container, false);
+        View newView = inflater.inflate(R.layout.fragment_community_page, container, false);
         return newView;
     }
 }
