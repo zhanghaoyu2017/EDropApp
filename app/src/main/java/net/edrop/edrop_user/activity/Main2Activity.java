@@ -17,12 +17,14 @@ public class Main2Activity extends AppCompatActivity {
     private Class[] fragmentArr = {HomePageFragment.class, ServicePageFragment.class, MsgPageFragment.class,CommunityPageFragment.class};
     private int [] imageNormalArr = {R.drawable.home_normal, R.drawable.service_normal, R.drawable.message_normal,R.drawable.community_normal};
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         initTabHost();
     }
+
     // 完成FragmentTabHost的初始化
     private void initTabHost() {
         // 1 获取获取FragmentTabHost控件对象控件对象
