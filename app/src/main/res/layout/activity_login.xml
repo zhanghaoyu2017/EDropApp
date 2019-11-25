@@ -33,7 +33,7 @@
         <!--中部-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="320dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="50dp"
@@ -41,8 +41,8 @@
             android:orientation="vertical">
             <!--logo-->
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:layout_gravity="center"
                 android:src="@drawable/logo" />
             <!--用户名-->
