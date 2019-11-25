@@ -14,7 +14,7 @@
             android:layout_height="120dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:src="@drawable/rubbish_recycler" />
+            android:src="@drawable/rubbish_gan" />
     </LinearLayout>
     <!--名称-->
     <LinearLayout
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="可回收物"
+            android:text="干垃圾/其他垃圾"
             android:textColor="@color/colorDark"
             android:textSize="23dp"
             android:textStyle="bold" />
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="RECYCLABLE"
+            android:text="RESIDOUAL"
             android:textColor="@color/colorGray"
             android:textSize="23dp"
             android:textStyle="bold" />
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="废纸张、废塑料、废玻璃制品、废金属、费织物等适宜回收、可循环利用的生活废弃物"
+            android:text="即其他垃圾，是指除可回收物、有害垃圾、湿垃圾以外的其它生活废弃物。包括砖瓦陶瓷、普通一次性电池等。"
             android:textColor="@color/colorDark"
             android:textSize="20dp" />
     </LinearLayout>
@@ -109,11 +109,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="1.轻投轻放
- 2.清洁干燥，避免污染
-3.废纸尽量平整
-4.立体包装物请清空内容，清洁后请压扁
-5.有尖锐边角的，应包裹后投放"
+            android:text="1.尽量沥干水分
+2.难以辨识类别的生活垃圾投入干垃圾容器内"
             android:textColor="@color/colorDark"
             android:textSize="20dp" />
     </LinearLayout>

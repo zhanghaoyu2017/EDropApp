@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-
-
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.adapter.MyPagerAdapter;
 
