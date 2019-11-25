@@ -9,8 +9,7 @@
     <!--顶部-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:gravity="right"
         android:orientation="horizontal">
         <!--<ImageView-->
@@ -37,18 +36,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#fff"
+            android:text="免密登录"
             android:textColor="#000"
-            android:text="免密登录aaa"
-            android:textSize="18dp" />
+            android:textSize="16dp" />
 
     </LinearLayout>
     <!--中部-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="300dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_weight="4"
+        android:layout_marginTop="20dp"
+
         android:orientation="vertical">
         <!--logo-->
         <ImageView
@@ -59,25 +59,28 @@
         <!--用户名-->
         <android.support.design.widget.TextInputLayout
             android:id="@+id/usernameWrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
             <EditText
                 android:id="@+id/username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:textCursorDrawable="@null" />
         </android.support.design.widget.TextInputLayout>
         <!--密码框-->
         <android.support.design.widget.TextInputLayout
             android:id="@+id/passwordWrapper"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/usernameWrapper"
+            android:layout_gravity="center"
             android:layout_marginTop="4dp">
 
             <EditText
                 android:id="@+id/password"
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:maxLength="6" />
@@ -85,13 +88,20 @@
         <!--登陆-->
         <Button
             android:id="@+id/btn_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:background="#32CD32"
             android:text="登录"
             android:textColor="#ffffff"
             android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="忘记密码?"
+            android:textColor="#000" />
         <!--手机验证码登陆-->
         <!--<Button-->
         <!--android:id="@+id/phone_login"-->
@@ -106,8 +116,7 @@
     <!--底部-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
         <!--快速登陆-->
         <LinearLayout
