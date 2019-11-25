@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:background="#fff"
             android:textColor="#000"
-            android:text="免密登录"
+            android:text="免密登录aaa"
             android:textSize="18dp" />
 
     </LinearLayout>
