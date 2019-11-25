@@ -28,7 +28,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="可回收物"
-            android:textColor="@color/colorDark"
+            android:textColor="@color/black"
             android:textSize="23dp"
             android:textStyle="bold" />
 
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="RECYCLABLE"
-            android:textColor="@color/colorGray"
+            android:textColor="@color/white"
             android:textSize="23dp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -53,7 +53,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="简单介绍"
-            android:textColor="@color/colorDark"
+            android:textColor="@color/black"
             android:textSize="23dp"
             android:textStyle="bold" />
 
@@ -62,9 +62,9 @@
             android:layout_height="3dp"
             android:layout_gravity="center"
             android:layout_marginTop="6dp"
-            android:background="@color/colorGray"
+            android:background="@color/black"
             android:text="简单介绍"
-            android:textColor="@color/colorGray"
+            android:textColor="@color/white"
             android:textSize="25dp"
             android:textStyle="bold" />
 
@@ -74,7 +74,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="废纸张、废塑料、废玻璃制品、废金属、费织物等适宜回收、可循环利用的生活废弃物"
-            android:textColor="@color/colorDark"
+            android:textColor="@color/white"
             android:textSize="20dp" />
     </LinearLayout>
     <!--投放要求-->
@@ -89,7 +89,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="投放要求"
-            android:textColor="@color/colorDark"
+            android:textColor="@color/black"
             android:textSize="23dp"
             android:textStyle="bold" />
 
@@ -98,9 +98,9 @@
             android:layout_height="3dp"
             android:layout_gravity="center"
             android:layout_marginTop="6dp"
-            android:background="@color/colorGray"
+            android:background="@color/white"
             android:text="简单介绍"
-            android:textColor="@color/colorGray"
+            android:textColor="@color/white"
             android:textSize="25dp"
             android:textStyle="bold" />
 
@@ -114,7 +114,7 @@
 3.废纸尽量平整
 4.立体包装物请清空内容，清洁后请压扁
 5.有尖锐边角的，应包裹后投放"
-            android:textColor="@color/colorDark"
+            android:textColor="@color/black"
             android:textSize="20dp" />
     </LinearLayout>
 

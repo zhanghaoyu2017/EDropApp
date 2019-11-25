@@ -16,6 +16,7 @@ public class Main2Activity extends AppCompatActivity {
     //类信息，通过类信息可以创建对象，对象之中包含视图，用来填充fragment
     private Class[] fragmentArr = {HomePageFragment.class, ServicePageFragment.class, MsgPageFragment.class,CommunityPageFragment.class};
     private int [] imageNormalArr = {R.drawable.home_normal, R.drawable.service_normal, R.drawable.message_normal,R.drawable.community_normal};
+    private int[] imageSelectArr= {R.drawable.home_select, R.drawable.service_select, R.drawable.message_select,R.drawable.community_select};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,7 @@ public class Main2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
         initTabHost();
     }
+
     // 完成FragmentTabHost的初始化
     private void initTabHost() {
         // 1 获取获取FragmentTabHost控件对象控件对象
