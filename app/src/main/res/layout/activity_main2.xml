@@ -25,28 +25,24 @@
             <LinearLayout android:id="@+id/tab1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#FF0000"
                 android:orientation="vertical">
             </LinearLayout>
 
             <LinearLayout android:id="@+id/tab2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#00FF00"
                 android:orientation="vertical">
             </LinearLayout>
 
             <LinearLayout android:id="@+id/tab3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#0000FF"
                 android:orientation="vertical">
             </LinearLayout>
 
             <LinearLayout android:id="@+id/tab4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#ff00FF"
                 android:orientation="vertical">
             </LinearLayout>
 

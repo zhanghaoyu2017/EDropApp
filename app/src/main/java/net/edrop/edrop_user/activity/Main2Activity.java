@@ -42,6 +42,7 @@ public class Main2Activity extends AppCompatActivity {
             tabHost.addTab(tabSpec, fragmentArr[i], null);
         }
     }
+
     // 创建TabSpec显示的View
     private View getTabSpecView(int i) {
         View view = getLayoutInflater().inflate(R.layout.item_main_layout, null);
