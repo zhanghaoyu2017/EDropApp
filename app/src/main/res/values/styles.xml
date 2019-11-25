@@ -6,8 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <!--<item name="colorDark">@color/colorDark</item>-->
-        <!--<item name="colorGray">@color/colorGray</item>-->
+        <item name="colorDark">@color/colorDark</item>
+        <item name="colorGray">@color/colorGray</item>
     </style>
     <!--不带标题的主题-->
     <style name="ThemeNoTitle" parent="AppTheme">
