@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:layout_gravity="center"
-    android:background="#3F51B5" >
+    android:background="#90EE90" >
 
     <!-- 用户侧边栏图标 -->
     <ImageView
@@ -16,7 +16,6 @@
         android:layout_centerVertical="true"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:contentDescription="@string/app_name"
         android:gravity="center"
         android:src="@drawable/nav_user" />
 
@@ -31,4 +30,15 @@
         android:textColor="#ffffff"
         android:textSize="18sp" />
 
+    <ImageView
+        android:id="@+id/top_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:gravity="center"
+        android:src="@drawable/setting" />
 </RelativeLayout>
