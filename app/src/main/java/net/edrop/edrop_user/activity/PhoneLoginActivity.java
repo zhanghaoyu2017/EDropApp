@@ -55,6 +55,7 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PhoneLoginActivity.this,LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
