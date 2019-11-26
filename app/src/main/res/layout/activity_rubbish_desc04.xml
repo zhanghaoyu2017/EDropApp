@@ -29,7 +29,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="湿垃圾/厨余垃圾/易腐垃圾/餐厨垃圾"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="23dp"
             android:textStyle="bold" />
 
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="HOUSEFOOD"
-            android:textColor="@color/white"
+            android:textColor="@color/gray"
             android:textSize="23dp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -54,7 +54,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="简单介绍"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="23dp"
             android:textStyle="bold" />
 
@@ -63,9 +63,9 @@
             android:layout_height="3dp"
             android:layout_gravity="center"
             android:layout_marginTop="6dp"
-            android:background="@color/white"
+            android:background="@color/gray"
             android:text="简单介绍"
-            android:textColor="@color/white"
+            android:textColor="@color/gray"
             android:textSize="25dp"
             android:textStyle="bold" />
 
@@ -75,7 +75,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="即易腐垃圾、厨余垃圾、餐厨垃圾，是指食材废料、剩菜剩饭、过期食品、瓜皮果核、花卉绿植、中药药渣等生物质生活废弃物。"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20dp" />
     </LinearLayout>
     <!--投放要求-->
@@ -90,7 +90,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="投放要求"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="23dp"
             android:textStyle="bold" />
 
@@ -99,9 +99,9 @@
             android:layout_height="3dp"
             android:layout_gravity="center"
             android:layout_marginTop="6dp"
-            android:background="@color/white"
+            android:background="@color/gray"
             android:text="简单介绍"
-            android:textColor="@color/white"
+            android:textColor="@color/gray"
             android:textSize="25dp"
             android:textStyle="bold" />
 
@@ -113,7 +113,7 @@
             android:text="1.纯流质的食物垃圾，如牛奶
 等，应直接倒进下水口
 2.有包装的湿垃圾应将包装去除后分类投放，包装物请投放到对应的可回收物或者干垃圾容器"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20dp" />
     </LinearLayout>
 

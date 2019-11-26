@@ -28,7 +28,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="有害垃圾"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="23dp"
             android:textStyle="bold" />
 
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="HAZARDOUS"
-            android:textColor="@color/white"
+            android:textColor="@color/gray"
             android:textSize="23dp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -53,7 +53,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="简单介绍"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="23dp"
             android:textStyle="bold" />
 
@@ -62,9 +62,9 @@
             android:layout_height="3dp"
             android:layout_gravity="center"
             android:layout_marginTop="6dp"
-            android:background="@color/white"
+            android:background="@color/gray"
             android:text="简单介绍"
-            android:textColor="@color/white"
+            android:textColor="@color/gray"
             android:textSize="25dp"
             android:textStyle="bold" />
 
@@ -74,7 +74,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="废电池、废灯管、废药品、废油漆及其容器等对人体健康或者自然环境造成直接或者潜在危害的生活废弃物。"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20dp" />
     </LinearLayout>
     <!--投放要求-->
@@ -89,7 +89,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="投放要求"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="23dp"
             android:textStyle="bold" />
 
@@ -98,9 +98,9 @@
             android:layout_height="3dp"
             android:layout_gravity="center"
             android:layout_marginTop="6dp"
-            android:background="@color/white"
+            android:background="@color/gray"
             android:text="简单介绍"
-            android:textColor="@color/white"
+            android:textColor="@color/gray"
             android:textSize="25dp"
             android:textStyle="bold" />
 
@@ -112,7 +112,7 @@
             android:text="1.投放时请注意轻放
 2.易破损的请连带包装或包裹后轻放
 3.如易发挥，请密封后投放"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20dp" />
     </LinearLayout>
 
