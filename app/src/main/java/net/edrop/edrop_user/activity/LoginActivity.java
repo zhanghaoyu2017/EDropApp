@@ -21,6 +21,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextInputLayout usernameWrapper;
     private TextInputLayout passwordWrapper;
     private Button btnLogin;
+    private Button btnPhoneLogin;
     private EditText edUserName;
     private EditText edPwd;
     public boolean isSelected =false;
@@ -30,12 +31,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
+
     }
     private void initView() {
         usernameWrapper = findViewById(R.id.usernameWrapper);
         passwordWrapper =  findViewById(R.id.passwordWrapper);
         edPwd =  findViewById(R.id.password);
         edUserName = findViewById(R.id.username);
+        btnPhoneLogin=findViewById(R.id.btn_phone_login);
         btnLogin =  findViewById(R.id.btn_login);
         usernameWrapper.setHint("请输入用户名");
         passwordWrapper.setHint("请输入密码");
@@ -70,6 +73,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin.setOnClickListener(this);
         usernameWrapper.setOnClickListener(this);
         passwordWrapper.setOnClickListener(this);
+        btnPhoneLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,PhoneLoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
