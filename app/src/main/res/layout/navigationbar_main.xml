@@ -5,19 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:layout_gravity="center"
-    android:background="#90EE90" >
+    android:background="#32BA88" >
 
     <!-- 用户侧边栏图标 -->
     <ImageView
         android:id="@+id/nav_user"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:gravity="center"
-        android:src="@drawable/nav_user" />
+        android:src="@drawable/more" />
 
     <!-- 标题 -->
     <TextView
