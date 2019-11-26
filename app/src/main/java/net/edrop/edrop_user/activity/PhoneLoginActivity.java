@@ -137,6 +137,7 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
 
                 // 3. 把按钮变成不可点击，并且显示倒计时（正在获取）
                 requestCodeBtn.setClickable(false);
+                requestCodeBtn.setBackgroundColor(R.drawable.btn_login_gray_backgroung);
                 requestCodeBtn.setText("重新发送(" + i + ")");
                 new Thread(new Runnable() {
                     @Override
@@ -172,6 +173,7 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
             } else if (msg.what == -8) {
                 requestCodeBtn.setText("获取验证码");
                 requestCodeBtn.setClickable(true);
+                requestCodeBtn.setBackgroundColor(R.drawable.btn_login_green_backgroung);
                 i = 60;
             } else {
                 int event = msg.arg1;
@@ -191,7 +193,7 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
                         startActivity(intent);
                         overridePendingTransition(0, 0);
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-                        Toast.makeText(getApplicationContext(), "正在获取验证码",
+                        Toast.makeText(getApplicationContext(), "正在获取验证码，请及时接收登录",
                                 Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(PhoneLoginActivity.this, "验证码不正确", Toast.LENGTH_SHORT).show();
