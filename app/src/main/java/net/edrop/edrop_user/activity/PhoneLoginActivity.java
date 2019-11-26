@@ -1,6 +1,8 @@
 package net.edrop.edrop_user.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.Handler;
@@ -8,18 +10,23 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.mob.MobSDK;
+
 import net.edrop.edrop_user.R;
 
+import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
 public class PhoneLoginActivity extends Activity implements View.OnClickListener{
     private String APPKEY = "2d3bde91c4a25";
     private String APPSECRET = "0f4a5150f9707ef7423d60cf7aaf3ae8";
-    private Button btnLogin;
+    private Button btnPwdLogin;
     // 手机号输入框
     private EditText inputPhoneEt;
 
@@ -29,29 +36,55 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
     // 获取验证码按钮
     private Button requestCodeBtn;
 
-    // 注册按钮
-    private Button commitBtn;
+    // 登录按钮
+    private Button btnPhoneLogin;
 
     //倒计时显示   可以手动更改。
     int i = 60;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // 5.0以上系统状态栏透明
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_login);
         initView();
     }
 
     private void initView() {
-        btnLogin=findViewById(R.id.btn_pwd_login);
+        btnPwdLogin=findViewById(R.id.btn_pwd_login);
         inputPhoneEt = (EditText) findViewById(R.id.et_phoneNum);
         inputCodeEt = (EditText) findViewById(R.id.et_request_Code);
         requestCodeBtn = (Button) findViewById(R.id.login_request_code_btn);
-        commitBtn = (Button) findViewById(R.id.btn_request_login);
+        btnPhoneLogin = (Button) findViewById(R.id.btn_request_login);
+
+        // 启动短信验证sdk
+        MobSDK.init(this, APPKEY, APPSECRET);
+        EventHandler eventHandler = new EventHandler() {
+            @Override
+            public void afterEvent(int event, int result, Object data) {
+                Message msg = new Message();
+                msg.arg1 = event;
+                msg.arg2 = result;
+                msg.obj = data;
+                handler.sendMessage(msg);
+            }
+        };
+        //注册回调监听接口
+        SMSSDK.registerEventHandler(eventHandler);
         setListener();
     }
     private void setListener() {
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        btnPwdLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PhoneLoginActivity.this,LoginActivity.class);
@@ -60,7 +93,7 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
             }
         });
         requestCodeBtn.setOnClickListener(this);
-        commitBtn.setOnClickListener(this);
+        btnPhoneLogin.setOnClickListener(this);
     }
 
     @Override
@@ -103,6 +136,7 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
                 break;
         }
     }
+
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             if (msg.what == -9) {
@@ -119,14 +153,15 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
                 if (result == SMSSDK.RESULT_COMPLETE) {
                     // 短信注册成功后，返回MainActivity,然后提示
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {// 提交验证码成功
-                        Toast.makeText(getApplicationContext(), "提交验证码成功",
-                                Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), "提交验证码成功",
+//                                Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(PhoneLoginActivity.this,
                                 Main2Activity.class);
                         Bundle bundle = new Bundle();
                         bundle.putString("userName", inputPhoneEt.getText().toString().trim());
                         intent.putExtras(bundle);
                         startActivity(intent);
+                        overridePendingTransition(0, 0);
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                         Toast.makeText(getApplicationContext(), "正在获取验证码",
                                 Toast.LENGTH_SHORT).show();
@@ -190,5 +225,11 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
         //反注册回调监听接口
         SMSSDK.unregisterAllEventHandler();
         super.onDestroy();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0, 0);
     }
 }
