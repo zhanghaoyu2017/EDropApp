@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nineoldandroids.view.ViewHelper;
 
@@ -31,6 +32,8 @@ public class Main2Activity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private MainMenuLeftFragment leftMenuFragment;
     private ImageView imgSweep;
+    private long waitTime = 2000;
+    private long touchTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,11 +106,19 @@ public class Main2Activity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            //启动一个意图,回到桌面
-            Intent intent = new Intent();// 创建Intent对象
-            intent.setAction(Intent.ACTION_MAIN);// 设置Intent动作
-            intent.addCategory(Intent.CATEGORY_HOME);// 设置Intent种类
-            startActivity(intent);// 将Intent传递给Activity
+            long currentTime = System.currentTimeMillis();
+            if ((currentTime - touchTime) >= waitTime) {
+                //让Toast的显示时间和等待时间相同
+                Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
+                touchTime = currentTime;
+            } else {
+                //启动一个意图,回到桌面
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_MAIN);// 设置Intent动作
+                intent.addCategory(Intent.CATEGORY_HOME);// 设置Intent种类
+                startActivity(intent);
+//                System.exit(0);
+            }
             return true;
         }
         return super.onKeyDown(keyCode, event);
