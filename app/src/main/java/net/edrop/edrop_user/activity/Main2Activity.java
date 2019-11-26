@@ -21,7 +21,7 @@ import net.edrop.edrop_user.R;
 
 public class Main2Activity extends AppCompatActivity {
     private FragmentTabHost tabHost = null;
-    private String [] tabStrArr = {"主页", "服务", "消息","社区"};
+    private String [] tabStrArr = {"主页", "代扔", "消息","社区"};
     private Class[] fragmentArr = {HomePageFragment.class, ServicePageFragment.class, MsgPageFragment.class,CommunityPageFragment.class};
     private int [] imageArr = {R.drawable.tab_home_channel, R.drawable.tab_service_channel, R.drawable.tab_msg_channel,R.drawable.tab_community_channel};
     private ImageView nav_userImg;
@@ -67,9 +67,10 @@ public class Main2Activity extends AppCompatActivity {
                     = tabHost.newTabSpec(tabStrArr[i])
                     .setIndicator(getTabSpecView(i));
             tabHost.addTab(tabSpec, fragmentArr[i], null);
-        }
-    }
 
+        }
+        tabHost.setCurrentTabByTag(tabStrArr[0]);
+    }
     // 创建TabSpec显示的View
     private View getTabSpecView(int i) {
         View view = getLayoutInflater().inflate(R.layout.item_main_layout, null);
