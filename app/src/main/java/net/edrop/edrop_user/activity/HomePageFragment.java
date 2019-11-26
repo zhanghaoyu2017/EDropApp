@@ -1,5 +1,7 @@
 package net.edrop.edrop_user.activity;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -21,6 +23,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
@@ -32,6 +35,7 @@ import com.facebook.imagepipeline.common.ResizeOptions;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
+import net.edrop.edrop_user.MyApplication;
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.entity.ImageInfo;
 import net.edrop.edrop_user.utils.ImageCarousel;
@@ -41,6 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomePageFragment extends Fragment implements View.OnClickListener{
+    private Activity activity;
     private View view;
     //搜索框控件
     private SearchView searchView;
@@ -63,9 +68,21 @@ public class HomePageFragment extends Fragment implements View.OnClickListener{
         initData();
         initEvent();
         setListener();
-//        imageStart();
+        imageStart();
         return view;
     }
+
+    @Nullable
+    @Override
+    //在Fragment中直接使用getContext方法容易产生空指针异常，覆写getContext方法
+    public Context getContext() {
+        activity = getActivity();
+        if (activity == null) {
+            return MyApplication.getInstance();
+        }
+        return activity;
+    }
+
     private void initView(){
         //搜索框
         searchView=view.findViewById(R.id.view_search);
@@ -163,7 +180,10 @@ public class HomePageFragment extends Fragment implements View.OnClickListener{
             simpleDraweeView.setAspectRatio(1.78f);
             // 设置一张默认的图片
             GenericDraweeHierarchy hierarchy = new GenericDraweeHierarchyBuilder(this.getResources())
-                    .setPlaceholderImage(ContextCompat.getDrawable(getContext(), R.drawable.defult), ScalingUtils.ScaleType.CENTER_CROP).build();
+                    .setPlaceholderImage(ContextCompat.getDrawable(getContext(),
+                            R.drawable.defult),
+                            ScalingUtils.ScaleType.CENTER_CROP)
+                    .build();
             simpleDraweeView.setHierarchy(hierarchy);
             simpleDraweeView.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, AbsListView.LayoutParams.WRAP_CONTENT));
 
@@ -192,7 +212,6 @@ public class HomePageFragment extends Fragment implements View.OnClickListener{
         imageCarousel = new ImageCarousel(getContext(), mViewPager, mTvPagerTitle, dots, 5000);
         imageCarousel.init(simpleDraweeViewList, titles).startAutoPlay();
         imageCarousel.start();
-
     }
 
     /**
@@ -203,26 +222,27 @@ public class HomePageFragment extends Fragment implements View.OnClickListener{
      * @return 小点的Id
      */
     private int addDot(final LinearLayout linearLayout, Drawable backgount) {
+        final View dot = new View(getContext());
         LinearLayout.LayoutParams dotParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         dotParams.width = 16;
         dotParams.height = 16;
         dotParams.setMargins(4, 0, 4, 0);
-        view.setLayoutParams(dotParams);
+        dot.setLayoutParams(dotParams);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            view.setBackground(backgount);
+            dot.setBackground(backgount);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            view.setId(View.generateViewId());
+            dot.setId(View.generateViewId());
         }
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                linearLayout.addView(view);
+                linearLayout.addView(dot);
             }
         });
 
-        return view.getId();
+        return dot.getId();
     }
 
     /**
