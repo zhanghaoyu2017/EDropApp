@@ -6,11 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="c"
-        android:textSize="40dp" />
+    <android.support.v7.widget.SearchView
+        android:id="@+id/view_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
