@@ -18,13 +18,13 @@
             android:orientation="horizontal">
 
             <Button
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/btn_backgroung"
-                style="?android:attr/borderlessButtonStyle"
-                android:text="免密登录"
+                android:text="密码登录"
                 android:textColor="#000"
                 android:textSize="16dp" />
 
@@ -44,44 +44,57 @@
                 android:layout_height="120dp"
                 android:layout_gravity="center"
                 android:src="@drawable/logo" />
-            <!--用户名-->
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/usernameWrapper"
-                android:layout_width="300dp"
+            <!--手机号-->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+86" />
 
                 <EditText
-                    android:id="@+id/username"
-                    android:layout_width="300dp"
+                    android:id="@+id/et_phoneNum"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:textCursorDrawable="@null" />
-            </android.support.design.widget.TextInputLayout>
-            <!--密码框-->
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/passwordWrapper"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/usernameWrapper"
-                android:layout_gravity="center"
-                android:layout_marginTop="4dp">
+                    android:hint="手机号" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <!--验证码-->
                 <EditText
-                    android:id="@+id/password"
-                    android:layout_width="300dp"
+                    android:id="@+id/et_request_Code"
+                    android:layout_width="140dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:hint="手机验证码"
                     android:inputType="textPassword"
                     android:maxLength="6" />
-            </android.support.design.widget.TextInputLayout>
+                <Button
+                    android:id="@+id/login_request_code_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#fff"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:background="@drawable/btn_request_code"
+                    android:text="获取验证码" />
+            </LinearLayout>
             <!--登陆-->
             <Button
                 android:id="@+id/btn_login"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/btn_login_backgroung"
-                style="?android:attr/borderlessButtonStyle"
                 android:text="登录"
                 android:textColor="#ffffff"
                 android:textSize="20dp" />

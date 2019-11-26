@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">EDrop用户客户端</string>
+    <string name="title_activity_phone_login">PhoneLoginActivity</string>
 </resources>
