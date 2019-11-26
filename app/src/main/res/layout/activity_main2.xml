@@ -30,6 +30,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1" />
+
+                <TabWidget
+                    android:id="@android:id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp" />
             </LinearLayout>
             <!-- 左侧区域侧边栏【可选】【如果想要只有一个右侧的侧边栏，那么就只需要留一个即可,注意的是left需要换成right】 -->
             <!-- android:tag="LEFT"用于java代码中通过drawerView.getTag()判断左侧还是右侧 -->
@@ -41,11 +46,6 @@
                 android:layout_gravity="left"
                 android:tag="LEFT" />
         </android.support.v4.widget.DrawerLayout>
-
-        <TabWidget
-            android:id="@android:id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="60dp" />
     </LinearLayout>
 
 </android.support.v4.app.FragmentTabHost>

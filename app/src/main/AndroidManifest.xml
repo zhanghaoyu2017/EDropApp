@@ -20,7 +20,7 @@
         <activity android:name=".activity.RubbishDesc01Activity" />
         <activity android:name=".activity.RubbishDesc02Activity" />
         <activity android:name=".activity.RubbishDesc03Activity" />
-        <activity android:name=".activity.RubbishDesc04Activity"></activity>
+        <activity android:name=".activity.RubbishDesc04Activity"/>
         <activity android:name=".activity.PhoneLoginActivity"/>
     </application>
 
