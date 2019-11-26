@@ -4,54 +4,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <!-- 页面底部的选项卡控件 -->
+        <android.support.v4.widget.DrawerLayout
+            android:id="@+id/id_drawerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <!-- 主内容视图一定要是DrawerLayout的第一个子视图【必须】 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <!-- 引入导航栏 -->
+                <include
+                    android:id="@+id/main_navbar"
+                    layout="@layout/navigationbar_main" />
+
+                <FrameLayout
+                    android:id="@android:id/tabcontent"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+            <!-- 左侧区域侧边栏【可选】【如果想要只有一个右侧的侧边栏，那么就只需要留一个即可,注意的是left需要换成right】 -->
+            <!-- android:tag="LEFT"用于java代码中通过drawerView.getTag()判断左侧还是右侧 -->
+            <fragment
+                android:id="@+id/fragment_leftmenu"
+                android:name="net.edrop.edrop_user.activity.MainMenuLeftFragment"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:tag="LEFT" />
+        </android.support.v4.widget.DrawerLayout>
+
         <TabWidget
             android:id="@android:id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true" />
-
-        <!-- 选项卡的内容控件 -->
-        <FrameLayout
-            android:id="@android:id/tabcontent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@android:id/tabs">
-
-            <LinearLayout android:id="@+id/tab1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#FF0000"
-                android:orientation="vertical">
-            </LinearLayout>
-
-            <LinearLayout android:id="@+id/tab2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#00FF00"
-                android:orientation="vertical">
-            </LinearLayout>
-
-            <LinearLayout android:id="@+id/tab3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#0000FF"
-                android:orientation="vertical">
-            </LinearLayout>
-
-            <LinearLayout android:id="@+id/tab4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#ff00FF"
-                android:orientation="vertical">
-            </LinearLayout>
-
-        </FrameLayout>
-
-    </RelativeLayout>
+            android:layout_height="60dp" />
+    </LinearLayout>
 
 </android.support.v4.app.FragmentTabHost>
