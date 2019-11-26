@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.mob.sdk'
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -18,7 +18,21 @@ android {
     }
     buildToolsVersion '28.0.2'
 }
+buildscript {
+    repositories {
+        jcenter()
+    }
 
+    dependencies {
+        // 注册MobSDK
+        classpath "com.mob.sdk:MobSDK:2018.0319.1724"
+    }
+}
+MobSDK {
+    appKey "2d3bde91c4a25"
+    appSecret "0f4a5150f9707ef7423d60cf7aaf3ae8"
+    SMSSDK {}
+}
 dependencies {
     //TextInputLayout的依赖
     implementation 'com.android.support:design:28.0.0'
