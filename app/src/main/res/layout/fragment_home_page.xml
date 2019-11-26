@@ -6,6 +6,7 @@
 
     <android.support.v7.widget.SearchView
         android:id="@+id/view_search"
+        android:focusable="false"
         android:background="@drawable/searchview_shape"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
