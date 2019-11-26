@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -97,6 +98,19 @@ public class Main2Activity extends AppCompatActivity {
 
     private void initData() {
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            //启动一个意图,回到桌面
+            Intent intent = new Intent();// 创建Intent对象
+            intent.setAction(Intent.ACTION_MAIN);// 设置Intent动作
+            intent.addCategory(Intent.CATEGORY_HOME);// 设置Intent种类
+            startActivity(intent);// 将Intent传递给Activity
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void initEvent() {
@@ -193,4 +207,5 @@ public class Main2Activity extends AppCompatActivity {
 //            imageView.setImageBitmap(bitmap);
 //        }
     }
+
 }

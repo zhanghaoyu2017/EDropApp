@@ -15,7 +15,7 @@ public class SharedPreferencesUtils {
         editor = sharedPreferences.edit();
     }
 
-    public static SharedPreferences.Editor getEditor() {
+    public SharedPreferences.Editor getEditor() {
         if (editor != null)
             return editor;
         else

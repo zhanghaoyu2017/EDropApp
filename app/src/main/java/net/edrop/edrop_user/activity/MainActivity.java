@@ -1,5 +1,7 @@
 package net.edrop.edrop_user.activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.adapter.MyPagerAdapter;
@@ -34,10 +37,36 @@ public class MainActivity extends AppCompatActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        vpGuiding = findViewById(R.id.main_vpGuiding);
-
-        viewPagerNormalLookLike();
+        //判断是不是第一次登陆
+        SharedPreferences sharedPreferences=this.getSharedPreferences("share",MODE_PRIVATE);
+        boolean isFirstRun=sharedPreferences.getBoolean("isFirstRun", true);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        if(isFirstRun){
+            //第一次运行
+            editor.putBoolean("isFirstRun", false);
+            editor.commit();
+            setContentView(R.layout.activity_main);
+            vpGuiding = findViewById(R.id.main_vpGuiding);
+            viewPagerNormalLookLike();
+        }else{
+            //不是第一次运行
+            vpGuiding = findViewById(R.id.main_vpGuiding);
+            setContentView(R.layout.activity_main_several);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    intent.setAction(Intent.ACTION_MAIN);// 设置Intent动作
+                    intent.addCategory(Intent.CATEGORY_HOME);// 设置Intent种类
+                    startActivity(intent);
+                }
+            }).start();
+        }
     }
 
     //默认效果的

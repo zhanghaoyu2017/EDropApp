@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/ThemeNoTitle">
-            <activity android:name=".activity.LoginActivity">
+            <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.Main2Activity" />
+        <activity android:name=".activity.LoginActivity"/>
         <activity android:name=".activity.RubbishDesc01Activity" />
         <activity android:name=".activity.RubbishDesc02Activity" />
         <activity android:name=".activity.RubbishDesc03Activity" />

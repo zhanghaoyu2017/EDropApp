@@ -2,6 +2,7 @@ package net.edrop.edrop_user.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -16,6 +17,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -36,6 +38,7 @@ import com.tencent.tauth.UiError;
 import net.edrop.edrop_user.QQbase.Config;
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.entity.QQUser;
+import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 
 import org.json.JSONObject;
 
@@ -53,6 +56,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private UserInfo userInfo;
     private static BaseUiListener listener = null;
     private String QQ_uid;//qq_openid
+    private SharedPreferencesUtils sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +73,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sharedPreferences = new SharedPreferencesUtils(LoginActivity.this,"loginInfo");
+        isAuto();
         // Tencent类是SDK的主要实现类，开发者可通过Tencent类访问腾讯开放的OpenAPI。
         // 其中APP_ID是分配给第三方应用的appid，类型为String。
         listener = new BaseUiListener();
         mTencent = Tencent.createInstance(Config.QQ_LOGIN_APP_ID, this.getApplicationContext());
         initView();
+    }
 
+    //判断是否是第一次登陆
+    private void isAuto() {
+        try {
+            boolean isAuto = sharedPreferences.getBoolean("isAuto");
+            if (isAuto){
+                Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -281,6 +300,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         protected Object doInBackground(Object[] objects) {
             String username = edUserName.getText().toString();
             String password = edPwd.getText().toString();
+
+            //将数据存入数据库里
+            SharedPreferences.Editor editor = sharedPreferences.getEditor();
+            editor.putString("username",username);
+            editor.putString("password",password);
+            editor.putBoolean("isAuto",true);
+            editor.commit();
             Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
@@ -293,5 +319,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void finish() {
         super.finish();
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            //启动一个意图,回到桌面
+            Intent intent = new Intent();// 创建Intent对象
+            intent.setAction(Intent.ACTION_MAIN);// 设置Intent动作
+            intent.addCategory(Intent.CATEGORY_HOME);// 设置Intent种类
+            startActivity(intent);// 将Intent传递给Activity
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

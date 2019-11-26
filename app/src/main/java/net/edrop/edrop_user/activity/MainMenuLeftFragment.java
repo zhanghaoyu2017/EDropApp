@@ -1,5 +1,6 @@
 package net.edrop.edrop_user.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,9 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.edrop.edrop_user.R;
+import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 
 public class MainMenuLeftFragment extends Fragment {
 	private View myView;
+	private TextView userName;
 	private TextView myMoney;
 	private TextView myAddress;
 	private TextView myOrder;
@@ -45,6 +48,7 @@ public class MainMenuLeftFragment extends Fragment {
 
 	/**初始化控件*/
 	private void initView(){
+	    userName=getActivity().findViewById(R.id.tv_userName);
         myMoney=getActivity().findViewById(R.id.myMoney);
         myAddress=getActivity().findViewById(R.id.myAddress);
         myOrder=getActivity().findViewById(R.id.myOrder);
@@ -60,6 +64,13 @@ public class MainMenuLeftFragment extends Fragment {
 	 */
 	public void setDefaultDatas(){
 		//修改首页左边数据
+        SharedPreferencesUtils sharedPreferences = new SharedPreferencesUtils(getContext(), "loginInfo");
+        String username = sharedPreferences.getString("username","");
+        userName.setText(username);
+	}
+
+	/**初始化监听事件*/
+	private void initEvent(){
         myListener=new MyListener();
         myMoney.setOnClickListener(myListener);
         myAddress.setOnClickListener(myListener);
@@ -69,11 +80,6 @@ public class MainMenuLeftFragment extends Fragment {
         aboutEDrop.setOnClickListener(myListener);
         setting.setOnClickListener(myListener);
         feedback.setOnClickListener(myListener);
-	}
-
-	/**初始化监听事件*/
-	private void initEvent(){
-
 	}
 	private class MyListener implements View.OnClickListener{
 
