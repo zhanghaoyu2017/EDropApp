@@ -3,6 +3,7 @@ package net.edrop.edrop_user.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -57,9 +58,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void afterTextChanged(Editable editable) {
                 if (!validatePassword(edPwd.getText().toString())) {
                     passwordWrapper.setError("请输入6位数有效的密码哦!");
-                    btnLogin.setBackgroundColor(Color.parseColor("#666666"));
+                    btnLogin.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_login_gray_backgroung));
                 } else {
-                    btnLogin.setBackgroundColor(Color.parseColor("#32CD32"));
+                    btnLogin.setBackgroundDrawable( getResources().getDrawable(R.drawable.btn_login_backgroung));
                     isSelected=true;
                     passwordWrapper.setErrorEnabled(false);
                     hideKeyboard();
