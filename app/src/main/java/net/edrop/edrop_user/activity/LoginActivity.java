@@ -1,9 +1,7 @@
 package net.edrop.edrop_user.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -17,13 +15,12 @@ import android.widget.Toast;
 
 import net.edrop.edrop_user.R;
 
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     private TextInputLayout usernameWrapper;
     private TextInputLayout passwordWrapper;
     private Button btnLogin;
-    private EditText edUserName;
     private EditText edPwd;
-    public boolean isSelected =false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +32,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         usernameWrapper = findViewById(R.id.usernameWrapper);
         passwordWrapper =  findViewById(R.id.passwordWrapper);
         edPwd =  findViewById(R.id.password);
-        edUserName = findViewById(R.id.username);
         btnLogin =  findViewById(R.id.btn_login);
         usernameWrapper.setHint("请输入用户名");
         passwordWrapper.setHint("请输入密码");
@@ -57,7 +53,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     btnLogin.setBackgroundColor(Color.parseColor("#666666"));
                 } else {
                     btnLogin.setBackgroundColor(Color.parseColor("#32CD32"));
-                    isSelected=true;
                     passwordWrapper.setErrorEnabled(false);
                     hideKeyboard();
                 }
@@ -76,12 +71,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
-                if (isSelected) {
-                    LoginTask loginTask = new LoginTask();
-                    loginTask.execute();
-                }else {
-                    Toast.makeText(LoginActivity.this, "请检查用户名或密码", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(this, "登陆成功", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -100,7 +90,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     /**
      * 自动弹出软 键盘
      */
-    public static void showSoftkeyboard(final EditText etID, final Context mContext) {
+    public static void showSoftkeyboard(final EditText etID,
+                                        final Context mContext) {
         etID.post(new Runnable() {
             @Override
             public void run() {
@@ -120,18 +111,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      */
     public boolean validatePassword(String password) {
         return password.length() > 5;
-    }
-
-    private class LoginTask extends AsyncTask{
-        @Override
-        protected Object doInBackground(Object[] objects) {
-            String username = edUserName.getText().toString();
-            String password = edPwd.getText().toString();
-            Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-//            Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
-            return null;
-        }
     }
 }
