@@ -1,5 +1,7 @@
 package net.edrop.edrop_user.activity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.FragmentTabHost;
@@ -27,6 +29,7 @@ public class Main2Activity extends AppCompatActivity {
     private ImageView nav_userImg;
     private DrawerLayout mDrawerLayout;
     private MainMenuLeftFragment leftMenuFragment;
+    private ImageView imgSweep;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +92,7 @@ public class Main2Activity extends AppCompatActivity {
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.LEFT);
         leftMenuFragment = (MainMenuLeftFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragment_leftmenu);
+        imgSweep=findViewById(R.id.top_sweep);
     }
 
     private void initData() {
@@ -101,6 +105,14 @@ public class Main2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 OpenLeftMenu();
+            }
+        });
+        imgSweep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent();
+                intent1.setAction(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent1,100);
             }
         });
 
@@ -170,5 +182,15 @@ public class Main2Activity extends AppCompatActivity {
         mDrawerLayout.openDrawer(Gravity.LEFT);
         //打开手势滑动：DrawerLayout.LOCK_MODE_UNLOCKED（Gravity.LEFT：代表左侧的）
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, Gravity.LEFT);
+    }
+    //拍照成功回调
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+//        ImageView imageView = findViewById(R.id.iv);
+//        if (requestCode == 100 && resultCode == RESULT_OK){
+//            Bitmap bitmap = (Bitmap) data.getExtras().get("data");//获取拍取的照片
+//            imageView.setImageBitmap(bitmap);
+//        }
     }
 }
