@@ -42,11 +42,23 @@ dependencies {
     implementation 'com.facebook.fresco:fresco:1.10.0'
     //添加qq快速登陆的依赖
     implementation 'com.zhy:okhttputils:2.6.2'
-    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.squareup.okio:okio:1.13.0'
     implementation 'com.alibaba:fastjson:1.1.56.android'
     implementation 'com.vise.xiaoyaoyou:viselog:1.0.0'
     implementation 'com.github.bumptech.glide:glide:4.0.0-RC1'
+    //Glide:
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.6.1'
+    //SmartRefreshLayout
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
+    //EventBus
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    //Gson
+    implementation 'com.google.code.gson:gson:2.8.5'
+    //OkHttp框架
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    //FloatingActionButton
+    implementation 'com.android.support:design:28.0.0'
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'

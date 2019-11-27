@@ -17,6 +17,15 @@ import net.edrop.edrop_user.R;
  * Time: 16:40
  */
 public class MsgPageFragment extends Fragment {
+    private static final String SECTION_STRING = "fragment_string";
+
+    public static MsgPageFragment newInstance(String sectionNumber) {
+        MsgPageFragment fragment = new MsgPageFragment();
+        Bundle args = new Bundle();
+        args.putString(SECTION_STRING, sectionNumber);
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -60,6 +60,16 @@ public class HomePageFragment extends Fragment implements View.OnClickListener{
     // 图片数据，包括图片标题、图片链接、数据、点击要打开的网站（点击打开的网页或一些提示指令）
     private List<ImageInfo> imageInfoList;
 
+    private static final String SECTION_STRING = "fragment_string";
+
+    public static HomePageFragment newInstance(String sectionNumber) {
+        HomePageFragment fragment = new HomePageFragment();
+        Bundle args = new Bundle();
+        args.putString(SECTION_STRING, sectionNumber);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -108,7 +118,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener{
         searchView.setImeOptions(2);//设置输入法搜索选项字段，默认是搜索，可以是：下一页、发送、完成等
 //        mSearchView.setInputType(1);//设置输入类型
 //        mSearchView.setMaxWidth(200);//设置最大宽度
-        searchView.setQueryHint("搜索");//设置查询提示字符串
+        searchView.setQueryHint("查找分类");//设置查询提示字符串
 //        mSearchView.setSubmitButtonEnabled(true);//设置是否显示搜索框展开时的提交按钮
         //设置SearchView下划线透明
         setUnderLinetransparent(searchView);
