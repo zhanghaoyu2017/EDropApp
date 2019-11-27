@@ -74,8 +74,7 @@
                 <EditText
                     android:id="@+id/username"
                     android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:textCursorDrawable="@null" />
+                    android:layout_height="wrap_content" />
             </android.support.design.widget.TextInputLayout>
             <!--密码框-->
             <android.support.design.widget.TextInputLayout
