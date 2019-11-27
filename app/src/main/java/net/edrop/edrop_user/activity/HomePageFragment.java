@@ -64,6 +64,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home_page, container, false);
+//        searchView.clearFocus();
         initView();
         initData();
         initEvent();
@@ -162,11 +163,11 @@ public class HomePageFragment extends Fragment implements View.OnClickListener{
     //初始化事件
     private void initEvent() {
         imageInfoList = new ArrayList<>();
-        imageInfoList.add(new ImageInfo(1, "图片1，公告1啦啦啦啦", "", "http://img0.imgtn.bdimg.com/it/u=1323060543,1759230141&fm=26&gp=0.jpg", "http://www.cnblogs.com/luhuan/"));
-        imageInfoList.add(new ImageInfo(1, "图片2，公告2啦啦啦啦", "", "http://f.3dxy.com/Manual/pic/2014/0918/12/1409181250_47667.jpg", "http://www.cnblogs.com/luhuan/"));
-        imageInfoList.add(new ImageInfo(1, "图片3，公告3啦啦啦啦", "", "http://img0.imgtn.bdimg.com/it/u=1323060543,1759230141&fm=26&gp=0.jpg", "http://www.cnblogs.com/luhuan/"));
-        imageInfoList.add(new ImageInfo(1, "图片4，公告4啦啦啦啦", "仅展示", "http://f.3dxy.com/Manual/pic/2014/0918/12/1409181250_47667.jpg", ""));
-        imageInfoList.add(new ImageInfo(1, "图片5，公告5啦啦啦啦", "仅展示", "http://img0.imgtn.bdimg.com/it/u=1323060543,1759230141&fm=26&gp=0.jpg", ""));
+        imageInfoList.add(new ImageInfo(1, "图片1，啦啦啦啦", "", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574784053918&di=f58933482d84cefcfc063e8833cdb2d6&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2Fa%2F5879b4884d8e1.jpg", "http://www.cnblogs.com/luhuan/"));
+        imageInfoList.add(new ImageInfo(1, "图片2，啦啦啦啦", "", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574784053918&di=88033b9a50f2bb5d763517435d047223&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F3%2F59c86223661fc.jpg", "http://www.cnblogs.com/luhuan/"));
+        imageInfoList.add(new ImageInfo(1, "图片3，啦啦啦啦", "", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574784053917&di=7f551a19ac7867bcc5a9fe0749547f7f&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F3%2F5423b8a480e35.jpg", "http://www.cnblogs.com/luhuan/"));
+        imageInfoList.add(new ImageInfo(1, "图片4，啦啦啦啦", "仅展示", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574784053917&di=3af840e99adc4a6be5c74c6a22e6d298&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2%2F58fec381a6036.jpg", ""));
+        imageInfoList.add(new ImageInfo(1, "图片5，啦啦啦啦", "仅展示", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574784053917&di=506193046c67fc511a7bfea446b783a0&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0166e45c396cf8a8012090db10f36f.jpg", ""));
     }
 
     private void imageStart() {

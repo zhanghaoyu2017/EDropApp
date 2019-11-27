@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.edrop.edrop_user">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/ThemeNoTitle">
-            <activity android:name=".activity.LoginActivity">
+            <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,11 +21,32 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.Main2Activity" />
+        <activity android:name=".activity.LoginActivity"/>
         <activity android:name=".activity.RubbishDesc01Activity" />
         <activity android:name=".activity.RubbishDesc02Activity" />
         <activity android:name=".activity.RubbishDesc03Activity" />
         <activity android:name=".activity.RubbishDesc04Activity"/>
         <activity android:name=".activity.PhoneLoginActivity"/>
+        <!--QQ登录配置 start-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1109992595" />
+            </intent-filter>
+        </activity>
+        <!--SDK_V2.0引入了AssistActivity，开发者需在androidManifest.xml中注册。代码如下：-->
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--QQ登录配置 end-->
     </application>
 
 </manifest>

@@ -14,6 +14,7 @@
         android:orientation="vertical">
         <!--顶部-->
         <LinearLayout
+            android:layout_gravity="top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -105,6 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:layout_gravity="bottom"
             android:orientation="vertical">
             <!--快速登陆-->
             <LinearLayout
@@ -133,7 +135,7 @@
                         android:layout_weight="1">
 
                         <ImageView
-                            android:id="@+id/qq"
+                            android:id="@+id/qq_name"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_marginLeft="30dp"

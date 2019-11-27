@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -14,11 +15,20 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.mob.MobSDK;
+import com.tencent.connect.UserInfo;
+import com.tencent.connect.common.Constants;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 
+import net.edrop.edrop_user.QQbase.Config;
 import net.edrop.edrop_user.R;
+import net.edrop.edrop_user.entity.QQUser;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
@@ -29,18 +39,20 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
     private Button btnPwdLogin;
     // 手机号输入框
     private EditText inputPhoneEt;
-
     // 验证码输入框
     private EditText inputCodeEt;
-
     // 获取验证码按钮
     private Button requestCodeBtn;
-
     // 登录按钮
     private Button btnPhoneLogin;
-
     //倒计时显示   可以手动更改。
     int i = 60;
+    //qq
+    private ImageView qqLogin;
+    private Tencent mTencent;
+    private UserInfo userInfo;
+    private static PhoneLoginActivity.BaseUiListener listener = null;
+    private String QQ_uid;//qq_openid
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +68,15 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
         super.onCreate(savedInstanceState);
+        listener = new BaseUiListener();
+        mTencent = Tencent.createInstance(Config.QQ_LOGIN_APP_ID, this.getApplicationContext());
         setContentView(R.layout.activity_phone_login);
         initView();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Tencent.onActivityResultData(requestCode,resultCode,data,new BaseUiListener());
     }
 
     private void initView() {
@@ -66,6 +85,7 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
         inputCodeEt = (EditText) findViewById(R.id.et_request_Code);
         requestCodeBtn = (Button) findViewById(R.id.login_request_code_btn);
         btnPhoneLogin = (Button) findViewById(R.id.btn_request_login);
+        qqLogin=findViewById(R.id.qq);
 
         // 启动短信验证sdk
         MobSDK.init(this, APPKEY, APPSECRET);
@@ -94,12 +114,20 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
         });
         requestCodeBtn.setOnClickListener(this);
         btnPhoneLogin.setOnClickListener(this);
+        qqLogin.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         String phoneNums = inputPhoneEt.getText().toString();  //取出咱们输入的手机号
         switch (v.getId()) {
+            case R.id.qq:
+                Log.e("qq","开始QQ登录..");
+                if (!mTencent.isSessionValid()) {
+                    //注销登录 mTencent.logout(this);
+                    mTencent.login(PhoneLoginActivity.this, "all", listener);
+                }
+                break;
             case R.id.login_request_code_btn:
                 // 1. 判断手机号是不是11位并且看格式是否合理
                 if (!judgePhoneNums(phoneNums)) {
@@ -109,6 +137,7 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
 
                 // 3. 把按钮变成不可点击，并且显示倒计时（正在获取）
                 requestCodeBtn.setClickable(false);
+                requestCodeBtn.setBackgroundColor(R.drawable.btn_login_gray_backgroung);
                 requestCodeBtn.setText("重新发送(" + i + ")");
                 new Thread(new Runnable() {
                     @Override
@@ -144,6 +173,7 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
             } else if (msg.what == -8) {
                 requestCodeBtn.setText("获取验证码");
                 requestCodeBtn.setClickable(true);
+                requestCodeBtn.setBackgroundColor(R.drawable.btn_login_green_backgroung);
                 i = 60;
             } else {
                 int event = msg.arg1;
@@ -163,7 +193,7 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
                         startActivity(intent);
                         overridePendingTransition(0, 0);
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-                        Toast.makeText(getApplicationContext(), "正在获取验证码",
+                        Toast.makeText(getApplicationContext(), "正在获取验证码，请及时接收登录",
                                 Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(PhoneLoginActivity.this, "验证码不正确", Toast.LENGTH_SHORT).show();
@@ -187,6 +217,88 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
         }
         Toast.makeText(this, "手机号码输入有误！", Toast.LENGTH_SHORT).show();
         return false;
+    }
+
+    private class BaseUiListener  implements IUiListener {
+
+        @Override
+        public void onComplete(Object o) {
+            Log.e("qq","授权:"+o.toString());
+            try {
+                org.json.JSONObject jsonObject = new org.json.JSONObject(o.toString());
+                initOpenidAndToken(jsonObject);
+                updateUserInfo();
+            }catch (org.json.JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private void updateUserInfo() {
+            if (mTencent != null && mTencent.isSessionValid()) {
+                IUiListener listener = new IUiListener() {
+                    @Override
+                    public void onError(UiError e) {
+                    }
+                    @Override
+                    public void onComplete(final Object response) {
+                        Message msg = new Message();
+                        msg.obj = response;
+                        Log.e("qq","................"+response.toString());
+                        msg.what = 0;
+                        mHandler.sendMessage(msg);
+                    }
+                    @Override
+                    public void onCancel() {
+                        Log.e("qq","登录取消..");
+                    }
+                };
+                userInfo = new UserInfo(PhoneLoginActivity.this, mTencent.getQQToken());
+                userInfo.getUserInfo(listener);
+            }
+        }
+
+        private void initOpenidAndToken(org.json.JSONObject jsonObject) {
+            try {
+                String token = jsonObject.getString(Constants.PARAM_ACCESS_TOKEN);
+                String expires = jsonObject.getString(Constants.PARAM_EXPIRES_IN);
+                String openId = jsonObject.getString(Constants.PARAM_OPEN_ID);
+                if (!TextUtils.isEmpty(token) && !TextUtils.isEmpty(expires)
+                        && !TextUtils.isEmpty(openId)) {
+                    mTencent.setAccessToken(token, expires);
+                    mTencent.setOpenId(openId);
+                    QQ_uid = openId;
+                }
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        private Handler mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                if (msg.what == 0) {
+                    com.alibaba.fastjson.JSONObject response = com.alibaba.fastjson.JSONObject.parseObject(String.valueOf(msg.obj));
+                    Log.e("qq","UserInfo:"+ JSON.toJSONString(response));
+                    QQUser user= com.alibaba.fastjson.JSONObject.parseObject(response.toJSONString(),QQUser.class);
+                    if (user!=null) {
+                        Log.e("qq","userInfo:昵称："+user.getNickname()+"  性别:"+user.getGender()+"  地址："+user.getProvince()+user.getCity());
+                        Log.e("qq","头像路径："+user.getFigureurl_qq_2());
+//                        Glide.with(QQLoginActivity.this).load(user.getFigureurl_qq_2()).into(ivHead);
+                    }
+                }
+            }
+        };
+
+        @Override
+        public void onError(UiError e) {
+            Log.e("qq","onError:code:" + e.errorCode +
+                    ", msg:" + e.errorMessage + ", detail:" + e.errorDetail);
+        }
+        @Override
+        public void onCancel() {
+            Log.e("qq","onCancel");
+        }
+
     }
 
     /**
