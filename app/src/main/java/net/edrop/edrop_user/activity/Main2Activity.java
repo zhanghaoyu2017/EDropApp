@@ -165,7 +165,7 @@ public class Main2Activity extends AppCompatActivity {
         imgSweep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("test", "动态申请权限");
+                //动态申请权限");
                 if (Build.VERSION.SDK_INT > 22) {
                     if (ContextCompat.checkSelfPermission(Main2Activity.this,
                             android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -261,7 +261,25 @@ public class Main2Activity extends AppCompatActivity {
         public void onClick(View v) {
             if (index == 4) {
                 // 跳转到Scan界面
-                Toast.makeText(Main2Activity.this, "点击了扫描按钮", Toast.LENGTH_SHORT).show();
+                if (Build.VERSION.SDK_INT > 22) {
+                    if (ContextCompat.checkSelfPermission(Main2Activity.this,
+                            android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                        //先判断有没有权限 ，没有就在这里进行权限的申请
+                        ActivityCompat.requestPermissions(Main2Activity.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
+                    } else {
+                        //说明已经获取到摄像头权限了
+                        Log.i("Main2Activity", "已经获取了权限");
+                        Intent intent1 = new Intent();
+                        intent1.setAction(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent1, 100);
+                    }
+                } else {
+                    //这个说明系统版本在6.0之下，不需要动态获取权限。
+                    Intent intent1 = new Intent();
+                    intent1.setAction(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent1, 100);
+
+                }
             } else {
                 //选择某一页
                 index_vp_fragment_list_top.setCurrentItem(index, false);
