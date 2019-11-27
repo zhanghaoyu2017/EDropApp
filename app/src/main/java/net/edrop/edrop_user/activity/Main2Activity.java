@@ -151,10 +151,16 @@ public class Main2Activity extends AppCompatActivity {
                     } else {
                         //说明已经获取到摄像头权限了
                         Log.i("Main2Activity", "已经获取了权限");
+                        Intent intent1 = new Intent();
+                        intent1.setAction(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent1, 100);
                     }
                 } else {
                     //这个说明系统版本在6.0之下，不需要动态获取权限。
-                    Log.i("Main2Activity", "这个说明系统版本在6.0之下，不需要动态获取权限。");
+                    Intent intent1 = new Intent();
+                    intent1.setAction(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent1, 100);
+
                 }
             }
         });
