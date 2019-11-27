@@ -8,8 +8,10 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +21,10 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,12 +32,29 @@ import android.widget.Toast;
 import com.nineoldandroids.view.ViewHelper;
 
 import net.edrop.edrop_user.R;
+import net.edrop.edrop_user.adapter.FragmentIndexAdapter;
+import net.edrop.edrop_user.utils.MyViewPager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main2Activity extends AppCompatActivity {
-    private FragmentTabHost tabHost = null;
-    private String[] tabStrArr = {"主页", "代扔", "消息", "社区"};
-    private Class[] fragmentArr = {HomePageFragment.class, ServicePageFragment.class, MsgPageFragment.class, CommunityPageFragment.class};
-    private int[] imageArr = {R.drawable.tab_home_channel, R.drawable.tab_service_channel, R.drawable.tab_msg_channel, R.drawable.tab_community_channel};
+    //自定义tabhost属性
+    private FragmentIndexAdapter mFragmentIndexAdapter;
+    private List<Fragment> mFragments;
+    private MyViewPager index_vp_fragment_list_top;
+    private RelativeLayout index_rl_contain;
+    private ImageView index_bottom_bar_home_image;
+    private LinearLayout index_bottom_bar_home;
+    private ImageView index_bottom_bar_dynamic_state_image;
+    private LinearLayout index_bottom_bar_dynamic_state;
+    private ImageView index_bottom_bar_integral_image;
+    private LinearLayout index_bottom_bar_integral;
+    private ImageView index_bottom_bar_me_image;
+    private LinearLayout index_bottom_bar_me;
+    private FrameLayout index_fl_bottom_bar;
+    private ImageView index_bottom_bar_scan;
+
     private ImageView nav_userImg;
     private DrawerLayout mDrawerLayout;
     private MainMenuLeftFragment leftMenuFragment;
@@ -56,7 +78,6 @@ public class Main2Activity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        initTabHost();
         //初始化控件
         initViews();
         //初始化数据
@@ -65,38 +86,20 @@ public class Main2Activity extends AppCompatActivity {
         initEvent();
     }
 
-    // 完成FragmentTabHost的初始化
-    private void initTabHost() {
-        // 1 获取获取FragmentTabHost控件对象控件对象
-        tabHost = findViewById(android.R.id.tabhost);
-        // 2 初始化获取FragmentTabHost控件对象
-        tabHost.setup(this,
-                getSupportFragmentManager(), //全局的FragmentManager，用来管理Fragment
-                android.R.id.tabcontent);
-
-        // 3 创建TabSpec并添加到FragmentTabHost中
-        for (int i = 0; i < fragmentArr.length; ++i) {
-            TabHost.TabSpec tabSpec
-                    = tabHost.newTabSpec(tabStrArr[i])
-                    .setIndicator(getTabSpecView(i));
-            tabHost.addTab(tabSpec, fragmentArr[i], null);
-
-        }
-        tabHost.setCurrentTabByTag(tabStrArr[0]);
-    }
-
-    // 创建TabSpec显示的View
-    private View getTabSpecView(int i) {
-        View view = getLayoutInflater().inflate(R.layout.item_main_layout, null);
-        ImageView imageView = view.findViewById(R.id.iv_image);
-        imageView.setImageResource(imageArr[i]);
-
-        TextView textView = view.findViewById(R.id.tv_text);
-        textView.setText(tabStrArr[i]);
-        return view;
-    }
-
     private void initViews() {
+        index_vp_fragment_list_top = (MyViewPager) findViewById(R.id.index_vp_fragment_list_top);
+        index_bottom_bar_home_image = (ImageView) findViewById(R.id.index_bottom_bar_home_image);
+        index_bottom_bar_home = (LinearLayout) findViewById(R.id.index_bottom_bar_home);
+        index_bottom_bar_dynamic_state_image = (ImageView) findViewById(R.id.index_bottom_bar_dynamic_state_image);
+        index_bottom_bar_dynamic_state = (LinearLayout) findViewById(R.id.index_bottom_bar_dynamic_state);
+        index_bottom_bar_integral_image = (ImageView) findViewById(R.id.index_bottom_bar_integral_image);
+        index_bottom_bar_integral = (LinearLayout) findViewById(R.id.index_bottom_bar_integral);
+        index_bottom_bar_me_image = (ImageView) findViewById(R.id.index_bottom_bar_me_image);
+        index_bottom_bar_me = (LinearLayout) findViewById(R.id.index_bottom_bar_me);
+        index_fl_bottom_bar = (FrameLayout) findViewById(R.id.index_fl_bottom_bar);
+        index_bottom_bar_scan = (ImageView) findViewById(R.id.index_bottom_bar_scan);
+        index_rl_contain = (RelativeLayout) findViewById(R.id.index_rl_contain);
+
         nav_userImg = (ImageView) findViewById(R.id.nav_user);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.id_drawerLayout);
         //关闭手势滑动：DrawerLayout.LOCK_MODE_LOCKED_CLOSED（Gravity.LEFT：代表左侧的）
@@ -107,7 +110,21 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     private void initData() {
+        mFragments = new ArrayList<Fragment>();
+        mFragments.add(HomePageFragment.newInstance("主页"));
+        mFragments.add(ServicePageFragment.newInstance("代扔"));
+        mFragments.add(MsgPageFragment.newInstance("消息"));
+        mFragments.add(CommunityPageFragment.newInstance("社区"));
+        initIndexFragmentAdapter();
+    }
 
+    private void initIndexFragmentAdapter() {
+        mFragmentIndexAdapter = new FragmentIndexAdapter(this.getSupportFragmentManager(), mFragments);
+        index_vp_fragment_list_top.setAdapter(mFragmentIndexAdapter);
+        index_bottom_bar_home.setSelected(true);
+        index_vp_fragment_list_top.setCurrentItem(0);
+        index_vp_fragment_list_top.setOffscreenPageLimit(3);
+        index_vp_fragment_list_top.addOnPageChangeListener(new TabOnPageChangeListener());
     }
 
     @Override
@@ -132,6 +149,12 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     private void initEvent() {
+        index_bottom_bar_home.setOnClickListener(new TabOnClickListener(0));
+        index_bottom_bar_dynamic_state.setOnClickListener(new TabOnClickListener(1));
+        index_bottom_bar_integral.setOnClickListener(new TabOnClickListener(2));
+        index_bottom_bar_me.setOnClickListener(new TabOnClickListener(3));
+        index_bottom_bar_scan.setOnClickListener(new TabOnClickListener(4));
+
         //用户图标的点击事件
         nav_userImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,6 +245,70 @@ public class Main2Activity extends AppCompatActivity {
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.LEFT);
             }
         });
+    }
+
+    /**
+     * Bottom_Bar的点击事件
+     */
+    public class TabOnClickListener implements View.OnClickListener {
+
+        private int index = 0;
+
+        public TabOnClickListener(int i) {
+            index = i;
+        }
+
+        public void onClick(View v) {
+            if (index == 4) {
+                // 跳转到Scan界面
+                Toast.makeText(Main2Activity.this, "点击了扫描按钮", Toast.LENGTH_SHORT).show();
+            } else {
+                //选择某一页
+                Toast.makeText(Main2Activity.this,index+"",Toast.LENGTH_SHORT).show();
+                index_vp_fragment_list_top.setCurrentItem(index, false);
+            }
+        }
+
+    }
+
+    public class TabOnPageChangeListener implements ViewPager.OnPageChangeListener {
+
+        //当滑动状态改变时调用
+        public void onPageScrollStateChanged(int state) {
+        }
+
+        //当前页面被滑动时调用
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        }
+
+        //当新的页面被选中时调用
+        public void onPageSelected(int position) {
+            resetTextView();
+            switch (position) {
+                case 0:
+                    index_bottom_bar_home.setSelected(true);
+                    break;
+                case 1:
+                    index_bottom_bar_dynamic_state.setSelected(true);
+                    break;
+                case 2:
+                    index_bottom_bar_integral.setSelected(true);
+                    break;
+                case 3:
+                    index_bottom_bar_me.setSelected(true);
+                    break;
+            }
+        }
+    }
+
+    /**
+     * 重置所有TextView的字体颜色
+     */
+    private void resetTextView() {
+        index_bottom_bar_home.setSelected(false);
+        index_bottom_bar_dynamic_state.setSelected(false);
+        index_bottom_bar_integral.setSelected(false);
+        index_bottom_bar_me.setSelected(false);
     }
 
     /**

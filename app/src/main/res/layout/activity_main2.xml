@@ -1,59 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.app.FragmentTabHost xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/tabhost"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"> 
-
-        <View
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <View
             android:background="#32BA88"
             android:layout_width="match_parent"
             android:layout_height="25dp"/>
-
-        <android.support.v4.widget.DrawerLayout
-            android:id="@+id/id_drawerLayout"
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/id_drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <!-- 主内容视图一定要是DrawerLayout的第一个子视图【必须】 -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-            <!-- 主内容视图一定要是DrawerLayout的第一个子视图【必须】 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-                <!-- 引入导航栏 -->
-                <include
-                    android:id="@+id/main_navbar"
-                    layout="@layout/navigationbar_main" />
+            <!-- 引入导航栏 -->
+            <include
+                android:id="@+id/main_navbar"
+                layout="@layout/navigationbar_main" />
+            <RelativeLayout
+                android:id="@+id/index_rl_contain"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <net.edrop.edrop_user.utils.MyViewPager
+                    android:id="@+id/index_vp_fragment_list_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true">
+
+                </net.edrop.edrop_user.utils.MyViewPager>
 
                 <FrameLayout
-                    android:id="@android:id/tabcontent"
+                    android:id="@+id/index_fl_bottom_bar"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#dcdcdc"/>
-                <TabWidget
-                    android:id="@android:id/tabs"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp" />
-            </LinearLayout>
-            <!-- 左侧区域侧边栏【可选】【如果想要只有一个右侧的侧边栏，那么就只需要留一个即可,注意的是left需要换成right】 -->
-            <!-- android:tag="LEFT"用于java代码中通过drawerView.getTag()判断左侧还是右侧 -->
-            <fragment
-                android:id="@+id/fragment_leftmenu"
-                android:name="net.edrop.edrop_user.activity.MainMenuLeftFragment"
-                android:layout_width="300dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="left"
-                android:tag="LEFT" />
-        </android.support.v4.widget.DrawerLayout>
-    </LinearLayout>
+                    android:layout_height="60dp"
+                    android:layout_alignParentBottom="true">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#dcdcdc"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:orientation="horizontal">
 
-</android.support.v4.app.FragmentTabHost>
+                        <!-- 主页 -->
+                        <LinearLayout
+                            android:id="@+id/index_bottom_bar_home"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <ImageView
+                                android:id="@+id/index_bottom_bar_home_image"
+                                android:layout_width="20dp"
+                                android:layout_height="27dp"
+                                android:layout_gravity="top|center"
+                                android:src="@drawable/tab_home_channel" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom|center"
+                                android:layout_marginTop="2dp"
+                                android:text="主页"
+                                android:textColor="@drawable/tab_item_textcolor"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- 服务 -->
+                        <LinearLayout
+                            android:id="@+id/index_bottom_bar_dynamic_state"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/index_bottom_bar_dynamic_state_image"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="top|center"
+                                android:layout_marginTop="2dp"
+                                android:src="@drawable/tab_service_channel" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom|center"
+                                android:layout_marginTop="2dp"
+                                android:text="动态"
+                                android:textColor="@drawable/tab_item_textcolor"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- 留白 -->
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                        </FrameLayout>
+
+                        <!-- 消息 -->
+
+                        <LinearLayout
+                            android:id="@+id/index_bottom_bar_integral"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/index_bottom_bar_integral_image"
+                                android:layout_width="23dp"
+                                android:layout_height="23dp"
+                                android:layout_gravity="top|center"
+                                android:src="@drawable/tab_msg_channel" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom|center"
+                                android:layout_marginTop="2dp"
+                                android:text="积分"
+                                android:textColor="@drawable/tab_item_textcolor"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- 社区 -->
+
+                        <LinearLayout
+                            android:id="@+id/index_bottom_bar_me"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/index_bottom_bar_me_image"
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:layout_gravity="top|center"
+                                android:src="@drawable/tab_community_channel" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom|center"
+                                android:layout_marginTop="2dp"
+                                android:text="我的"
+                                android:textColor="@drawable/tab_item_textcolor"
+                                android:textSize="10sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/index_bottom_bar_scan"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="0dp"
+                    android:src="@drawable/camera" />
+
+            </RelativeLayout>
+        </LinearLayout>
+        <!-- 左侧区域侧边栏【可选】【如果想要只有一个右侧的侧边栏，那么就只需要留一个即可,注意的是left需要换成right】 -->
+        <!-- android:tag="LEFT"用于java代码中通过drawerView.getTag()判断左侧还是右侧 -->
+        <fragment
+            android:id="@+id/fragment_leftmenu"
+            android:name="net.edrop.edrop_user.activity.MainMenuLeftFragment"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:tag="LEFT" />
+    </android.support.v4.widget.DrawerLayout>
+
+
+</LinearLayout>

@@ -60,6 +60,16 @@ public class HomePageFragment extends Fragment implements View.OnClickListener{
     // 图片数据，包括图片标题、图片链接、数据、点击要打开的网站（点击打开的网页或一些提示指令）
     private List<ImageInfo> imageInfoList;
 
+    private static final String SECTION_STRING = "fragment_string";
+
+    public static HomePageFragment newInstance(String sectionNumber) {
+        HomePageFragment fragment = new HomePageFragment();
+        Bundle args = new Bundle();
+        args.putString(SECTION_STRING, sectionNumber);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {

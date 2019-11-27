@@ -17,6 +17,15 @@ import net.edrop.edrop_user.R;
  * Time: 16:39
  */
 public class ServicePageFragment extends Fragment {
+    private static final String SECTION_STRING = "fragment_string";
+
+    public static ServicePageFragment newInstance(String sectionNumber) {
+        ServicePageFragment fragment = new ServicePageFragment();
+        Bundle args = new Bundle();
+        args.putString(SECTION_STRING, sectionNumber);
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
