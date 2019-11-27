@@ -1,10 +1,15 @@
 package net.edrop.edrop_user.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,29 +30,30 @@ import net.edrop.edrop_user.R;
 
 public class Main2Activity extends AppCompatActivity {
     private FragmentTabHost tabHost = null;
-    private String [] tabStrArr = {"主页", "代扔","消息","社区"};
-    private Class[] fragmentArr = {HomePageFragment.class, ServicePageFragment.class,MsgPageFragment.class,CommunityPageFragment.class};
-    private int [] imageArr = {R.drawable.tab_home_channel, R.drawable.tab_service_channel,R.drawable.tab_msg_channel,R.drawable.tab_community_channel};
+    private String[] tabStrArr = {"主页", "代扔", "消息", "社区"};
+    private Class[] fragmentArr = {HomePageFragment.class, ServicePageFragment.class, MsgPageFragment.class, CommunityPageFragment.class};
+    private int[] imageArr = {R.drawable.tab_home_channel, R.drawable.tab_service_channel, R.drawable.tab_msg_channel, R.drawable.tab_community_channel};
     private ImageView nav_userImg;
     private DrawerLayout mDrawerLayout;
     private MainMenuLeftFragment leftMenuFragment;
     private ImageView imgSweep;
     private long waitTime = 2000;
     private long touchTime = 0;
+    private final int REQUEST_CAMERA = 1;//请求相机权限的请求码
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-            // 5.0以上系统状态栏透明
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                Window window = getWindow();
-                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.setStatusBarColor(Color.TRANSPARENT);
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            }
+        // 5.0以上系统状态栏透明
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         initTabHost();
@@ -69,7 +75,7 @@ public class Main2Activity extends AppCompatActivity {
                 android.R.id.tabcontent);
 
         // 3 创建TabSpec并添加到FragmentTabHost中
-        for(int i=0; i<fragmentArr.length; ++i) {
+        for (int i = 0; i < fragmentArr.length; ++i) {
             TabHost.TabSpec tabSpec
                     = tabHost.newTabSpec(tabStrArr[i])
                     .setIndicator(getTabSpecView(i));
@@ -78,6 +84,7 @@ public class Main2Activity extends AppCompatActivity {
         }
         tabHost.setCurrentTabByTag(tabStrArr[0]);
     }
+
     // 创建TabSpec显示的View
     private View getTabSpecView(int i) {
         View view = getLayoutInflater().inflate(R.layout.item_main_layout, null);
@@ -96,7 +103,7 @@ public class Main2Activity extends AppCompatActivity {
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.LEFT);
         leftMenuFragment = (MainMenuLeftFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragment_leftmenu);
-        imgSweep=findViewById(R.id.top_sweep);
+        imgSweep = findViewById(R.id.top_sweep);
     }
 
     private void initData() {
@@ -135,9 +142,20 @@ public class Main2Activity extends AppCompatActivity {
         imgSweep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent();
-                intent1.setAction(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent1,100);
+                Log.e("test", "动态申请权限");
+                if (Build.VERSION.SDK_INT > 22) {
+                    if (ContextCompat.checkSelfPermission(Main2Activity.this,
+                            android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                        //先判断有没有权限 ，没有就在这里进行权限的申请
+                        ActivityCompat.requestPermissions(Main2Activity.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
+                    } else {
+                        //说明已经获取到摄像头权限了
+                        Log.i("Main2Activity", "已经获取了权限");
+                    }
+                } else {
+                    //这个说明系统版本在6.0之下，不需要动态获取权限。
+                    Log.i("Main2Activity", "这个说明系统版本在6.0之下，不需要动态获取权限。");
+                }
             }
         });
 
@@ -208,6 +226,7 @@ public class Main2Activity extends AppCompatActivity {
         //打开手势滑动：DrawerLayout.LOCK_MODE_UNLOCKED（Gravity.LEFT：代表左侧的）
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, Gravity.LEFT);
     }
+
     //拍照成功回调
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -217,6 +236,17 @@ public class Main2Activity extends AppCompatActivity {
 //            Bitmap bitmap = (Bitmap) data.getExtras().get("data");//获取拍取的照片
 //            imageView.setImageBitmap(bitmap);
 //        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CAMERA) {
+            Intent intent1 = new Intent();
+            intent1.setAction(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            Log.e("权限获取成功", "onRequestPermissionsResult: ");
+            startActivityForResult(intent1, 100);
+        }
     }
 
 }
