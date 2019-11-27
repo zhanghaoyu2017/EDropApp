@@ -10,13 +10,14 @@
         android:layout_height="250dp">
 
         <ImageView
-            android:id="@+id/img"
+            android:id="@+id/img_service_reservation"
             android:layout_width="@dimen/size_120"
             android:layout_height="@dimen/size_120"
             android:layout_centerInParent="true"
             android:src="@drawable/reservation_logo" />
 
         <TextView
+            android:id="@+id/tv_service_yireng"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -33,12 +34,14 @@
     </RelativeLayout>
 
     <ListView
+        android:id="@+id/lv_service"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
     <View
-        android:background="#fff"
         android:layout_width="match_parent"
-        android:layout_height="60dp"/>
+        android:layout_height="60dp"
+        android:background="#fff" />
 
 
 </LinearLayout>
