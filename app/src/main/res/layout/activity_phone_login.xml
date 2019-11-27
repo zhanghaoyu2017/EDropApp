@@ -107,15 +107,15 @@
                 android:textColor="#ffffff"
                 android:textSize="20dp" />
             <!--忘记密码-->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
-                android:text="忘记密码?"
-                android:textColor="#4169E1"
-                android:textSize="12dp" />
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="right"-->
+                <!--android:layout_marginRight="20dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:text="忘记密码?"-->
+                <!--android:textColor="#4169E1"-->
+                <!--android:textSize="12dp" />-->
 
         </LinearLayout>
         <!--快速登录-->

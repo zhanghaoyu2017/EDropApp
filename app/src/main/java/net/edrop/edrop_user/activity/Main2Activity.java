@@ -167,7 +167,8 @@ public class Main2Activity extends AppCompatActivity {
         imgSweep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //动态申请权限");
+                //
+                // 动态申请权限");
                 if (Build.VERSION.SDK_INT > 22) {
                     if (ContextCompat.checkSelfPermission(Main2Activity.this,
                             android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
