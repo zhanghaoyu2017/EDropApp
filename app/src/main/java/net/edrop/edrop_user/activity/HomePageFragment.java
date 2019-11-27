@@ -14,7 +14,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -22,6 +24,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,9 +47,10 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomePageFragment extends Fragment implements View.OnClickListener{
+public class HomePageFragment extends Fragment implements TabHost.TabContentFactory, GestureDetector.OnGestureListener {
     private Activity activity;
     private View view;
+    private ImageView nav_userImg;
     //搜索框控件
     private SearchView searchView;
     private AutoCompleteTextView mAutoCompleteTextView;//搜索输入框
@@ -59,7 +63,11 @@ public class HomePageFragment extends Fragment implements View.OnClickListener{
     private List<View> dots;//小点
     // 图片数据，包括图片标题、图片链接、数据、点击要打开的网站（点击打开的网页或一些提示指令）
     private List<ImageInfo> imageInfoList;
+    private CustomClickListener customClickListener = new CustomClickListener();
+    //定义手势检测器实例
+    private GestureDetector detector;
 
+    private Main2Activity main2Activity;
     private static final String SECTION_STRING = "fragment_string";
 
     public static HomePageFragment newInstance(String sectionNumber) {
@@ -74,7 +82,18 @@ public class HomePageFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home_page, container, false);
-//        searchView.clearFocus();
+        //创建手势检测器
+        detector = new GestureDetector(getActivity(),this);
+        Main2Activity.MyOnTouchListener myOnTouchListener = new Main2Activity.MyOnTouchListener() {
+            @Override
+            public boolean onTouch(MotionEvent ev) {
+                boolean result = detector.onTouchEvent(ev);
+                return result;
+            }
+        };
+        main2Activity=(Main2Activity)getActivity();
+        ((Main2Activity) getActivity()).registerMyOnTouchListener(myOnTouchListener);
+
         initView();
         initData();
         initEvent();
@@ -95,6 +114,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener{
     }
 
     private void initView(){
+        nav_userImg=view.findViewById(R.id.nav_user);
         //搜索框
         searchView=view.findViewById(R.id.view_search);
         mAutoCompleteTextView=searchView.findViewById(R.id.search_src_text);
@@ -103,7 +123,6 @@ public class HomePageFragment extends Fragment implements View.OnClickListener{
         mViewPager =view.findViewById(R.id.viewPager);
         mTvPagerTitle = view.findViewById(R.id.tv_pager_title);
         mLineLayoutDot = view.findViewById(R.id.lineLayout_dot);
-
         Fresco.initialize(getContext());
     }
 
@@ -147,6 +166,20 @@ public class HomePageFragment extends Fragment implements View.OnClickListener{
         });
     }
 
+    @Override
+    public View createTabContent(String tag) {
+        return null;
+    }
+
+    private class CustomClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+
+            }
+        }
+    }
+
     /**设置SearchView下划线透明**/
     private void setUnderLinetransparent(SearchView searchView){
         try {
@@ -160,12 +193,6 @@ public class HomePageFragment extends Fragment implements View.OnClickListener{
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
         }
     }
 
@@ -211,7 +238,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener{
 
             simpleDraweeView.setId(imgaeIds[i]);//给view设置id
             simpleDraweeView.setTag(imageInfoList.get(i));
-            simpleDraweeView.setOnClickListener(this);
+            simpleDraweeView.setOnClickListener(new CustomClickListener());
             titles[i] = imageInfoList.get(i).getTitle();
             simpleDraweeViewList.add(simpleDraweeView);
 
@@ -284,4 +311,50 @@ public class HomePageFragment extends Fragment implements View.OnClickListener{
         }
         return dots;
     }
+
+    /*----------------------------手势滑动-------------------------------------*/
+    public void flingLeft() {//自定义方法：处理向左滑动事件
+        main2Activity.OpenLeftMenu();
+    }
+
+    public void flingRight() {//自定义方法：处理向右滑动事件
+
+    }
+
+    @Override
+    public boolean onDown(MotionEvent arg0) {
+        return false;
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        try {
+            if (e1.getX() - e2.getX() < -89) {
+                flingLeft();
+                return true;
+            } else if (e1.getX() - e2.getX() > 89) {
+                flingRight();
+                return true;
+            }
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) { }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) { }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
 }
