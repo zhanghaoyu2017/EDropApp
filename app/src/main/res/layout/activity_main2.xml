@@ -101,7 +101,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="bottom|center"
                                 android:layout_marginTop="2dp"
-                                android:text="动态"
+                                android:text="服务"
                                 android:textColor="@drawable/tab_item_textcolor"
                                 android:textSize="10sp" />
                         </LinearLayout>
@@ -139,7 +139,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="bottom|center"
                                 android:layout_marginTop="2dp"
-                                android:text="积分"
+                                android:text="消息"
                                 android:textColor="@drawable/tab_item_textcolor"
                                 android:textSize="10sp" />
                         </LinearLayout>
@@ -168,7 +168,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="bottom|center"
                                 android:layout_marginTop="2dp"
-                                android:text="我的"
+                                android:text="社区"
                                 android:textColor="@drawable/tab_item_textcolor"
                                 android:textSize="10sp" />
 
@@ -180,11 +180,11 @@
 
                 <ImageView
                     android:id="@+id/index_bottom_bar_scan"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerInParent="true"
-                    android:layout_marginBottom="0dp"
+                    android:layout_marginBottom="10dp"
                     android:src="@drawable/camera" />
 
             </RelativeLayout>

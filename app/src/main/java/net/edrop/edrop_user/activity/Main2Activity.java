@@ -264,7 +264,6 @@ public class Main2Activity extends AppCompatActivity {
                 Toast.makeText(Main2Activity.this, "点击了扫描按钮", Toast.LENGTH_SHORT).show();
             } else {
                 //选择某一页
-                Toast.makeText(Main2Activity.this,index+"",Toast.LENGTH_SHORT).show();
                 index_vp_fragment_list_top.setCurrentItem(index, false);
             }
         }
