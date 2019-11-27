@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,7 +27,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.bumptech.glide.Glide;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.common.Constants;
 import com.tencent.tauth.IUiListener;
@@ -39,8 +37,6 @@ import net.edrop.edrop_user.QQbase.Config;
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.entity.QQUser;
 import net.edrop.edrop_user.utils.SharedPreferencesUtils;
-
-import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     private TextInputLayout usernameWrapper;
@@ -126,9 +122,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void afterTextChanged(Editable editable) {
                 if (!validatePassword(edPwd.getText().toString())) {
                     passwordWrapper.setError("请输入6位数有效的密码哦!");
-                    btnLogin.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_login_gray_backgroung));
+                    btnLogin.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_login_gray_background));
                 } else {
-                    btnLogin.setBackgroundDrawable( getResources().getDrawable(R.drawable.btn_login_backgroung));
+                    btnLogin.setBackgroundDrawable( getResources().getDrawable(R.drawable.btn_login_background));
                     isSelected=true;
                     passwordWrapper.setErrorEnabled(false);
                     hideKeyboard();
