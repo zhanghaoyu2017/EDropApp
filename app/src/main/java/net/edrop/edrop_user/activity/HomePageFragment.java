@@ -329,10 +329,10 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         try {
-            if (e1.getX() - e2.getX() < -89) {
+            if (e1.getX() - e2.getX() < -150) {
                 flingLeft();
                 return true;
-            } else if (e1.getX() - e2.getX() > 89) {
+            } else if (e1.getX() - e2.getX() > 150) {
                 flingRight();
                 return true;
             }
