@@ -38,6 +38,7 @@
                 <FrameLayout
                     android:id="@+id/index_fl_bottom_bar"
                     android:layout_width="match_parent"
+
                     android:layout_height="60dp"
                     android:layout_alignParentBottom="true">
                     <View
