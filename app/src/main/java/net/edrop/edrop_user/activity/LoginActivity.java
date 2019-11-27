@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextInputLayout passwordWrapper;
     private Button btnLogin;
     private Button btnPhoneLogin;
+    private Button btnRegister;
     private EditText edUserName;
     private EditText edPwd;
     public boolean isSelected =false;
@@ -103,6 +104,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edPwd =  findViewById(R.id.password);
         edUserName = findViewById(R.id.username);
         btnPhoneLogin=findViewById(R.id.btn_phone_login);
+        btnRegister=findViewById(R.id.btn_register);
         btnLogin =  findViewById(R.id.btn_login);
         qqLogin=findViewById(R.id.qq_name);
         usernameWrapper.setHint("请输入用户名");
@@ -144,6 +146,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this,PhoneLoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+
                 startActivity(intent);
             }
         });

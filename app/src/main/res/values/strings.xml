@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">EDrop</string>
     <string name="title_activity_phone_login">PhoneLoginActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
 </resources>
