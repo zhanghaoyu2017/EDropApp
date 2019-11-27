@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/btn_backgroung"
+                android:background="@drawable/btn_background"
                 android:text="密码登录"
                 android:textColor="#000"
                 android:textSize="16dp" />
@@ -90,7 +90,7 @@
                     android:layout_height="40dp"
                     android:textColor="#fff"
                     style="?android:attr/borderlessButtonStyle"
-                    android:background="@drawable/btn_login_green_backgroung"
+                    android:background="@drawable/btn_login_green_background"
                     android:text="获取验证码" />
             </LinearLayout>
             <!--android:background="@drawable/btn_request_code"-->
@@ -102,7 +102,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/btn_login_backgroung"
+                android:background="@drawable/btn_login_background"
                 android:text="登录"
                 android:textColor="#ffffff"
                 android:textSize="20dp" />

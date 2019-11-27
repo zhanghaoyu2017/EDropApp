@@ -17,17 +17,33 @@
             android:layout_gravity="top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
             android:orientation="horizontal">
-
+            <Button
+                android:id="@+id/btn_register"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_background"
+                android:text="注册"
+                android:textColor="#000"
+                android:textSize="16dp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_height="30dp"
+                android:layout_weight="2"/>
             <Button
                 android:id="@+id/btn_phone_login"
                 style="?android:attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/btn_backgroung"
+                android:background="@drawable/btn_background"
                 android:text="免密登录"
                 android:textColor="#000"
                 android:textSize="16dp" />
@@ -85,7 +101,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/btn_login_backgroung"
+                android:background="@drawable/btn_login_background"
                 android:text="登录"
                 android:textColor="#ffffff"
                 android:textSize="20dp" />
