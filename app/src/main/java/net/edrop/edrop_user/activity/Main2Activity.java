@@ -54,6 +54,7 @@ public class Main2Activity extends AppCompatActivity {
     private LinearLayout index_bottom_bar_me;
     private FrameLayout index_fl_bottom_bar;
     private ImageView index_bottom_bar_scan;
+    private TextView navTitle;
 
     private ImageView nav_userImg;
     private DrawerLayout mDrawerLayout;
@@ -87,6 +88,7 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     private void initViews() {
+        navTitle = (TextView) findViewById(R.id.nav_title);
         index_vp_fragment_list_top = (MyViewPager) findViewById(R.id.index_vp_fragment_list_top);
         index_bottom_bar_home_image = (ImageView) findViewById(R.id.index_bottom_bar_home_image);
         index_bottom_bar_home = (LinearLayout) findViewById(R.id.index_bottom_bar_home);
@@ -282,6 +284,15 @@ public class Main2Activity extends AppCompatActivity {
                 }
             } else {
                 //选择某一页
+                if (index == 0) {
+                    navTitle.setText("主页");
+                } else if (index == 1) {
+                    navTitle.setText("代扔服务");
+                } else if (index == 2) {
+                    navTitle.setText("消息");
+                }else {
+                    navTitle.setText("社区动态");
+                }
                 index_vp_fragment_list_top.setCurrentItem(index, false);
             }
         }
