@@ -136,7 +136,7 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
                 SMSSDK.getVerificationCode("86", phoneNums);
 
                 // 3. 把按钮变成不可点击，并且显示倒计时（正在获取）
-                requestCodeBtn.setBackgroundResource(R.drawable.btn_login_gray_backgroung);
+                requestCodeBtn.setBackgroundResource(R.drawable.btn_login_gray_background);
                 requestCodeBtn.setClickable(false);
                 requestCodeBtn.setText("重新发送(" + i + ")");
                 new Thread(new Runnable() {
@@ -169,13 +169,12 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             if (msg.what == -9) {
-//                requestCodeBtn.setBackgroundColor(R.drawable.btn_login_gray_backgroung);
+//                requestCodeBtn.setBackgroundColor(R.drawable.btn_login_gray_background);
                 requestCodeBtn.setText("重新发送(" + i + ")");
 
             } else if (msg.what == -8) {
-//                requestCodeBtn.setBackgroundColor(R.drawable.btn_login_green_backgroung);
                 requestCodeBtn.setText("获取验证码");
-                requestCodeBtn.setBackgroundResource(R.drawable.btn_login_green_backgroung);
+                requestCodeBtn.setBackgroundResource(R.drawable.btn_login_green_background);
                 requestCodeBtn.setClickable(true);
                 i = 60;
             } else {
