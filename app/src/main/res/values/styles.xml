@@ -57,4 +57,8 @@
         <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
         <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item> 
     </style>
+    <!--绿色-->
+    <style name="theme_green" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/color_green_32BA88</item>
+    </style>
 </resources>

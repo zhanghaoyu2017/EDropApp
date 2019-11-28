@@ -224,7 +224,7 @@ public class Main2Activity extends AppCompatActivity {
              */
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
-                Log.e("滑动的距离", "slideOffset=" + slideOffset);//0.0 -- 0.56 -- 1.0
+               //"滑动的距离", "slideOffset=" + slideOffset);//0.0 -- 0.56 -- 1.0
 
                 View mContent = mDrawerLayout.getChildAt(0);//内容区域view
                 View mMenu = drawerView;

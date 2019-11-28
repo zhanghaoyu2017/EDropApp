@@ -1,24 +1,48 @@
 package net.edrop.edrop_user.activity;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.Window;
+import android.widget.SimpleAdapter;
 
 import net.edrop.edrop_user.R;
+import net.edrop.edrop_user.adapter.SimpleIntroduceAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by 李诗凡.
- * User: sifannnn
- * Date: 2019/11/28
- * Time: 10:17
- * TODO：对易扔的简单介绍
- */
 public class IntroductionEDropActivity extends AppCompatActivity {
+    private SimpleIntroduceAdapter mAdapter;
+    private List<String> mDatas;
+    RecyclerView rvToDoList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.introductionedrop_main);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_introduction_edrop);
+        CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.maincollapsing);
+        collapsingToolbar.setTitle("EDrop简介");
+        collapsingToolbar.setExpandedTitleColor(Color.WHITE);//设置展开后标题的颜色
+        rvToDoList = (RecyclerView) findViewById(R.id.rvToDoList);
+        recycleView();
+    }
+    private void recycleView() {
+        mDatas = new ArrayList<String>();
+        mDatas.add(getResources().getString(R.string.introduction_text));
+        mAdapter = new SimpleIntroduceAdapter(IntroductionEDropActivity.this, mDatas);
+        rvToDoList.setAdapter(mAdapter);
+        //设置布局管理
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rvToDoList.setLayoutManager(linearLayoutManager);
+        rvToDoList.setItemAnimator(new DefaultItemAnimator());
     }
 }
