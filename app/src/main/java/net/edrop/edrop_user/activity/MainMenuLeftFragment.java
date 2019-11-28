@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +17,7 @@ import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 
 public class MainMenuLeftFragment extends Fragment {
 	private View myView;
-	private TextView userImg;
+	private ImageView userImg;
 	private TextView userName;
 	private TextView myMoney;
 	private TextView myAddress;
@@ -50,7 +51,7 @@ public class MainMenuLeftFragment extends Fragment {
 
 	/**初始化控件*/
 	private void initView(){
-//	    userImg=getActivity().findViewById(R.id.iv_userImg);
+	    userImg=getActivity().findViewById(R.id.iv_userImg);
 	    userName=getActivity().findViewById(R.id.tv_userName);
         myMoney=getActivity().findViewById(R.id.myMoney);
         myAddress=getActivity().findViewById(R.id.myAddress);
@@ -92,7 +93,7 @@ public class MainMenuLeftFragment extends Fragment {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.iv_image:
-                    Intent intent = new Intent(getContext(), PersonalCenterManagerActivity.class);
+                    Intent intent = new Intent(getActivity(), PersonalCenterManagerActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     getContext().startActivity(intent);
                 case R.id.myMoney:

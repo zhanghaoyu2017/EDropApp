@@ -116,13 +116,13 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter implements View.OnClickLis
     public void fillValues(int position, View convertView) {
         TextView tvNickName = (TextView) convertView.findViewById(R.id.tv_nickname);
         TextView tvMsg = (TextView) convertView.findViewById(R.id.tv_msg);
-        TextView tvSwipeOpen = (TextView) convertView.findViewById(R.id.swipe_open);
+        TextView tvSwipeTop = (TextView) convertView.findViewById(R.id.swipe_top);
         TextView tvSwipeDelete = (TextView) convertView.findViewById(R.id.swipe_delete);
         tvNickName.setText(list.get(position).getNickName());
         tvMsg.setText(list.get(position).getMsg());
 
         tvSwipeDelete.setOnClickListener(this);
-        tvSwipeOpen.setOnClickListener(this);
+        tvSwipeTop.setOnClickListener(this);
     }
 
     @Override
@@ -144,10 +144,10 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter implements View.OnClickLis
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
-            case R.id.swipe_open:
+            case R.id.swipe_top:
                 // 关闭所有打开的Swipe的item
                 this.closeAllItems();
-                Toast.makeText(context, "Swipe--Open", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Swipe--Top", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.swipe_delete:
                 this.closeAllItems();

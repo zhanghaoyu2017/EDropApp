@@ -14,7 +14,7 @@ import net.edrop.edrop_user.R;
  * Time: 10:17
  * TODO：对易扔的简单介绍
  */
-public class IntroductionEdrop extends AppCompatActivity {
+public class IntroductionEDropActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
