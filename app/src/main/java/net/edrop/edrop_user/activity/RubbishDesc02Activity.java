@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import net.edrop.edrop_user.R;
 
 public class RubbishDesc02Activity extends AppCompatActivity {
-
+    private boolean lightStatusBar=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // 5.0以上系统状态栏透明
@@ -22,6 +22,16 @@ public class RubbishDesc02Activity extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
+            //将状态栏文字颜色改为黑色
+            lightStatusBar=true;
+            View decor = window.getDecorView();
+            int ui = decor.getSystemUiVisibility();
+            if (lightStatusBar) {
+                ui |=View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体的颜色为黑色
+            } else {
+                ui &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体颜色为白色
+            }
+            decor.setSystemUiVisibility(ui);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
