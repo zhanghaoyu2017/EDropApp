@@ -1,5 +1,6 @@
 package net.edrop.edrop_user.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.adapter.ServiceAdapter;
@@ -26,6 +28,7 @@ import java.util.Map;
  */
 public class ServicePageFragment extends Fragment {
     private static final String SECTION_STRING = "fragment_string";
+    private TextView textView;
     private List<Map<String, Object>> dataSource = null;
     private ListView listView;
     private View view;
@@ -46,13 +49,26 @@ public class ServicePageFragment extends Fragment {
         InitData();
         findView();
         setAdapter();
+        introductionEdrop();
         return view;
+    }
+
+    //什么是易扔？的点击事件
+    private void introductionEdrop() {
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转新页面
+                Intent intent = new Intent(getActivity(), IntroductionEdrop.class);
+                startActivity(intent);
+            }
+        });
     }
 
     //找到控件对象
     private void findView() {
         listView = view.findViewById(R.id.lv_service);
-
+        textView = view.findViewById(R.id.tv_service_what);
     }
 
     //将数据传入adapter
