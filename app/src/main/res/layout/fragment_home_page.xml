@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     android:orientation="vertical">
 
     <android.support.v7.widget.SearchView
@@ -78,6 +79,149 @@
 
         </FrameLayout>
     </android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_60">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="基本垃圾分类"
+            android:textSize="@dimen/size_25"
+            android:textColor="#000"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_150"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_rubbish_recyclable"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_150"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/size_70"
+                android:layout_height="@dimen/size_70"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/rubbish_recycler" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="可回收物"
+                android:textColor="#000"
+                android:textSize="@dimen/size_18"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="RECYCLABLE"
+                android:textColor="#8a8a8a"
+                android:textSize="@dimen/size_13" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_rubbish_hazardous"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_150"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/size_70"
+                android:layout_height="@dimen/size_70"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/rubbish_harm" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="有害垃圾"
+                android:textColor="#000"
+                android:textSize="@dimen/size_18"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="HAZARDOUS"
+                android:textColor="#8a8a8a"
+                android:textSize="@dimen/size_13" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_rubbish_housefood"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_150"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/size_70"
+                android:layout_height="@dimen/size_70"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/rubbish_certain" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="湿垃圾"
+                android:textColor="#000"
+                android:textSize="@dimen/size_18"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="HOUSEFOOD"
+                android:textColor="#8a8a8a"
+                android:textSize="@dimen/size_13" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_rubbish_residoual"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_150"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/size_70"
+                android:layout_height="@dimen/size_70"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/rubbish_gan" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="干垃圾"
+                android:textColor="#000"
+                android:textSize="@dimen/size_18"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="RESIDOUAL"
+                android:textColor="#8a8a8a"
+                android:textSize="@dimen/size_13" />
+        </LinearLayout>
+
+    </LinearLayout>
     <!--结尾-->
     <LinearLayout
         android:layout_width="match_parent"

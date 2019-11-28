@@ -3,6 +3,7 @@ package net.edrop.edrop_user.activity;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -68,6 +69,10 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
     private GestureDetector detector;
 
     private Main2Activity main2Activity;
+    private LinearLayout recyclable;
+    private LinearLayout hazardous;
+    private LinearLayout housefood;
+    private LinearLayout residoual;
     private static final String SECTION_STRING = "fragment_string";
 
     public static HomePageFragment newInstance(String sectionNumber) {
@@ -123,6 +128,10 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
         mViewPager =view.findViewById(R.id.viewPager);
         mTvPagerTitle = view.findViewById(R.id.tv_pager_title);
         mLineLayoutDot = view.findViewById(R.id.lineLayout_dot);
+        recyclable=view.findViewById(R.id.ll_rubbish_recyclable);
+        hazardous=view.findViewById(R.id.ll_rubbish_hazardous);
+        housefood=view.findViewById(R.id.ll_rubbish_housefood);
+        residoual =view.findViewById(R.id.ll_rubbish_residoual);
         Fresco.initialize(getContext());
     }
 
@@ -163,6 +172,36 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
                 return false;
             }
 
+        });
+
+        recyclable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),RubbishDesc01Activity.class);
+                startActivity(intent);
+            }
+        });
+
+        hazardous.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),RubbishDesc02Activity.class);
+                startActivity(intent);
+            }
+        });
+        housefood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),RubbishDesc03Activity.class);
+                startActivity(intent);
+            }
+        });
+        residoual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),RubbishDesc04Activity.class);
+                startActivity(intent);
+            }
         });
     }
 
