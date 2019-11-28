@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!--标签项对应的页面布局文件-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     android:orientation="vertical">
 
-    <TextView
+    <ListView
+        android:id="@+id/lv_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="a"
-        android:textSize="40dp" />
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:scrollbars="none"
+        android:overScrollMode="never"/>
+    <LinearLayout
+        android:layout_weight="1"
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
 
 </LinearLayout>
