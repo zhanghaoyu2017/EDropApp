@@ -1,16 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!--标签项对应的页面布局文件-->
+<?xml version="1.0" encoding="utf-8"?><!--标签项对应的页面布局文件-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     android:orientation="vertical">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="ae"
-        android:textSize="40dp" />
+        android:layout_height="250dp">
+
+        <ImageView
+            android:id="@+id/img_service_reservation"
+            android:layout_width="@dimen/size_120"
+            android:layout_height="@dimen/size_120"
+            android:layout_centerInParent="true"
+            android:src="@drawable/reservation_logo" />
+
+        <TextView
+            android:id="@+id/tv_service_yireng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingLeft="@dimen/size_200"
+            android:paddingBottom="103dp"
+            android:text="什么是易扔？" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="立即预约" />
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/lv_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#fff" />
+
 
 </LinearLayout>
+
+
+
+
+
+

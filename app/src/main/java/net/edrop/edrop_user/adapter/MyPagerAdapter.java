@@ -12,6 +12,8 @@ import net.edrop.edrop_user.activity.LoginActivity;
 
 import java.util.ArrayList;
 
+
+
 public class MyPagerAdapter extends PagerAdapter {
     private ArrayList<View> viewLists;
     private Context context;
@@ -19,8 +21,9 @@ public class MyPagerAdapter extends PagerAdapter {
     public MyPagerAdapter(ArrayList<View> viewLists, Context context) {
         super();
         this.viewLists = viewLists;
-        this.context=context;
+        this.context = context;
     }
+
 
     @Override
     public int getCount() {
@@ -37,8 +40,9 @@ public class MyPagerAdapter extends PagerAdapter {
 
     /**
      * 该方法两个作用：一、把要被显示的视图加载到ViewGroup,二、返回要加载的View
+     *
      * @param container 被加载的View的父布局
-     * @param position 要加载的View在数组或集合中的位置
+     * @param position  要加载的View在数组或集合中的位置
      * @return
      */
     @Override
@@ -56,10 +60,11 @@ public class MyPagerAdapter extends PagerAdapter {
     }
 
     /**
-     *该方法在View被移除时调用,移除对应的View
+     * 该方法在View被移除时调用,移除对应的View
+     *
      * @param container 要被移除的View的父布局
-     * @param position 表示要被移除的View在数组或集合中的位置
-     * @param object 代表的就是要被移除的对象
+     * @param position  表示要被移除的View在数组或集合中的位置
+     * @param object    代表的就是要被移除的对象
      */
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
