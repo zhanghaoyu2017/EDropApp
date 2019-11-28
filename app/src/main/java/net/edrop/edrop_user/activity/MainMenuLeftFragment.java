@@ -76,7 +76,8 @@ public class MainMenuLeftFragment extends Fragment {
 	/**初始化监听事件*/
 	private void initEvent(){
         myListener=new MyListener();
-//        userImg.setOnClickListener(myListener);
+        userName.setOnClickListener(myListener);
+        userImg.setOnClickListener(myListener);
         myMoney.setOnClickListener(myListener);
         myAddress.setOnClickListener(myListener);
         myOrder.setOnClickListener(myListener);
@@ -92,10 +93,11 @@ public class MainMenuLeftFragment extends Fragment {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.iv_image:
+                case R.id.tv_userName:
                     Intent intent = new Intent(getActivity(), PersonalCenterManagerActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     getContext().startActivity(intent);
+                    break;
                 case R.id.myMoney:
                     Toast.makeText(getActivity(),myMoney.getText().toString(),Toast.LENGTH_SHORT).show();
                     break;
