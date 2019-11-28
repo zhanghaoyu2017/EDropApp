@@ -56,6 +56,13 @@ public class SearchRubblishActivity extends AppCompatActivity {
         setListener();
     }
 
+    private void initView() {
+        //搜索框
+        searchView=findViewById(R.id.view_search);
+        mAutoCompleteTextView=searchView.findViewById(R.id.search_src_text);
+        mDeleteButton=searchView.findViewById(R.id.search_close_btn);
+    }
+
     private void initData() {
         searchView.setIconifiedByDefault(false);//设置搜索图标是否显示在搜索框内
         //1:回车
@@ -71,13 +78,6 @@ public class SearchRubblishActivity extends AppCompatActivity {
 //        mSearchView.setSubmitButtonEnabled(true);//设置是否显示搜索框展开时的提交按钮
         //设置SearchView下划线透明
         setUnderLinetransparent(searchView);
-    }
-
-    private void initView() {
-        //搜索框
-        searchView=findViewById(R.id.view_search);
-        mAutoCompleteTextView=searchView.findViewById(R.id.search_src_text);
-        mDeleteButton=searchView.findViewById(R.id.search_close_btn);
     }
 
     /**设置SearchView下划线透明**/
