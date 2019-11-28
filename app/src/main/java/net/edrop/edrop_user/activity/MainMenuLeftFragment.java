@@ -76,7 +76,7 @@ public class MainMenuLeftFragment extends Fragment {
 	/**初始化监听事件*/
 	private void initEvent(){
         myListener=new MyListener();
-        userImg.setOnClickListener(myListener);
+//        userImg.setOnClickListener(myListener);
         myMoney.setOnClickListener(myListener);
         myAddress.setOnClickListener(myListener);
         myOrder.setOnClickListener(myListener);
