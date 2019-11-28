@@ -12,11 +12,11 @@ import android.view.WindowManager;
 import net.edrop.edrop_user.R;
 
 public class RubbishDesc01Activity extends AppCompatActivity {
-private Window window;
-private boolean lightStatusBar=false;
+    private Window window;
+    private boolean lightStatusBar=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         // 5.0以上系统状态栏透明
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();

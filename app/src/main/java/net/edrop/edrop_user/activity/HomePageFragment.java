@@ -51,11 +51,8 @@ import java.util.List;
 public class HomePageFragment extends Fragment implements TabHost.TabContentFactory, GestureDetector.OnGestureListener {
     private Activity activity;
     private View view;
-    private ImageView nav_userImg;
     //搜索框控件
-    private SearchView searchView;
-    private AutoCompleteTextView mAutoCompleteTextView;//搜索输入框
-    private ImageView mDeleteButton;//搜索框中的删除按钮
+    private Button search;
     // 图片轮播控件
     private ViewPager mViewPager;
     private TextView mTvPagerTitle;
@@ -119,11 +116,8 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
     }
 
     private void initView(){
-        nav_userImg=view.findViewById(R.id.nav_user);
         //搜索框
-        searchView=view.findViewById(R.id.view_search);
-        mAutoCompleteTextView=searchView.findViewById(R.id.search_src_text);
-        mDeleteButton=searchView.findViewById(R.id.search_close_btn);
+        search=view.findViewById(R.id.search);
         //轮播图
         mViewPager =view.findViewById(R.id.viewPager);
         mTvPagerTitle = view.findViewById(R.id.tv_pager_title);
@@ -136,75 +130,20 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
     }
 
     private void initData(){
-        searchView.setIconifiedByDefault(false);//设置搜索图标是否显示在搜索框内
-        //1:回车
-        //2:前往
-        //3:搜索
-        //4:发送
-        //5:下一項
-        //6:完成
-        searchView.setImeOptions(2);//设置输入法搜索选项字段，默认是搜索，可以是：下一页、发送、完成等
-//        mSearchView.setInputType(1);//设置输入类型
-//        mSearchView.setMaxWidth(200);//设置最大宽度
-        searchView.setQueryHint("查找分类");//设置查询提示字符串
-//        mSearchView.setSubmitButtonEnabled(true);//设置是否显示搜索框展开时的提交按钮
-        //设置SearchView下划线透明
-        setUnderLinetransparent(searchView);
+
     }
 
     private void setListener(){
-        // 设置搜索文本监听
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            //当点击搜索按钮时触发该方法
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Log.e("=query=",query);
-                searchView.setQuery("", false);
-                searchView.clearFocus();//收起键盘
-                searchView.onActionViewCollapsed();//收起SearchView视图
-                return false;
-            }
-
-            //当搜索内容改变时触发该方法
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                Log.e("=====newText=",newText);
-                return false;
-            }
-
-        });
+        //搜索框
+        search.setOnClickListener(customClickListener);
         //可回收垃圾介绍
-        recyclable.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),RubbishDesc01Activity.class);
-                startActivity(intent);
-            }
-        });
+        recyclable.setOnClickListener(customClickListener);
         //有害垃圾介绍
-        hazardous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),RubbishDesc03Activity.class);
-                startActivity(intent);
-            }
-        });
+        hazardous.setOnClickListener(customClickListener);
         //湿垃圾介绍
-        housefood.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),RubbishDesc04Activity.class);
-                startActivity(intent);
-            }
-        });
+        housefood.setOnClickListener(customClickListener);
         //干垃圾介绍
-        residoual.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),RubbishDesc02Activity.class);
-                startActivity(intent);
-            }
-        });
+        residoual.setOnClickListener(customClickListener);
     }
 
     @Override
@@ -216,24 +155,32 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-
+                case R.id.search:
+                    Intent intent = new Intent(getActivity(), SearchRubblishActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    break;
+                case R.id.ll_rubbish_recyclable:
+                    Intent intent1 = new Intent(getActivity(),RubbishDesc01Activity.class);
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent1);
+                    break;
+                case R.id.ll_rubbish_hazardous:
+                    Intent intent2 = new Intent(getActivity(),RubbishDesc03Activity.class);
+                    intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent2);
+                    break;
+                case R.id.ll_rubbish_housefood:
+                    Intent intent3 = new Intent(getActivity(),RubbishDesc04Activity.class);
+                    intent3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent3);
+                    break;
+                case R.id.ll_rubbish_residoual:
+                    Intent intent4 = new Intent(getActivity(),RubbishDesc02Activity.class);
+                    intent4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent4);
+                    break;
             }
-        }
-    }
-
-    /**设置SearchView下划线透明**/
-    private void setUnderLinetransparent(SearchView searchView){
-        try {
-            Class<?> argClass = searchView.getClass();
-            // mSearchPlate是SearchView父布局的名字
-            Field ownField = argClass.getDeclaredField("mSearchPlate");
-            ownField.setAccessible(true);
-            View mView = (View) ownField.get(searchView);
-            mView.setBackgroundColor(Color.TRANSPARENT);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
         }
     }
 
