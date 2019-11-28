@@ -36,6 +36,7 @@
         <activity android:name=".activity.RubbishDesc03Activity" android:theme="@style/Anim_translate"/>
         <activity android:name=".activity.RubbishDesc04Activity" android:theme="@style/Anim_translate"/>
         <activity android:name=".activity.PhoneLoginActivity" />
+        <activity android:name=".activity.PersonalCenterManagerActivity"/>
         <!-- QQ登录配置 start -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -58,7 +59,7 @@
         <!-- QQ登录配置 end -->
         <activity
             android:name=".activity.RegisterActivity"
-            android:label="@string/title_activity_register"></activity>
+            android:label="@string/title_activity_register"/>
     </application>
 
 </manifest>
