@@ -36,8 +36,23 @@ import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.adapter.FragmentIndexAdapter;
 import net.edrop.edrop_user.utils.MyViewPager;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static net.edrop.edrop_user.utils.Constant.BASE_URL;
 
 public class Main2Activity extends AppCompatActivity {
     //自定义tabhost属性
@@ -64,7 +79,7 @@ public class Main2Activity extends AppCompatActivity {
     private long waitTime = 2000;
     private long touchTime = 0;
     private final int REQUEST_CAMERA = 1;//请求相机权限的请求码
-
+    private OkHttpClient okHttpClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // 5.0以上系统状态栏透明
@@ -110,6 +125,7 @@ public class Main2Activity extends AppCompatActivity {
         leftMenuFragment = (MainMenuLeftFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragment_leftmenu);
         imgSweep = findViewById(R.id.top_sweep);
+        okHttpClient=new OkHttpClient();
     }
 
     private void initData() {
@@ -356,9 +372,57 @@ public class Main2Activity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 //        ImageView imageView = findViewById(R.id.iv);
 //        if (requestCode == 100 && resultCode == RESULT_OK){
-//            Bitmap bitmap = (Bitmap) data.getExtras().get("data");//获取拍取的照片
-//            imageView.setImageBitmap(bitmap);
-//        }
+        Log.e("拍照测试", "拍照成功");
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");//获取拍取的照片
+
+        //BitMap转成文件
+       File f = convertBitmapToFile(bitmap);
+       postFile(f);
+    }
+    private File convertBitmapToFile(Bitmap bitmap) {
+        File f=null;
+
+        try {
+            // create a file to write bitmap data
+            f = new File(Main2Activity.this.getCacheDir(), "portrait");
+            f.createNewFile();
+
+            // convert bitmap to byte array
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+            byte[] bitmapdata = bos.toByteArray();
+
+            // write the bytes in file
+            FileOutputStream fos = new FileOutputStream(f);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+
+        } catch (Exception e) {
+
+        }
+        return f;
+    }
+    //通过okhttp传图片给服务器
+    private void postFile(File f) {
+        RequestBody requestBody = RequestBody.create(
+                MediaType.parse("application/octet-stream"),f);
+        Request.Builder builder = new Request.Builder();
+        Request request = builder.post(requestBody).url( BASE_URL+ "indentify").build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+            }
+        });
+
+
     }
 
     @Override
