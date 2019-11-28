@@ -47,7 +47,7 @@
     </style>
     <!--实现滑入滑出-->
 
-    <style name="Anim_translate" parent="Base.Theme.AppCompat.Light.DarkActionBar"> 
+    <style name="Anim_translate" parent="ThemeNoTitle"> 
                <item name="android:windowAnimationStyle">@style/translate</item>  
            
     </style>
@@ -55,10 +55,10 @@
        
 
     <style name="translate" parent="@android:style/Animation.Activity"> 
-               <item name="android:activityOpenEnterAnimation">@anim/slide_in_left</item>  
-               <item name="android:activityOpenExitAnimation">@anim/slide_out_right</item>  
-               <item name="android:activityCloseEnterAnimation">@anim/slide_in_right</item>  
-               <item name="android:activityCloseExitAnimation">@anim/slide_out_left</item>  
+               <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>  
+               <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>  
+               <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>  
+               <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>  
            
     </style>
 </resources>
