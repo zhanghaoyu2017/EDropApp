@@ -18,7 +18,7 @@
     <ImageView
         android:id="@+id/img_service"
         android:layout_width="@dimen/size_0"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/size_45"
         android:layout_weight="2"
         android:src="@drawable/right" />
 
