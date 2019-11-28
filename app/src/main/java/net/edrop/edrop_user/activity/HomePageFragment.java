@@ -173,7 +173,7 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
             }
 
         });
-
+        //可回收垃圾介绍
         recyclable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,25 +181,27 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
                 startActivity(intent);
             }
         });
-
+        //有害垃圾介绍
         hazardous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),RubbishDesc02Activity.class);
-                startActivity(intent);
-            }
-        });
-        housefood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),RubbishDesc03Activity.class);
                 startActivity(intent);
             }
         });
-        residoual.setOnClickListener(new View.OnClickListener() {
+        //湿垃圾介绍
+        housefood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),RubbishDesc04Activity.class);
+                startActivity(intent);
+            }
+        });
+        //干垃圾介绍
+        residoual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),RubbishDesc02Activity.class);
                 startActivity(intent);
             }
         });
