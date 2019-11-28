@@ -14,7 +14,6 @@
     <!-- 打电话权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -29,7 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SearchRubblishActivity"/>
+        <activity android:name=".activity.SearchRubblishActivity" />
         <activity
             android:name=".activity.IntroductionEDropActivity"
             android:theme="@style/Anim_translate" />
@@ -72,6 +71,7 @@
         <activity
             android:name=".activity.RegisterActivity"
             android:label="@string/title_activity_register" />
+        <activity android:name=".activity.GrabageQuestionsActivity"></activity>
     </application>
 
 </manifest>

@@ -70,6 +70,7 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
     private LinearLayout hazardous;
     private LinearLayout housefood;
     private LinearLayout residoual;
+    private ImageView questions;
     private static final String SECTION_STRING = "fragment_string";
 
     public static HomePageFragment newInstance(String sectionNumber) {
@@ -97,7 +98,6 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
         ((Main2Activity) getActivity()).registerMyOnTouchListener(myOnTouchListener);
 
         initView();
-        initData();
         initEvent();
         setListener();
         imageStart();
@@ -116,6 +116,7 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
     }
 
     private void initView(){
+        questions=view.findViewById(R.id.questions);
         //搜索框
         search=view.findViewById(R.id.search);
         //轮播图
@@ -129,10 +130,6 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
         Fresco.initialize(getContext());
     }
 
-    private void initData(){
-
-    }
-
     private void setListener(){
         //搜索框
         search.setOnClickListener(customClickListener);
@@ -144,6 +141,8 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
         housefood.setOnClickListener(customClickListener);
         //干垃圾介绍
         residoual.setOnClickListener(customClickListener);
+        //答题
+        questions.setOnClickListener(customClickListener);
     }
 
     @Override
@@ -179,6 +178,11 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
                     Intent intent4 = new Intent(getActivity(),RubbishDesc02Activity.class);
                     intent4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent4);
+                    break;
+                case R.id.questions:
+                    Intent intent5 = new Intent(getActivity(),GrabageQuestionsActivity.class);
+                    intent5.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent5);
                     break;
             }
         }
