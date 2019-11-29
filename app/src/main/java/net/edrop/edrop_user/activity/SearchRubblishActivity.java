@@ -5,17 +5,37 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import net.edrop.edrop_user.R;
+import net.edrop.edrop_user.adapter.HotSearchAdapter;
+import net.edrop.edrop_user.adapter.SearchAdapter;
+import net.edrop.edrop_user.entity.HotItem;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class SearchRubblishActivity extends AppCompatActivity {
     private Window window;
@@ -24,6 +44,20 @@ public class SearchRubblishActivity extends AppCompatActivity {
     private SearchView searchView;
     private AutoCompleteTextView mAutoCompleteTextView;//搜索输入框
     private ImageView mDeleteButton;//搜索框中的删除按钮
+    private RecyclerView searchRes;//搜索的结果
+    private List<String> findList=new ArrayList<>();//部分结果
+    private List<String> allList=new ArrayList<>();//所有结果
+    private SearchAdapter searchAdapter;
+    //历史记录
+    private HorizontalScrollView horizontalScrollView;
+    private LinearLayout container;
+    private String item[] = new String[]{"London", "Bangkok", "Paris", "Dubai", "Istanbul", "New York"};
+    private List<String> history = new ArrayList<>();
+    private ImageView ivDelete;
+    //热搜榜
+    private List<HotItem> hotItems=new ArrayList<>();
+    private ListView hotItemListView;
+    private HotSearchAdapter hotSearchAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +87,7 @@ public class SearchRubblishActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_rubblish);
         initView();
         initData();
+        bindHZSWData();
         setListener();
     }
 
@@ -61,16 +96,29 @@ public class SearchRubblishActivity extends AppCompatActivity {
         searchView=findViewById(R.id.view_search);
         mAutoCompleteTextView=searchView.findViewById(R.id.search_src_text);
         mDeleteButton=searchView.findViewById(R.id.search_close_btn);
+        searchRes=findViewById(R.id.search_result);
+        //历史记录：横向布局
+        horizontalScrollView = (HorizontalScrollView) findViewById(R.id.horizontalScrollView);
+        container = (LinearLayout) findViewById(R.id.horizontalScrollViewItemContainer);
+        ivDelete=findViewById(R.id.iv_delete);
+        //热搜榜
+        hotItemListView=findViewById(R.id.lv_hot_search);
+        hotSearchAdapter=new HotSearchAdapter(SearchRubblishActivity.this,R.layout.item_hot_search,hotItems);
+        hotItemListView.setAdapter(hotSearchAdapter);
     }
 
     private void initData() {
+        Collections.addAll(history, item);
+        allList.add("我是程序员");
+        allList.add("我是程序员哈哈哈");
+        allList.add("我是人");
+        allList.add("我不是人");
+
+        hotItems.add(new HotItem("1","康师傅矿泉水"));
+        hotItems.add(new HotItem("2","康师傅矿泉水"));
+
         searchView.setIconifiedByDefault(false);//设置搜索图标是否显示在搜索框内
-        //1:回车
-        //2:前往
-        //3:搜索
-        //4:发送
-        //5:下一項
-        //6:完成
+        //1:回车2:前往3:搜索4:发送5:下一項6:完成
         searchView.setImeOptions(2);//设置输入法搜索选项字段，默认是搜索，可以是：下一页、发送、完成等
 //        mSearchView.setInputType(1);//设置输入类型
 //        mSearchView.setMaxWidth(200);//设置最大宽度
@@ -96,26 +144,112 @@ public class SearchRubblishActivity extends AppCompatActivity {
         }
     }
 
+    /**设置搜索文本监听**/
     private void setListener(){
-        // 设置搜索文本监听
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             //当点击搜索按钮时触发该方法
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.e("=query=",query);
-                searchView.setQuery("", false);
-                searchView.clearFocus();//收起键盘
-                searchView.onActionViewCollapsed();//收起SearchView视图
-                return false;
+                if(TextUtils.isEmpty(query)) {
+                    findList.clear();
+                    searchRes.setAdapter(searchAdapter);
+                } else {
+                    findList.clear();
+                    for (int i = 0; i < allList.size(); i++) {
+                        String str = allList.get(i);
+                        if (str.equals(query)) {
+                            findList.add(str);
+                            break;
+                        }
+                    }
+                    if (findList.size() == 0) {
+                        Toast.makeText(SearchRubblishActivity.this, "查找失败，推荐使用模糊查询", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(SearchRubblishActivity.this, "查找成功", Toast.LENGTH_SHORT).show();
+                        searchAdapter = new SearchAdapter(findList);
+                        searchRes.setAdapter(searchAdapter);
+                    }
+                    searchView.setQuery("", false);//设置初始值
+                    searchView.clearFocus();//收起键盘
+//                searchView.onActionViewCollapsed();//收起SearchView视图
+                }
+                return true;
             }
 
             //当搜索内容改变时触发该方法
             @Override
             public boolean onQueryTextChange(String newText) {
-                Log.e("=====newText=",newText);
-                return false;
+                if(TextUtils.isEmpty(newText)) {
+                    findList.clear();
+                    searchRes.setAdapter(searchAdapter);
+                } else {
+                    findList.clear();
+                    for (int i = 0; i < allList.size(); i++) {
+                        String string = allList.get(i);
+                        if (string.contains(newText)) {
+                            findList.add(string);
+                        }
+                    }
+                    searchRes.setLayoutManager(new LinearLayoutManager(SearchRubblishActivity.this));
+                    searchAdapter = new SearchAdapter(findList);
+                    searchAdapter.notifyDataSetChanged();
+                    searchRes.setAdapter(searchAdapter);
+                }
+                return true;
             }
-
         });
+        ivDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                history.clear();
+                Toast.makeText(SearchRubblishActivity.this,"删除按钮点击了",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        hotItemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(SearchRubblishActivity.this,id+"",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**历史记录的绑定**/
+    private void bindHZSWData() {
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, 100);
+        layoutParams.gravity = Gravity.CENTER;
+        layoutParams.setMargins(20, 10, 20, 10);
+
+        for (int i = 0; i < history.size(); i++) {
+            final Button button = new Button(this);
+            button.setText(history.get(i));
+            button.setTextSize(10);
+            button.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_search_gray_background));
+            button.setLayoutParams(layoutParams);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(SearchRubblishActivity.this,button.getText().toString(),Toast.LENGTH_SHORT).show();
+//                    performItemClick(view);
+                }
+            });
+            container.addView(button);
+            container.invalidate();
+        }
+    }
+
+    private void performItemClick(View view) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        int screenWidth = displayMetrics.widthPixels;
+
+        int scrollX = (view.getLeft() - (screenWidth / 2)) + (view.getWidth() / 2);
+
+        //smooth scrolling horizontalScrollView
+        horizontalScrollView.smoothScrollTo(scrollX, 0);
+
+        String s = "CenterLocked Item: "+((TextView)view).getText();
     }
 }
