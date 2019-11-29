@@ -17,6 +17,7 @@ android {
         }
     }
     buildToolsVersion '28.0.2'
+
 }
 buildscript {
     repositories {
@@ -68,5 +69,4 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     //qq集成的jar包
     implementation files('libs/open_sdk_r6137_lite.jar')
-    implementation files('libs/commons-codec-1.6.jar')
 }
