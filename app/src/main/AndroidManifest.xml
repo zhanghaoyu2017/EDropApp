@@ -71,7 +71,10 @@
         <activity
             android:name=".activity.RegisterActivity"
             android:label="@string/title_activity_register" />
-        <activity android:name=".activity.GrabageQuestionsActivity"></activity>
+        <activity android:name=".activity.GrabageQuestionsActivity" />
+        <activity
+            android:name=".activity.RecognitionResultActivity"
+            android:label="@string/title_activity_recognition_result"></activity>
     </application>
 
 </manifest>

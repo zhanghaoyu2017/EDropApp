@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/size_20"
-    android:background="#FFF">
+    android:background="#FAFAFA">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/size_20"
         android:layout_marginRight="@dimen/size_20"
-        android:background="#FFF"
+        android:background="#FAFAFA"
         android:orientation="vertical">
         <!--图片-->
         <ImageView
