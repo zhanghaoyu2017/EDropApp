@@ -116,10 +116,12 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter implements View.OnClickLis
     public void fillValues(int position, View convertView) {
         TextView tvNickName = (TextView) convertView.findViewById(R.id.tv_nickname);
         TextView tvMsg = (TextView) convertView.findViewById(R.id.tv_msg);
+        TextView tvDate =(TextView) convertView.findViewById(R.id.tv_talk_date);
         TextView tvSwipeTop = (TextView) convertView.findViewById(R.id.swipe_top);
         TextView tvSwipeDelete = (TextView) convertView.findViewById(R.id.swipe_delete);
         tvNickName.setText(list.get(position).getNickName());
         tvMsg.setText(list.get(position).getMsg());
+        tvDate.setText(list.get(position).getDate());
 
         tvSwipeDelete.setOnClickListener(this);
         tvSwipeTop.setOnClickListener(this);

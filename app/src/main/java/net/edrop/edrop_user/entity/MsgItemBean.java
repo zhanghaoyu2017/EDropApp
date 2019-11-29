@@ -9,6 +9,15 @@ package net.edrop.edrop_user.entity;
 public class MsgItemBean {
     private String nickName;
     private String msg;
+    private String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public String getNickName() {
         return nickName;

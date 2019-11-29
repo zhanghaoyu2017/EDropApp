@@ -36,7 +36,7 @@ public class SimpleIntroduceAdapter extends RecyclerView.Adapter<SimpleIntroduce
         holder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "" + holder.getPosition(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "" + holder.getPosition(), Toast.LENGTH_SHORT).show();
             }
         });
     }

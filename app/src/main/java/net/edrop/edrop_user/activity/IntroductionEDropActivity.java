@@ -1,6 +1,7 @@
 package net.edrop.edrop_user.activity;
 
 import android.graphics.Color;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,10 +20,10 @@ import net.edrop.edrop_user.adapter.SimpleIntroduceAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IntroductionEDropActivity extends AppCompatActivity {
+public class IntroductionEDropActivity extends AppCompatActivity{
     private SimpleIntroduceAdapter mAdapter;
     private List<String> mDatas;
-    RecyclerView rvToDoList;
+    private RecyclerView rvToDoList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class IntroductionEDropActivity extends AppCompatActivity {
         setContentView(R.layout.activity_introduction_edrop);
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.maincollapsing);
         collapsingToolbar.setTitle("EDrop简介");
+        collapsingToolbar.setStatusBarScrimColor(getResources().getColor(R.color.color_green_32BA88));
         collapsingToolbar.setExpandedTitleColor(Color.WHITE);//设置展开后标题的颜色
         rvToDoList = (RecyclerView) findViewById(R.id.rvToDoList);
         recycleView();
