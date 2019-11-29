@@ -9,6 +9,7 @@
         android:orientation="vertical">
         <!--搜索-->
         <Button
+            android:textColor="@color/gray"
             android:text="搜索"
             android:id="@+id/search"
             android:layout_width="match_parent"

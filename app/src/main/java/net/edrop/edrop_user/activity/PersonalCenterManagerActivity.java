@@ -24,7 +24,7 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
     private ImageView userImg;
     private ImageView gender;
     private ImageView personalBack;
-    private Button outLogin;
+    private Button cancelLogin;
 
     protected void onCreate(Bundle savedInstanceState) {
         // 5.0以上系统状态栏透明
@@ -56,12 +56,12 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
     }
 
     private void setListener() {
-        outLogin.setOnClickListener(new MyListener());
+        cancelLogin.setOnClickListener(new MyListener());
         personalBack.setOnClickListener(new MyListener());
     }
 
     private void initView() {
-        outLogin=findViewById(R.id.btn_out_login);
+        cancelLogin=findViewById(R.id.btn_cancel_login);
         personalBack=findViewById(R.id.personal_back);
     }
 
@@ -69,20 +69,19 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             switch (view.getId()){
-                case R.id.btn_out_login:
-                    SharedPreferencesUtils sharedPreferences = new SharedPreferencesUtils(PersonalCenterManagerActivity.this,"loginInfo");
-                    sharedPreferences.removeValues("username");
-                    SharedPreferences.Editor editor = sharedPreferences.getEditor();
-                    editor.putBoolean("isAuto",false);
-                    editor.commit();
-                    Intent intent = new Intent(PersonalCenterManagerActivity.this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                case R.id.btn_cancel_login:
+                    SharedPreferencesUtils sharedPreferences2 = new SharedPreferencesUtils(PersonalCenterManagerActivity.this,"loginInfo");
+                    sharedPreferences2.removeValues("username");
+                    sharedPreferences2.removeValues("password");
+                    SharedPreferences.Editor editor2 = sharedPreferences2.getEditor();
+                    editor2.putBoolean("isAuto",false);
+                    editor2.commit();
+                    Intent intent2 = new Intent(PersonalCenterManagerActivity.this, LoginActivity.class);
+                    intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent2);
                     break;
                 case R.id.personal_back:
-                    Intent intent1 = new Intent(PersonalCenterManagerActivity.this, Main2Activity.class);
-                    intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent1);
+                    finish();
                     break;
 
             }

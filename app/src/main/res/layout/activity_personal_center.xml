@@ -5,6 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         android:orientation="vertical"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <!--头像，性别-->
@@ -152,17 +153,17 @@
             android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="40dp" />
-        <!--退出登录-->
+        <!--注销登录-->
         <Button
-            android:id="@+id/btn_out_login"
-            android:text="退出登录"
+            android:id="@+id/btn_cancel_login"
+            android:text="注销登录"
             android:textColor="#ffffff"
             android:textSize="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:background="@drawable/btn_login_red_background"
             android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_height="40dp" />
     </LinearLayout>
 
