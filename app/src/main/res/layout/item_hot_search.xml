@@ -6,6 +6,7 @@
     <TextView
         android:id="@+id/hot_id"
         android:text="1"
+        android:layout_marginTop="@dimen/size_15"
         android:gravity="center"
         android:textSize="@dimen/size_15"
         android:textColor="@color/color_crimson_DC143C"
@@ -15,6 +16,7 @@
     <TextView
         android:id="@+id/hot_content"
         android:text="似懂非懂"
+        android:layout_marginTop="@dimen/size_15"
         android:textSize="@dimen/size_15"
         android:layout_weight="5"
         android:layout_width="@dimen/size_0"
