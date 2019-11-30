@@ -32,10 +32,19 @@ import net.edrop.edrop_user.adapter.HotSearchAdapter;
 import net.edrop.edrop_user.adapter.SearchAdapter;
 import net.edrop.edrop_user.entity.HotItem;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import static net.edrop.edrop_user.utils.Constant.BASE_URL;
 
 public class SearchRubblishActivity extends AppCompatActivity {
     private Window window;
@@ -58,7 +67,7 @@ public class SearchRubblishActivity extends AppCompatActivity {
     private List<HotItem> hotItems=new ArrayList<>();
     private ListView hotItemListView;
     private HotSearchAdapter hotSearchAdapter;
-
+    private OkHttpClient okHttpClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // 5.0以上系统状态栏透明
@@ -105,6 +114,7 @@ public class SearchRubblishActivity extends AppCompatActivity {
         hotItemListView=findViewById(R.id.lv_hot_search);
         hotSearchAdapter=new HotSearchAdapter(SearchRubblishActivity.this,R.layout.item_hot_search,hotItems);
         hotItemListView.setAdapter(hotSearchAdapter);
+        okHttpClient=new OkHttpClient();
     }
 
     private void initData() {
@@ -155,13 +165,7 @@ public class SearchRubblishActivity extends AppCompatActivity {
                     searchRes.setAdapter(searchAdapter);
                 } else {
                     findList.clear();
-                    for (int i = 0; i < allList.size(); i++) {
-                        String str = allList.get(i);
-                        if (str.equals(query)) {
-                            findList.add(str);
-                            break;
-                        }
-                    }
+                    OkHttpQuery(query);
                     if (findList.size() == 0) {
                         Toast.makeText(SearchRubblishActivity.this, "查找失败，推荐使用模糊查询", Toast.LENGTH_SHORT).show();
                     } else {
@@ -184,12 +188,13 @@ public class SearchRubblishActivity extends AppCompatActivity {
                     searchRes.setAdapter(searchAdapter);
                 } else {
                     findList.clear();
-                    for (int i = 0; i < allList.size(); i++) {
-                        String string = allList.get(i);
-                        if (string.contains(newText)) {
-                            findList.add(string);
-                        }
-                    }
+                    OkHttpQuery(newText);
+//                    for (int i = 0; i < allList.size(); i++) {
+//                        String string = allList.get(i);
+//                        if (string.contains(newText)) {
+//                            findList.add(string);
+//                        }
+//                    }
                     searchRes.setLayoutManager(new LinearLayoutManager(SearchRubblishActivity.this));
                     searchAdapter = new SearchAdapter(findList);
                     searchAdapter.notifyDataSetChanged();
@@ -214,6 +219,26 @@ public class SearchRubblishActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 查询垃圾种类
+     * @param query
+     */
+    private void OkHttpQuery( String query){
+        Request request = new Request.Builder().url(BASE_URL + "searchRubbishByName?name="+query).build();
+        final Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.e("test", response.body().string());
+            }
+        });
+
+    }
     /**历史记录的绑定**/
     private void bindHZSWData() {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
