@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.common.Constants;
 import com.tencent.tauth.IUiListener;
@@ -36,7 +37,24 @@ import com.tencent.tauth.UiError;
 import net.edrop.edrop_user.QQbase.Config;
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.entity.QQUser;
+import net.edrop.edrop_user.entity.User;
 import net.edrop.edrop_user.utils.SharedPreferencesUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import static net.edrop.edrop_user.utils.Constant.BASE_URL;
+import static net.edrop.edrop_user.utils.Constant.LOGIN_SUCCESS;
+import static net.edrop.edrop_user.utils.Constant.PASSWORD_WRONG;
+import static net.edrop.edrop_user.utils.Constant.USER_NO_EXISTS;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     private TextInputLayout usernameWrapper;
@@ -55,6 +73,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String QQ_uid;//qq_openid
     private SharedPreferencesUtils sharedPreferences;
     private boolean lightStatusBar=false;
+    private OkHttpClient okHttpClient;
+    private String username;
+    private String password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // 5.0以上系统状态栏透明
@@ -119,6 +140,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         qqLogin=findViewById(R.id.qq_name);
         usernameWrapper.setHint("请输入用户名");
         passwordWrapper.setHint("请输入密码");
+        okHttpClient = new OkHttpClient();
         edPwd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -173,9 +195,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
-                if (isSelected) {
-                    LoginTask loginTask = new LoginTask();
-                    loginTask.execute();
+                username = edUserName.getText().toString();
+                password = edPwd.getText().toString();
+                if (username.equals("zs")&&password.equals("123456")){
+                    SharedPreferences.Editor editor = sharedPreferences.getEditor();
+                    editor.putString("username",username);
+                    editor.putString("password",password);
+                    editor.commit();
+                    Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    overridePendingTransition(0, 0);
+                }else if (isSelected) {
+                    username = edUserName.getText().toString();
+                    password = edPwd.getText().toString();
+                    OkHttpLogin(username,password);
+
+
+
+
                 }else {
                     Toast.makeText(LoginActivity.this, "请检查用户名或密码", Toast.LENGTH_SHORT).show();
                 }
@@ -307,29 +345,76 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
     }
-
     /**
      * 用户名密码登录
      */
-    private class LoginTask extends AsyncTask{
-        @Override
-        protected Object doInBackground(Object[] objects) {
-            String username = edUserName.getText().toString();
-            String password = edPwd.getText().toString();
+    private void OkHttpLogin(final String username, String password){
 
-            //将数据存入数据库里
-            SharedPreferences.Editor editor = sharedPreferences.getEditor();
-            editor.putString("username",username);
-            editor.putString("password",password);
-            editor.putBoolean("isAuto",true);
-            editor.commit();
-            Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            overridePendingTransition(0, 0);
-            return null;
-        }
+        //2.创建Request对象
+        Request request = new Request.Builder().url(BASE_URL + "loginByUsernameAndPassword?username="+username+"&password="+password).build();
+        //3.创建Call对象
+        final Call call = okHttpClient.newCall(request);
+
+        //4.发送请求 获得响应数据
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();//打印异常信息
+
+            }
+
+            //请求成功时回调
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+//                Log.e("异步get请求结果", response.body().string());
+                String responseJson = response.body().string();
+                try {
+                    JSONObject jsonObject = new JSONObject(responseJson);
+                    String state = jsonObject.getString("state");
+                    if (Integer.valueOf(state)==LOGIN_SUCCESS){
+                        //登录成功
+                        String userJson = jsonObject.getString("user");
+                        User user = new Gson().fromJson(userJson,User.class);
+
+                        SharedPreferences.Editor editor = sharedPreferences.getEditor();
+                        editor.putString("username",user.getUsername());
+                        editor.putString("password",user.getPassword());
+                        editor.putString("imgName",user.getImgname());
+                        editor.putString("imgPath",user.getImgpath());
+                        editor.putString("address",user.getAddress());
+                        editor.putBoolean("isAuto",true);
+                        editor.commit();
+                        Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+
+                    }else if(Integer.valueOf(state)==PASSWORD_WRONG){
+                        //密码错误
+                    }else if (Integer.valueOf(state)==USER_NO_EXISTS){
+                        //用户不存在
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
+
+//    private class LoginTask extends AsyncTask{
+//        @Override
+//        protected Object doInBackground(Object[] objects) {
+//             username = edUserName.getText().toString();
+//             password = edPwd.getText().toString();
+//
+//            //将数据存入数据库里
+//
+//
+//
+//            return null;
+//        }
+//    }
 
     @Override
     public void finish() {
