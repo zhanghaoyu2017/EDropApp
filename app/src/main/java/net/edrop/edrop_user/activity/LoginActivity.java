@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -76,6 +75,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private OkHttpClient okHttpClient;
     private String username;
     private String password;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 9) {
+                com.alibaba.fastjson.JSONObject response = com.alibaba.fastjson.JSONObject.parseObject(String.valueOf(msg.obj));
+                Log.e("qq","UserInfo:"+ JSON.toJSONString(response));
+                QQUser user= com.alibaba.fastjson.JSONObject.parseObject(response.toJSONString(),QQUser.class);
+                if (user!=null) {
+                    Log.e("qq","userInfo:昵称："+user.getNickname()+"  性别:"+user.getGender()+"  地址："+user.getProvince()+user.getCity());
+                    Log.e("qq","头像路径："+user.getFigureurl_qq_2());
+//                        Glide.with(QQLoginActivity.this).load(user.getFigureurl_qq_2()).into(ivHead);
+                }
+
+            }
+            if (msg.what==PASSWORD_WRONG){
+//                edUserName.setText("");
+//                edPwd.setText("");
+                Toast.makeText(LoginActivity.this,"密码错误，请重试!",Toast.LENGTH_SHORT).show();
+            }
+            if (msg.what==USER_NO_EXISTS){
+//                edUserName.setText("");
+//                edPwd.setText("");
+                Toast.makeText(LoginActivity.this,"改账号不存在，请先注册！",Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // 5.0以上系统状态栏透明
@@ -210,10 +236,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     username = edUserName.getText().toString();
                     password = edPwd.getText().toString();
                     OkHttpLogin(username,password);
-
-
-
-
                 }else {
                     Toast.makeText(LoginActivity.this, "请检查用户名或密码", Toast.LENGTH_SHORT).show();
                 }
@@ -289,7 +311,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Message msg = new Message();
                         msg.obj = response;
                         Log.e("qq","................"+response.toString());
-                        msg.what = 0;
+                        msg.what = 9;
                         mHandler.sendMessage(msg);
                     }
                     @Override
@@ -318,21 +340,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         }
 
-        private Handler mHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                if (msg.what == 0) {
-                    com.alibaba.fastjson.JSONObject response = com.alibaba.fastjson.JSONObject.parseObject(String.valueOf(msg.obj));
-                    Log.e("qq","UserInfo:"+ JSON.toJSONString(response));
-                    QQUser user= com.alibaba.fastjson.JSONObject.parseObject(response.toJSONString(),QQUser.class);
-                    if (user!=null) {
-                        Log.e("qq","userInfo:昵称："+user.getNickname()+"  性别:"+user.getGender()+"  地址："+user.getProvince()+user.getCity());
-                        Log.e("qq","头像路径："+user.getFigureurl_qq_2());
-//                        Glide.with(QQLoginActivity.this).load(user.getFigureurl_qq_2()).into(ivHead);
-                    }
-                }
-            }
-        };
+
 
         @Override
         public void onError(UiError e) {
@@ -368,6 +376,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onResponse(Call call, Response response) throws IOException {
 //                Log.e("异步get请求结果", response.body().string());
                 String responseJson = response.body().string();
+                Log.e("response", responseJson);
                 try {
                     JSONObject jsonObject = new JSONObject(responseJson);
                     String state = jsonObject.getString("state");
@@ -391,9 +400,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     }else if(Integer.valueOf(state)==PASSWORD_WRONG){
                         //密码错误
+                        Message msg = new Message();
+                        msg.obj = response;
+                        msg.what =PASSWORD_WRONG;
+                        mHandler.sendMessage(msg);
                     }else if (Integer.valueOf(state)==USER_NO_EXISTS){
                         //用户不存在
-                    }
+                        Message msg = new Message();
+                        msg.obj = response;
+                        msg.what =USER_NO_EXISTS;
+                        mHandler.sendMessage(msg);                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
