@@ -60,6 +60,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     //侧滑
     implementation 'com.daimajia.swipelayout:library:1.2.0@aar'
+
+    implementation 'com.squareup.picasso:picasso:2.3.2'
     //原生的依赖
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'

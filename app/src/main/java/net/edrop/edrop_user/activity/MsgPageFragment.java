@@ -49,7 +49,7 @@ public class MsgPageFragment extends Fragment {
     }
 
     private void initData() {
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 2; i++) {
             MsgItemBean itemBean = new MsgItemBean();
             itemBean.setNickName("昵称 " + (i + 1));
             itemBean.setMsg("Message " + i);
@@ -81,7 +81,7 @@ public class MsgPageFragment extends Fragment {
 
     private void initView() {
         listView = view.findViewById(R.id.lv_main);
-        swipeAdapter = new MsgSwipeAdapter(getContext(), datas);
+        swipeAdapter = new MsgSwipeAdapter(getContext(), R.layout.item_swipe_msg ,datas);
         listView.setAdapter(swipeAdapter);
     }
 }
