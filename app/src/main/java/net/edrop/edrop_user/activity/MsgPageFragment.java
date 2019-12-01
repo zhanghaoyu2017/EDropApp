@@ -1,5 +1,6 @@
 package net.edrop.edrop_user.activity;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.adapter.MsgSwipeAdapter;
@@ -25,6 +30,7 @@ import java.util.List;
  * Time: 16:40
  */
 public class MsgPageFragment extends Fragment {
+    private SmartRefreshLayout refeshLayout;
     private ListView listView;
     private List<MsgItemBean> datas = new ArrayList<>();
     private MsgSwipeAdapter swipeAdapter;
@@ -43,9 +49,42 @@ public class MsgPageFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_msg_page, container, false);
-        initData();
         initView();
+        initData();
+        setListener();
         return view;
+    }
+
+    private void setListener() {
+        refeshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                //刷新信息栏
+                RefreshMsgTask refreshMsgTask = new RefreshMsgTask();
+                refreshMsgTask.execute();
+            }
+        });
+    }
+    private class RefreshMsgTask extends AsyncTask{
+
+        @Override
+        protected Object doInBackground(Object[] objects) {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            //更新视图
+
+            swipeAdapter.notifyDataSetChanged();
+            //结束加载更多的动画
+            refeshLayout.finishLoadMore();
+        }
     }
 
     private void initData() {
@@ -80,6 +119,8 @@ public class MsgPageFragment extends Fragment {
     }
 
     private void initView() {
+        //获取智能刷新布局
+        refeshLayout =view.findViewById(R.id.smart_refesh);
         listView = view.findViewById(R.id.lv_main);
         swipeAdapter = new MsgSwipeAdapter(getContext(), R.layout.item_swipe_msg ,datas);
         listView.setAdapter(swipeAdapter);
