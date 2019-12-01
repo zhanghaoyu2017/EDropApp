@@ -26,7 +26,7 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
-import net.edrop.edrop_user.QQbase.Config;
+import net.edrop.edrop_user.utils.QQConfig;
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.entity.QQUser;
 
@@ -79,7 +79,7 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
         }
         super.onCreate(savedInstanceState);
         listener = new BaseUiListener();
-        mTencent = Tencent.createInstance(Config.QQ_LOGIN_APP_ID, this.getApplicationContext());
+        mTencent = Tencent.createInstance(QQConfig.QQ_LOGIN_APP_ID, this.getApplicationContext());
         setContentView(R.layout.activity_phone_login);
         initView();
     }

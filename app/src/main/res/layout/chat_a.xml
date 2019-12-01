@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     android:padding="10dp">
 
-    <net.edrop.edrop_user.widget.CircleImageView
+    <net.edrop.edrop_user.utils.CircleImageView
         android:id="@+id/ic_user"
         android:layout_width="48dp"
         android:layout_height="48dp"

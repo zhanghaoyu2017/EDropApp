@@ -1,4 +1,4 @@
-package net.edrop.edrop_user.widget;
+package net.edrop.edrop_user.utils;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -20,7 +20,6 @@ import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 
 import net.edrop.edrop_user.R;
-
 
 public class CircleImageView extends android.support.v7.widget.AppCompatImageView {
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
