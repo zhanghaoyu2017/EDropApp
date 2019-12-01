@@ -1,230 +1,236 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
-    android:orientation="vertical">
-
-    <android.support.v7.widget.SearchView
-        android:id="@+id/view_search"
-
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_30"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/searchview_shape"
-        android:focusable="false">
-        <!--配合搜索的listview-->
-        <ListView
-            android:id="@+id/lv_content"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:orientation="vertical">
+        <!--搜索-->
+        <Button
+            android:textColor="@color/gray"
+            android:text="@string/search"
+            android:id="@+id/search"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </android.support.v7.widget.SearchView>
+            android:layout_height="@dimen/size_30"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/searchview_shape"
+            android:focusable="false"/>
+        <!--轮播图-->
+        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewPager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="0dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="35dip"
-                android:layout_gravity="bottom"
-                android:background="#33000000"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:weightSum="10">
-
-                <TextView
-                    android:id="@+id/tv_pager_title"
-                    android:layout_width="0dp"
-                    android:layout_height="35dip"
-                    android:layout_weight="8"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="8dip"
-                    android:text="加载图片轮播失败"
-                    android:textColor="@android:color/white" />
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="0dp" />
 
                 <LinearLayout
-                    android:id="@+id/lineLayout_dot"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="2"
-                    android:gravity="center|right"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dip"
+                    android:layout_gravity="bottom"
+                    android:background="#33000000"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingLeft="3dp"
-                    android:paddingRight="3dp" />
+                    android:weightSum="10">
 
+                    <TextView
+                        android:id="@+id/tv_pager_title"
+                        android:layout_width="0dp"
+                        android:layout_height="35dip"
+                        android:layout_weight="8"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="8dip"
+                        android:text="加载图片轮播失败"
+                        android:textColor="@android:color/white" />
+
+                    <LinearLayout
+                        android:id="@+id/lineLayout_dot"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="2"
+                        android:gravity="center|right"
+                        android:orientation="horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+        </android.support.constraint.ConstraintLayout>
+        <!--4个垃圾分类-->
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_60">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="基本垃圾分类"
+                android:textSize="@dimen/size_25"
+                android:textColor="#000"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_150"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/ll_rubbish_recyclable"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_150"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/size_70"
+                    android:layout_height="@dimen/size_70"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/rubbish_recycler" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="可回收物"
+                    android:textColor="#000"
+                    android:textSize="@dimen/size_18"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="RECYCLABLE"
+                    android:textColor="#8a8a8a"
+                    android:textSize="@dimen/size_13" />
             </LinearLayout>
 
-        </FrameLayout>
-    </android.support.constraint.ConstraintLayout>
-    <LinearLayout
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_60">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="基本垃圾分类"
-            android:textSize="@dimen/size_25"
-            android:textColor="#000"
-            android:textStyle="bold"
-            />
+            <LinearLayout
+                android:id="@+id/ll_rubbish_hazardous"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_150"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/size_70"
+                    android:layout_height="@dimen/size_70"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/rubbish_harm" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="有害垃圾"
+                    android:textColor="#000"
+                    android:textSize="@dimen/size_18"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="HAZARDOUS"
+                    android:textColor="#8a8a8a"
+                    android:textSize="@dimen/size_13" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_rubbish_housefood"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_150"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/size_70"
+                    android:layout_height="@dimen/size_70"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/rubbish_certain" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="湿垃圾"
+                    android:textColor="#000"
+                    android:textSize="@dimen/size_18"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="HOUSEFOOD"
+                    android:textColor="#8a8a8a"
+                    android:textSize="@dimen/size_13" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_rubbish_residoual"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_150"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/size_70"
+                    android:layout_height="@dimen/size_70"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/rubbish_gan" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="干垃圾"
+                    android:textColor="#000"
+                    android:textSize="@dimen/size_18"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="RESIDOUAL"
+                    android:textColor="#8a8a8a"
+                    android:textSize="@dimen/size_13" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/questions"
+            android:layout_width="match_parent"
+            android:layout_height="141dp"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_marginRight="@dimen/size_10"
+            android:src="@drawable/garbage_test_question" />
+        <!--结尾-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#fff" />
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_150"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/ll_rubbish_recyclable"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/size_150"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="@dimen/size_70"
-                android:layout_height="@dimen/size_70"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/rubbish_recycler" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="可回收物"
-                android:textColor="#000"
-                android:textSize="@dimen/size_18"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="RECYCLABLE"
-                android:textColor="#8a8a8a"
-                android:textSize="@dimen/size_13" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_rubbish_hazardous"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/size_150"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="@dimen/size_70"
-                android:layout_height="@dimen/size_70"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/rubbish_harm" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="有害垃圾"
-                android:textColor="#000"
-                android:textSize="@dimen/size_18"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="HAZARDOUS"
-                android:textColor="#8a8a8a"
-                android:textSize="@dimen/size_13" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_rubbish_housefood"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/size_150"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="@dimen/size_70"
-                android:layout_height="@dimen/size_70"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/rubbish_certain" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="湿垃圾"
-                android:textColor="#000"
-                android:textSize="@dimen/size_18"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="HOUSEFOOD"
-                android:textColor="#8a8a8a"
-                android:textSize="@dimen/size_13" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_rubbish_residoual"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/size_150"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="@dimen/size_70"
-                android:layout_height="@dimen/size_70"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/rubbish_gan" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="干垃圾"
-                android:textColor="#000"
-                android:textSize="@dimen/size_18"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="RESIDOUAL"
-                android:textColor="#8a8a8a"
-                android:textSize="@dimen/size_13" />
-        </LinearLayout>
-
-    </LinearLayout>
-    <!--结尾-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#fff" />
-</LinearLayout>
+</ScrollView>

@@ -36,6 +36,7 @@
                 </net.edrop.edrop_user.utils.MyViewPager>
 
                 <FrameLayout
+                    android:background="#FAFBFF"
                     android:id="@+id/index_fl_bottom_bar"
                     android:layout_width="match_parent"
 
@@ -53,6 +54,7 @@
 
                         <!-- 主页 -->
                         <LinearLayout
+                            android:background="#FAFBFF"
                             android:id="@+id/index_bottom_bar_home"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -79,6 +81,7 @@
 
                         <!-- 服务 -->
                         <LinearLayout
+                            android:background="#FAFBFF"
                             android:id="@+id/index_bottom_bar_dynamic_state"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -109,6 +112,7 @@
                         <!-- 留白 -->
 
                         <FrameLayout
+                            android:background="#FAFBFF"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1">
@@ -118,6 +122,7 @@
                         <!-- 消息 -->
 
                         <LinearLayout
+                            android:background="#FAFBFF"
                             android:id="@+id/index_bottom_bar_integral"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -148,6 +153,7 @@
                         <!-- 社区 -->
 
                         <LinearLayout
+                            android:background="#FAFBFF"
                             android:id="@+id/index_bottom_bar_me"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

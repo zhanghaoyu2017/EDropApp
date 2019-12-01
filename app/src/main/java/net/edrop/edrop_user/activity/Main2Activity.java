@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -36,8 +37,27 @@ import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.adapter.FragmentIndexAdapter;
 import net.edrop.edrop_user.utils.MyViewPager;
 
+import org.json.JSONObject;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static net.edrop.edrop_user.utils.Constant.BASE_URL;
 
 public class Main2Activity extends AppCompatActivity {
     //自定义tabhost属性
@@ -64,7 +84,8 @@ public class Main2Activity extends AppCompatActivity {
     private long waitTime = 2000;
     private long touchTime = 0;
     private final int REQUEST_CAMERA = 1;//请求相机权限的请求码
-
+    private OkHttpClient okHttpClient;
+   private Bitmap bitmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // 5.0以上系统状态栏透明
@@ -110,6 +131,7 @@ public class Main2Activity extends AppCompatActivity {
         leftMenuFragment = (MainMenuLeftFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragment_leftmenu);
         imgSweep = findViewById(R.id.top_sweep);
+        okHttpClient = new OkHttpClient();
     }
 
     private void initData() {
@@ -208,7 +230,7 @@ public class Main2Activity extends AppCompatActivity {
              */
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
-                Log.e("滑动的距离", "slideOffset=" + slideOffset);//0.0 -- 0.56 -- 1.0
+                //"滑动的距离", "slideOffset=" + slideOffset);//0.0 -- 0.56 -- 1.0
 
                 View mContent = mDrawerLayout.getChildAt(0);//内容区域view
                 View mMenu = drawerView;
@@ -292,7 +314,7 @@ public class Main2Activity extends AppCompatActivity {
                     navTitle.setText("代扔服务");
                 } else if (index == 2) {
                     navTitle.setText("消息");
-                }else {
+                } else {
                     navTitle.setText("社区动态");
                 }
                 index_vp_fragment_list_top.setCurrentItem(index, false);
@@ -356,9 +378,71 @@ public class Main2Activity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 //        ImageView imageView = findViewById(R.id.iv);
 //        if (requestCode == 100 && resultCode == RESULT_OK){
-//            Bitmap bitmap = (Bitmap) data.getExtras().get("data");//获取拍取的照片
-//            imageView.setImageBitmap(bitmap);
-//        }
+        Log.e("拍照测试", "拍照成功");
+        bitmap = (Bitmap) data.getExtras().get("data");//获取拍取的照片
+
+        //BitMap转成文件
+        File f = convertBitmapToFile(bitmap);
+        postFile(f);
+
+
+    }
+
+    private byte[] Bitmap2Bytes(Bitmap bm) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        return baos.toByteArray();
+    }
+
+    private File convertBitmapToFile(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        File file = new File(Environment.getExternalStorageDirectory() + "/temp.jpg");
+        try {
+            file.createNewFile();
+            FileOutputStream fos = new FileOutputStream(file);
+            InputStream is = new ByteArrayInputStream(baos.toByteArray());
+            int x = 0;
+            byte[] b = new byte[1024 * 100];
+            while ((x = is.read(b)) != -1) {
+                fos.write(b, 0, x);
+            }
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
+    //通过okhttp传图片给服务器
+    private void postFile(File f) {
+        RequestBody requestBody = RequestBody.create(
+                MediaType.parse("application/octet-stream"), f);
+        Request.Builder builder = new Request.Builder();
+        Request request = builder.post(requestBody).url(BASE_URL + "indentify").build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+//                JSONObject object = new JSONObject();
+                String success = response.body().string();
+                Log.e("11111", success);
+                byte[] buf = new byte[1024];
+                buf=Bitmap2Bytes(bitmap);
+                Intent intent = new Intent(Main2Activity.this,RecognitionResultActivity.class);
+                intent.putExtra("photo_bmp",buf);
+                intent.putExtra("json",success);
+                startActivity(intent);
+
+            }
+        });
+
+
     }
 
     @Override

@@ -28,14 +28,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.IntroductionEdrop"/>
+        <activity android:name=".activity.SearchRubblishActivity" />
+        <activity
+            android:name=".activity.IntroductionEDropActivity"
+            android:theme="@style/Anim_translate" />
         <activity android:name=".activity.Main2Activity" />
         <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.RubbishDesc01Activity" android:theme="@style/Anim_translate"/>
-        <activity android:name=".activity.RubbishDesc02Activity" android:theme="@style/Anim_translate"/>
-        <activity android:name=".activity.RubbishDesc03Activity" android:theme="@style/Anim_translate"/>
-        <activity android:name=".activity.RubbishDesc04Activity" android:theme="@style/Anim_translate"/>
+        <activity
+            android:name=".activity.RubbishDesc01Activity"
+            android:theme="@style/Anim_translate" />
+        <activity
+            android:name=".activity.RubbishDesc02Activity"
+            android:theme="@style/Anim_translate" />
+        <activity
+            android:name=".activity.RubbishDesc03Activity"
+            android:theme="@style/Anim_translate" />
+        <activity
+            android:name=".activity.RubbishDesc04Activity"
+            android:theme="@style/Anim_translate" />
         <activity android:name=".activity.PhoneLoginActivity" />
+        <activity android:name=".activity.PersonalCenterManagerActivity" />
         <!-- QQ登录配置 start -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -58,7 +70,11 @@
         <!-- QQ登录配置 end -->
         <activity
             android:name=".activity.RegisterActivity"
-            android:label="@string/title_activity_register"></activity>
+            android:label="@string/title_activity_register" />
+        <activity android:name=".activity.GrabageQuestionsActivity" />
+        <activity
+            android:name=".activity.RecognitionResultActivity"
+            android:label="@string/title_activity_recognition_result"></activity>
     </application>
 
 </manifest>

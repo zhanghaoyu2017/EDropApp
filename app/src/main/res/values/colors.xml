@@ -6,6 +6,7 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="gray">#B4B4B4</color>
+    <color name="color_green">#32BA88</color>
 
     <color name="common_color_transparent">#aa000001</color>//完全透明颜色值
 
@@ -37,6 +38,7 @@
     <color name="color_orangered_ff5500">#ff5500</color>
     <color name="color_orangered_ff5002">#ff5002</color>
     <color name="color_red_ff6464">#ff6464</color>
+    <color name="color_crimson_DC143C">#DC143C</color>
     <color name="color_red_ff7668">#ff7668</color>
     <color name="color_blue_6495ED">#6495ED</color>
     <color name="color_blue_778df1">#778df1</color>
@@ -51,7 +53,7 @@
     <color name="color_green_8ec31f">#8ec31f</color>
     <color name="color_green_73aa00">#73aa00</color>
     <color name="color_green_89c018">#89c018</color>
-
+    <color name="color_green_32BA88">#32BA88</color>
     <color name="color_cyan_3fa1a9">#3fa1a9</color>
 
     <color name="color_yellow_f5ae53">#f5ae53</color>

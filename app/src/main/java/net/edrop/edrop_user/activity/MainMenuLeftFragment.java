@@ -1,5 +1,6 @@
 package net.edrop.edrop_user.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +17,7 @@ import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 
 public class MainMenuLeftFragment extends Fragment {
 	private View myView;
+	private ImageView userImg;
 	private TextView userName;
 	private TextView myMoney;
 	private TextView myAddress;
@@ -48,6 +51,7 @@ public class MainMenuLeftFragment extends Fragment {
 
 	/**初始化控件*/
 	private void initView(){
+	    userImg=getActivity().findViewById(R.id.iv_userImg);
 	    userName=getActivity().findViewById(R.id.tv_userName);
         myMoney=getActivity().findViewById(R.id.myMoney);
         myAddress=getActivity().findViewById(R.id.myAddress);
@@ -72,6 +76,8 @@ public class MainMenuLeftFragment extends Fragment {
 	/**初始化监听事件*/
 	private void initEvent(){
         myListener=new MyListener();
+        userName.setOnClickListener(myListener);
+        userImg.setOnClickListener(myListener);
         myMoney.setOnClickListener(myListener);
         myAddress.setOnClickListener(myListener);
         myOrder.setOnClickListener(myListener);
@@ -81,11 +87,17 @@ public class MainMenuLeftFragment extends Fragment {
         setting.setOnClickListener(myListener);
         feedback.setOnClickListener(myListener);
 	}
+
 	private class MyListener implements View.OnClickListener{
 
         @Override
         public void onClick(View v) {
             switch (v.getId()){
+                case R.id.tv_userName:
+                    Intent intent = new Intent(getActivity(), PersonalCenterManagerActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    getContext().startActivity(intent);
+                    break;
                 case R.id.myMoney:
                     Toast.makeText(getActivity(),myMoney.getText().toString(),Toast.LENGTH_SHORT).show();
                     break;

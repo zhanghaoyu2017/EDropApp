@@ -14,6 +14,8 @@ import net.edrop.edrop_user.adapter.MsgSwipeAdapter;
 import net.edrop.edrop_user.entity.MsgItemBean;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -51,8 +53,30 @@ public class MsgPageFragment extends Fragment {
             MsgItemBean itemBean = new MsgItemBean();
             itemBean.setNickName("昵称 " + (i + 1));
             itemBean.setMsg("Message " + i);
+            itemBean.setDate(getDate());
             datas.add(itemBean);
         }
+    }
+
+    private String getDate() {
+        String hour;
+        String minute;
+        Calendar c = Calendar.getInstance();//可以对每个时间域单独修改
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int date = c.get(Calendar.DATE);
+        if (c.get(Calendar.HOUR_OF_DAY)<10){
+            hour="0"+c.get(Calendar.HOUR_OF_DAY);
+        }else {
+            hour = String.valueOf(c.get(Calendar.HOUR_OF_DAY));
+        }
+        if (c.get(Calendar.MINUTE)<10){
+            minute="0"+c.get(Calendar.MINUTE);
+        }else {
+            minute = String.valueOf(c.get(Calendar.MINUTE));
+        }
+        int second = c.get(Calendar.SECOND);
+        return hour+":"+minute;
     }
 
     private void initView() {
