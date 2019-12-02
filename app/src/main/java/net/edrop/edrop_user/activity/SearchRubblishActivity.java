@@ -86,7 +86,7 @@ public class SearchRubblishActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             if (msg.what == SEARCH_SUCCESS) {
                 searchRes.setLayoutManager(new LinearLayoutManager(SearchRubblishActivity.this));
-                searchAdapter = new SearchAdapter(findList);
+                searchAdapter = new SearchAdapter(findList,SearchRubblishActivity.this,SearchRubblishActivity.this,rubbishList);
                 searchAdapter.notifyDataSetChanged();
                 searchRes.setAdapter(searchAdapter);
             }
@@ -183,23 +183,24 @@ public class SearchRubblishActivity extends AppCompatActivity {
             //当点击搜索按钮时触发该方法
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if (TextUtils.isEmpty(query)) {
-                    findList.clear();
-                    searchRes.setAdapter(searchAdapter);
-                } else {
-                    findList.clear();
-                    if (findList.size() == 0) {
-                        Toast.makeText(SearchRubblishActivity.this, "查找失败，推荐使用模糊查询", Toast.LENGTH_SHORT).show();
-                    } else {
-
-                        Toast.makeText(SearchRubblishActivity.this, "查找成功", Toast.LENGTH_SHORT).show();
-                        searchAdapter = new SearchAdapter(findList);
-                        searchRes.setAdapter(searchAdapter);
-                    }
-                    searchView.setQuery("", false);//设置初始值
-                    searchView.clearFocus();//收起键盘
-//                searchView.onActionViewCollapsed();//收起SearchView视图
-                }
+//                if (TextUtils.isEmpty(query)) {
+//                    findList.clear();
+//                    searchRes.setAdapter(searchAdapter);
+//                } else {
+//                    findList.clear();
+//                    OkHttpQuery(query);
+//                    if (findList.size() == 0) {
+//                        Toast.makeText(SearchRubblishActivity.this, "查找失败，推荐使用模糊查询", Toast.LENGTH_SHORT).show();
+//                    } else {
+//
+//                        Toast.makeText(SearchRubblishActivity.this, "查找成功", Toast.LENGTH_SHORT).show();
+//                        searchAdapter = new SearchAdapter(findList,SearchRubblishActivity.this,SearchRubblishActivity.this,rubbishList);
+//                        searchRes.setAdapter(searchAdapter);
+//                    }
+//                    searchView.setQuery("", false);//设置初始值
+//                    searchView.clearFocus();//收起键盘
+////                searchView.onActionViewCollapsed();//收起SearchView视图
+//                }
                 return true;
             }
 
@@ -238,6 +239,42 @@ public class SearchRubblishActivity extends AppCompatActivity {
      * @param query
      */
     private void OkHttpQuery(String query) {
+        final Request request = new Request.Builder().url(BASE_URL + "searchRubbishByName?name=" + query).build();
+        final Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+//                Log.e("test", response.body().string());
+                String jsonStr = response.body().string();
+                Log.e("test", jsonStr);
+                rubbishList = new Gson().fromJson(jsonStr, new TypeToken<List<Rubbish>>() {
+                }.getType());
+                Log.e("test", rubbishList.toString());
+                int count = 0;
+                for (Rubbish rubbish : rubbishList) {
+                    if (count < 5) {
+                        Rubbish rubbish1 = new Rubbish(rubbish.getId(), rubbish.getName(), rubbish.getTypeId(), rubbish.getType());
+                        findList.add(rubbish1.getName());
+                        count++;
+                    } else {
+                        break;
+                    }
+                }
+
+                Message msg = new Message();
+                msg.obj = response;
+                msg.what = SEARCH_SUCCESS;
+                mHandler.sendMessage(msg);
+            }
+        });
+
+    }
+    private void OkHttpQueryOne(String query) {
         final Request request = new Request.Builder().url(BASE_URL + "searchRubbishByName?name=" + query).build();
         final Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
