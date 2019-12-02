@@ -11,4 +11,5 @@ public class Constant {
     public static final int USER_NO_EXISTS = -1;
     public static final int PASSWORD_WRONG = 0;
     public static final int LOGIN_SUCCESS = 1;
+    public static final int SEARCH_SUCCESS = 2;
 }
