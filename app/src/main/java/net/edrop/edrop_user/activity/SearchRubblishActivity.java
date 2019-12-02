@@ -72,7 +72,6 @@ public class SearchRubblishActivity extends AppCompatActivity {
     //历史记录
     private HorizontalScrollView horizontalScrollView;
     private LinearLayout container;
-    private String item[] = new String[]{"London", "Bangkok", "Paris", "Dubai", "Istanbul", "New York"};
     private List<String> history = new ArrayList<>();
     private ImageView ivDelete;
     //热搜榜
@@ -274,42 +273,7 @@ public class SearchRubblishActivity extends AppCompatActivity {
         });
 
     }
-    private void OkHttpQueryOne(String query) {
-        final Request request = new Request.Builder().url(BASE_URL + "searchRubbishByName?name=" + query).build();
-        final Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
 
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-//                Log.e("test", response.body().string());
-                String jsonStr = response.body().string();
-                Log.e("test", jsonStr);
-                rubbishList = new Gson().fromJson(jsonStr, new TypeToken<List<Rubbish>>() {
-                }.getType());
-                Log.e("test", rubbishList.toString());
-                int count = 0;
-                for (Rubbish rubbish : rubbishList) {
-                    if (count < 5) {
-                        Rubbish rubbish1 = new Rubbish(rubbish.getId(), rubbish.getName(), rubbish.getTypeId(), rubbish.getType());
-                        findList.add(rubbish1.getName());
-                        count++;
-                    } else {
-                        break;
-                    }
-                }
-
-                Message msg = new Message();
-                msg.obj = response;
-                msg.what = SEARCH_SUCCESS;
-                mHandler.sendMessage(msg);
-            }
-        });
-
-    }
 
     /**
      * 历史记录的绑定
@@ -319,7 +283,7 @@ public class SearchRubblishActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams.WRAP_CONTENT, 100);
         layoutParams.gravity = Gravity.CENTER;
         layoutParams.setMargins(20, 10, 20, 10);
-
+        history.add("尿不湿");
         for (int i = 0; i < history.size(); i++) {
             final Button button = new Button(this);
             button.setText(history.get(i));

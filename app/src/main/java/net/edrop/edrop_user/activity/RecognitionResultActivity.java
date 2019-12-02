@@ -26,21 +26,21 @@ public class RecognitionResultActivity extends Activity {
     private List<Recognition> dataSource;
     private ListView listView;
 
-    //    private TextView textView;
+        private TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recognition_result);
-        initData();
+//        initData();
         initViews();
-
-        setMyAdapter();
+//
+//        setMyAdapter();
         Intent intent = getIntent();
         byte buf[] = intent.getByteArrayExtra("photo_bmp");
         Bitmap photo_bmp = BitmapFactory.decodeByteArray(buf, 0, buf.length);
         imgPhoto.setImageBitmap(photo_bmp);
         String json = intent.getStringExtra("json");
-//        textView.setText(json);
+        textView.setText(json);
     }
 
     /*设置adapter*/
@@ -68,8 +68,8 @@ public class RecognitionResultActivity extends Activity {
 
     private void initViews() {
         imgPhoto = findViewById(R.id.iv_photo);
-        listView = findViewById(R.id.lv_recognition);
-//        textView =findViewById(R.id.tv_json);
+//        listView = findViewById(R.id.lv_recognition);
+        textView =findViewById(R.id.tv_json);
 
     }
 
