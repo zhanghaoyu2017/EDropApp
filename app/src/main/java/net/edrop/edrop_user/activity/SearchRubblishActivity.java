@@ -3,6 +3,8 @@ package net.edrop.edrop_user.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,14 +29,23 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.adapter.HotSearchAdapter;
 import net.edrop.edrop_user.adapter.SearchAdapter;
 import net.edrop.edrop_user.entity.HotItem;
+import net.edrop.edrop_user.entity.Rubbish;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,17 +56,18 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import static net.edrop.edrop_user.utils.Constant.BASE_URL;
+import static net.edrop.edrop_user.utils.Constant.SEARCH_SUCCESS;
+import static net.edrop.edrop_user.utils.Constant.USER_NO_EXISTS;
 
 public class SearchRubblishActivity extends AppCompatActivity {
     private Window window;
-    private boolean lightStatusBar=false;
+    private boolean lightStatusBar = false;
     //搜索框控件
     private SearchView searchView;
     private AutoCompleteTextView mAutoCompleteTextView;//搜索输入框
     private ImageView mDeleteButton;//搜索框中的删除按钮
     private RecyclerView searchRes;//搜索的结果
-    private List<String> findList=new ArrayList<>();//部分结果
-    private List<String> allList=new ArrayList<>();//所有结果
+    private List<String> findList = new ArrayList<>();//部分结果
     private SearchAdapter searchAdapter;
     //历史记录
     private HorizontalScrollView horizontalScrollView;
@@ -64,10 +76,23 @@ public class SearchRubblishActivity extends AppCompatActivity {
     private List<String> history = new ArrayList<>();
     private ImageView ivDelete;
     //热搜榜
-    private List<HotItem> hotItems=new ArrayList<>();
+    private List<HotItem> hotItems = new ArrayList<>();
     private ListView hotItemListView;
     private HotSearchAdapter hotSearchAdapter;
     private OkHttpClient okHttpClient;
+    private List<Rubbish> rubbishList = null;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == SEARCH_SUCCESS) {
+                searchRes.setLayoutManager(new LinearLayoutManager(SearchRubblishActivity.this));
+                searchAdapter = new SearchAdapter(findList);
+                searchAdapter.notifyDataSetChanged();
+                searchRes.setAdapter(searchAdapter);
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // 5.0以上系统状态栏透明
@@ -80,11 +105,11 @@ public class SearchRubblishActivity extends AppCompatActivity {
             window.setStatusBarColor(Color.TRANSPARENT);
 
             //将状态栏文字颜色改为黑色
-            lightStatusBar=true;
+            lightStatusBar = true;
             View decor = window.getDecorView();
             int ui = decor.getSystemUiVisibility();
             if (lightStatusBar) {
-                ui |=View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体的颜色为黑色
+                ui |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体的颜色为黑色
             } else {
                 ui &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体颜色为白色
             }
@@ -102,30 +127,24 @@ public class SearchRubblishActivity extends AppCompatActivity {
 
     private void initView() {
         //搜索框
-        searchView=findViewById(R.id.view_search);
-        mAutoCompleteTextView=searchView.findViewById(R.id.search_src_text);
-        mDeleteButton=searchView.findViewById(R.id.search_close_btn);
-        searchRes=findViewById(R.id.search_result);
+        searchView = findViewById(R.id.view_search);
+        mAutoCompleteTextView = searchView.findViewById(R.id.search_src_text);
+        mDeleteButton = searchView.findViewById(R.id.search_close_btn);
+        searchRes = findViewById(R.id.search_result);
         //历史记录：横向布局
         horizontalScrollView = (HorizontalScrollView) findViewById(R.id.horizontalScrollView);
         container = (LinearLayout) findViewById(R.id.horizontalScrollViewItemContainer);
-        ivDelete=findViewById(R.id.iv_delete);
+        ivDelete = findViewById(R.id.iv_delete);
         //热搜榜
-        hotItemListView=findViewById(R.id.lv_hot_search);
-        hotSearchAdapter=new HotSearchAdapter(SearchRubblishActivity.this,R.layout.item_hot_search,hotItems);
+        hotItemListView = findViewById(R.id.lv_hot_search);
+        hotSearchAdapter = new HotSearchAdapter(SearchRubblishActivity.this, R.layout.item_hot_search, hotItems);
         hotItemListView.setAdapter(hotSearchAdapter);
-        okHttpClient=new OkHttpClient();
+        okHttpClient = new OkHttpClient();
     }
 
     private void initData() {
-        Collections.addAll(history, item);
-        allList.add("我是程序员");
-        allList.add("我是程序员哈哈哈");
-        allList.add("我是人");
-        allList.add("我不是人");
-
-        hotItems.add(new HotItem("1","康师傅矿泉水"));
-        hotItems.add(new HotItem("2","康师傅矿泉水"));
+        hotItems.add(new HotItem("1", "康师傅矿泉水"));
+        hotItems.add(new HotItem("2", "康师傅矿泉水"));
 
         searchView.setIconifiedByDefault(false);//设置搜索图标是否显示在搜索框内
         //1:回车2:前往3:搜索4:发送5:下一項6:完成
@@ -138,8 +157,10 @@ public class SearchRubblishActivity extends AppCompatActivity {
         setUnderLinetransparent(searchView);
     }
 
-    /**设置SearchView下划线透明**/
-    private void setUnderLinetransparent(SearchView searchView){
+    /**
+     * 设置SearchView下划线透明
+     **/
+    private void setUnderLinetransparent(SearchView searchView) {
         try {
             Class<?> argClass = searchView.getClass();
             // mSearchPlate是SearchView父布局的名字
@@ -154,21 +175,23 @@ public class SearchRubblishActivity extends AppCompatActivity {
         }
     }
 
-    /**设置搜索文本监听**/
-    private void setListener(){
+    /**
+     * 设置搜索文本监听
+     **/
+    private void setListener() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             //当点击搜索按钮时触发该方法
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if(TextUtils.isEmpty(query)) {
+                if (TextUtils.isEmpty(query)) {
                     findList.clear();
                     searchRes.setAdapter(searchAdapter);
                 } else {
                     findList.clear();
-                    OkHttpQuery(query);
                     if (findList.size() == 0) {
                         Toast.makeText(SearchRubblishActivity.this, "查找失败，推荐使用模糊查询", Toast.LENGTH_SHORT).show();
                     } else {
+
                         Toast.makeText(SearchRubblishActivity.this, "查找成功", Toast.LENGTH_SHORT).show();
                         searchAdapter = new SearchAdapter(findList);
                         searchRes.setAdapter(searchAdapter);
@@ -183,22 +206,13 @@ public class SearchRubblishActivity extends AppCompatActivity {
             //当搜索内容改变时触发该方法
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(TextUtils.isEmpty(newText)) {
+                if (TextUtils.isEmpty(newText)) {
                     findList.clear();
                     searchRes.setAdapter(searchAdapter);
                 } else {
                     findList.clear();
                     OkHttpQuery(newText);
-//                    for (int i = 0; i < allList.size(); i++) {
-//                        String string = allList.get(i);
-//                        if (string.contains(newText)) {
-//                            findList.add(string);
-//                        }
-//                    }
-                    searchRes.setLayoutManager(new LinearLayoutManager(SearchRubblishActivity.this));
-                    searchAdapter = new SearchAdapter(findList);
-                    searchAdapter.notifyDataSetChanged();
-                    searchRes.setAdapter(searchAdapter);
+
                 }
                 return true;
             }
@@ -207,24 +221,24 @@ public class SearchRubblishActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 history.clear();
-                Toast.makeText(SearchRubblishActivity.this,"删除按钮点击了",Toast.LENGTH_SHORT).show();
+                Toast.makeText(SearchRubblishActivity.this, "删除按钮点击了", Toast.LENGTH_SHORT).show();
             }
         });
-
         hotItemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(SearchRubblishActivity.this,id+"",Toast.LENGTH_SHORT).show();
+                Toast.makeText(SearchRubblishActivity.this, id + "", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     /**
      * 查询垃圾种类
+     *
      * @param query
      */
-    private void OkHttpQuery( String query){
-        Request request = new Request.Builder().url(BASE_URL + "searchRubbishByName?name="+query).build();
+    private void OkHttpQuery(String query) {
+        final Request request = new Request.Builder().url(BASE_URL + "searchRubbishByName?name=" + query).build();
         final Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
@@ -234,12 +248,35 @@ public class SearchRubblishActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.e("test", response.body().string());
+//                Log.e("test", response.body().string());
+                String jsonStr = response.body().string();
+                Log.e("test", jsonStr);
+                rubbishList = new Gson().fromJson(jsonStr, new TypeToken<List<Rubbish>>() {
+                }.getType());
+                Log.e("test", rubbishList.toString());
+                int count = 0;
+                for (Rubbish rubbish : rubbishList) {
+                    if (count < 5) {
+                        Rubbish rubbish1 = new Rubbish(rubbish.getId(), rubbish.getName(), rubbish.getTypeId(), rubbish.getType());
+                        findList.add(rubbish1.getName());
+                        count++;
+                    } else {
+                        break;
+                    }
+                }
+
+                Message msg = new Message();
+                msg.obj = response;
+                msg.what = SEARCH_SUCCESS;
+                mHandler.sendMessage(msg);
             }
         });
 
     }
-    /**历史记录的绑定**/
+
+    /**
+     * 历史记录的绑定
+     **/
     private void bindHZSWData() {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, 100);
@@ -255,7 +292,7 @@ public class SearchRubblishActivity extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(SearchRubblishActivity.this,button.getText().toString(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchRubblishActivity.this, button.getText().toString(), Toast.LENGTH_SHORT).show();
 //                    performItemClick(view);
                 }
             });
@@ -275,6 +312,6 @@ public class SearchRubblishActivity extends AppCompatActivity {
         //smooth scrolling horizontalScrollView
         horizontalScrollView.smoothScrollTo(scrollX, 0);
 
-        String s = "CenterLocked Item: "+((TextView)view).getText();
+        String s = "CenterLocked Item: " + ((TextView) view).getText();
     }
 }
