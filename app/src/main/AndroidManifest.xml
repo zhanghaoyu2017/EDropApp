@@ -74,7 +74,8 @@
         <activity android:name=".activity.GrabageQuestionsActivity" />
         <activity
             android:name=".activity.RecognitionResultActivity"
-            android:label="@string/title_activity_recognition_result"></activity>
+            android:label="@string/title_activity_recognition_result" />
+        <activity android:name=".activity.ChatViewActivity"></activity>
     </application>
 
 </manifest>

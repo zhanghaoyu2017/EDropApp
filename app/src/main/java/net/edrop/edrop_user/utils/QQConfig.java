@@ -1,6 +1,6 @@
-package net.edrop.edrop_user.QQbase;
+package net.edrop.edrop_user.utils;
 
-public class Config {
+public class QQConfig {
 
     /**
      * QQ登录的APPID

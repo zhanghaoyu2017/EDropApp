@@ -33,7 +33,7 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
-import net.edrop.edrop_user.QQbase.Config;
+import net.edrop.edrop_user.utils.QQConfig;
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.entity.QQUser;
 import net.edrop.edrop_user.entity.User;
@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // Tencent类是SDK的主要实现类，开发者可通过Tencent类访问腾讯开放的OpenAPI。
         // 其中APP_ID是分配给第三方应用的appid，类型为String。
         listener = new BaseUiListener();
-        mTencent = Tencent.createInstance(Config.QQ_LOGIN_APP_ID, this.getApplicationContext());
+        mTencent = Tencent.createInstance(QQConfig.QQ_LOGIN_APP_ID, this.getApplicationContext());
         initView();
     }
 
