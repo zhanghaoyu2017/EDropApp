@@ -1,6 +1,7 @@
 package net.edrop.edrop_user.adapter;
 
 import android.content.Context;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,21 +9,23 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import net.edrop.edrop_user.R;
+import net.edrop.edrop_user.entity.Recognition;
 
 import java.util.List;
-import java.util.Map;
+
 
 /**
- * Created by Android Studio.
+ * Created by 李诗凡.
  * User: sifannnn
- * Date: 2019/11/27
- * Time: 21:06
+ * Date: 2019/12/2
+ * Time: 15:04
+ * TODO:给拍照识别结果设置布局
  */
-//设置服务显示的item，方便以后维护项目。
-public class ServiceAdapter extends BaseAdapter {
+public class RecognitionAdapter extends BaseAdapter {
     // 原始数据
-    private List<Map<String, Object>> dataSource = null;
+    private List<Recognition> dataSource = null;
     // 上下文环境
     private Context context;
     // item对应的布局文件
@@ -35,9 +38,9 @@ public class ServiceAdapter extends BaseAdapter {
      * @param dataSource     原始数据
      * @param item_layout_id item对应的布局文件
      */
-    public ServiceAdapter(Context context,
-                          List<Map<String, Object>> dataSource,
-                          int item_layout_id) {
+    public RecognitionAdapter(Context context,
+                              List<Recognition> dataSource,
+                              int item_layout_id) {
         this.context = context;
         this.dataSource = dataSource;
         this.item_layout_id = item_layout_id;
@@ -62,20 +65,25 @@ public class ServiceAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        ViewHolder viewHolder = null;
         if (convertView == null) {
-            //布局填充器，根据布局文件生成相应的VIew
-            LayoutInflater inflater = LayoutInflater.from(context);
-            // 使用布局填充器根据布局文件资源ID生成View视图对象
-            convertView = inflater.inflate(item_layout_id, null);
+            convertView = LayoutInflater.from(context).inflate(item_layout_id, null);
+            viewHolder = new ViewHolder();
+            viewHolder.imgId = convertView.findViewById(R.id.img_recognition);
+            viewHolder.text = convertView.findViewById(R.id.tv_recognition);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-
-        //设置item的值和右箭头图标
-        final TextView textView = convertView.findViewById(R.id.tv_service_title);
-        final ImageView imageView = convertView.findViewById(R.id.img_service);
-        Map<String, Object> map = dataSource.get(position);
-        textView.setText(map.get("text").toString());
-        imageView.setImageResource((int) map.get("img"));
+        Recognition recognition = dataSource.get(position);
+        viewHolder.text.setText(recognition.getText());
+        viewHolder.imgId.setImageResource(recognition.getImgId());
 
         return convertView;
+    }
+
+    private class ViewHolder {
+        public ImageView imgId;
+        public TextView text;
     }
 }

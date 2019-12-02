@@ -18,68 +18,88 @@ public class User {
     private String imgpath;
     private String address;
     private String gender;
-    private	Timestamp registerTime;
+    private Timestamp registerTime;
 
     public String getImgname() {
         return imgname;
     }
+
     public void setImgname(String imgname) {
         this.imgname = imgname;
     }
+
     public String getImgpath() {
         return imgpath;
     }
+
     public void setImgpath(String imgpath) {
         this.imgpath = imgpath;
     }
+
     public Integer getId() {
         return id;
     }
+
     public void setId(Integer id) {
         this.id = id;
     }
+
     public String getPhone() {
         return phone;
     }
+
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
     public String getQq() {
         return qq;
     }
+
     public void setQq(String qq) {
         this.qq = qq;
     }
+
     public String getUsername() {
         return username;
     }
+
     public void setUsername(String username) {
         this.username = username;
     }
+
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
+
     public String getAddress() {
         return address;
     }
+
     public void setAddress(String address) {
         this.address = address;
     }
+
     public String getGender() {
         return gender;
     }
+
     public void setGender(String gender) {
         this.gender = gender;
     }
+
     public Timestamp getRegisterTime() {
         return registerTime;
     }
+
     public void setRegisterTime(Timestamp registerTime) {
         this.registerTime = registerTime;
     }
+
     public User() {
         super();
         // TODO Auto-generated constructor stub
@@ -99,6 +119,7 @@ public class User {
         this.gender = gender;
         this.registerTime = registerTime;
     }
+
     @Override
     public String toString() {
         return "User [id=" + id + ", phone=" + phone + ", qq=" + qq + ", username=" + username + ", password="
