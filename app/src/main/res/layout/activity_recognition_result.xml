@@ -2,18 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/size_20"
     android:orientation="vertical">
 
     <ImageView
-        android:layout_marginTop="@dimen/size_25"
-        android:layout_gravity="center_horizontal"
         android:id="@+id/iv_photo"
         android:layout_width="@dimen/size_100"
-        android:layout_height="@dimen/size_100" />
+        android:layout_height="@dimen/size_100"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/size_25" />
 
     <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/tv_json"/>-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:id="@+id/tv_json"/>-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_30"
+        android:text="已找到相匹配的结果"
+        android:textColor="#000"
+        android:textSize="@dimen/size_20" />
+    <!--显示识别结果的listView-->
+    <ListView
+        android:id="@+id/lv_recognition"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/size_10" />
+
 
 </LinearLayout>
