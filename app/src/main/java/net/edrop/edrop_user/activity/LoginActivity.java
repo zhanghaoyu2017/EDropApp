@@ -55,7 +55,7 @@ import static net.edrop.edrop_user.utils.Constant.LOGIN_SUCCESS;
 import static net.edrop.edrop_user.utils.Constant.PASSWORD_WRONG;
 import static net.edrop.edrop_user.utils.Constant.USER_NO_EXISTS;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private TextInputLayout usernameWrapper;
     private TextInputLayout passwordWrapper;
     private Button btnLogin;
@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button btnRegister;
     private EditText edUserName;
     private EditText edPwd;
-    public boolean isSelected =false;
+    public boolean isSelected = false;
     private ImageView qqLogin;
     //qq
     private Tencent mTencent;
@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static BaseUiListener listener = null;
     private String QQ_uid;//qq_openid
     private SharedPreferencesUtils sharedPreferences;
-    private boolean lightStatusBar=false;
+    private boolean lightStatusBar = false;
     private OkHttpClient okHttpClient;
     private String username;
     private String password;
@@ -80,24 +80,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         public void handleMessage(Message msg) {
             if (msg.what == 9) {
                 com.alibaba.fastjson.JSONObject response = com.alibaba.fastjson.JSONObject.parseObject(String.valueOf(msg.obj));
-                Log.e("qq","UserInfo:"+ JSON.toJSONString(response));
-                QQUser user= com.alibaba.fastjson.JSONObject.parseObject(response.toJSONString(),QQUser.class);
-                if (user!=null) {
-                    Log.e("qq","userInfo:昵称："+user.getNickname()+"  性别:"+user.getGender()+"  地址："+user.getProvince()+user.getCity());
-                    Log.e("qq","头像路径："+user.getFigureurl_qq_2());
+                Log.e("qq", "UserInfo:" + JSON.toJSONString(response));
+                QQUser user = com.alibaba.fastjson.JSONObject.parseObject(response.toJSONString(), QQUser.class);
+                if (user != null) {
+                    Log.e("qq", "userInfo:昵称：" + user.getNickname() + "  性别:" + user.getGender() + "  地址：" + user.getProvince() + user.getCity());
+                    Log.e("qq", "头像路径：" + user.getFigureurl_qq_2());
 //                        Glide.with(QQLoginActivity.this).load(user.getFigureurl_qq_2()).into(ivHead);
                 }
 
             }
-            if (msg.what==PASSWORD_WRONG){
+            if (msg.what == PASSWORD_WRONG) {
 //                edUserName.setText("");
 //                edPwd.setText("");
-                Toast.makeText(LoginActivity.this,"密码错误，请重试!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "密码错误，请重试!", Toast.LENGTH_SHORT).show();
             }
-            if (msg.what==USER_NO_EXISTS){
+            if (msg.what == USER_NO_EXISTS) {
 //                edUserName.setText("");
 //                edPwd.setText("");
-                Toast.makeText(LoginActivity.this,"改账号不存在，请先注册！",Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "改账号不存在，请先注册！", Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -113,11 +113,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
             //将状态栏文字颜色改为黑色
-            lightStatusBar=true;
+            lightStatusBar = true;
             View decor = window.getDecorView();
             int ui = decor.getSystemUiVisibility();
             if (lightStatusBar) {
-                ui |=View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体的颜色为黑色
+                ui |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体的颜色为黑色
             } else {
                 ui &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体颜色为白色
             }
@@ -127,7 +127,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        sharedPreferences = new SharedPreferencesUtils(LoginActivity.this,"loginInfo");
+        sharedPreferences = new SharedPreferencesUtils(LoginActivity.this, "loginInfo");
         isAuto();
         // Tencent类是SDK的主要实现类，开发者可通过Tencent类访问腾讯开放的OpenAPI。
         // 其中APP_ID是分配给第三方应用的appid，类型为String。
@@ -140,30 +140,30 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void isAuto() {
         try {
             boolean isAuto = sharedPreferences.getBoolean("isAuto");
-            if (isAuto){
+            if (isAuto) {
                 Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Tencent.onActivityResultData(requestCode,resultCode,data,new BaseUiListener());
+        Tencent.onActivityResultData(requestCode, resultCode, data, new BaseUiListener());
     }
 
     private void initView() {
         usernameWrapper = findViewById(R.id.usernameWrapper);
-        passwordWrapper =  findViewById(R.id.passwordWrapper);
-        edPwd =  findViewById(R.id.password);
+        passwordWrapper = findViewById(R.id.passwordWrapper);
+        edPwd = findViewById(R.id.password);
         edUserName = findViewById(R.id.username);
-        btnPhoneLogin=findViewById(R.id.btn_phone_login);
-        btnRegister=findViewById(R.id.btn_register);
-        btnLogin =  findViewById(R.id.btn_login);
-        qqLogin=findViewById(R.id.qq_name);
+        btnPhoneLogin = findViewById(R.id.btn_phone_login);
+        btnRegister = findViewById(R.id.btn_register);
+        btnLogin = findViewById(R.id.btn_login);
+        qqLogin = findViewById(R.id.qq_name);
         usernameWrapper.setHint("请输入用户名");
         passwordWrapper.setHint("请输入密码");
         okHttpClient = new OkHttpClient();
@@ -184,8 +184,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     passwordWrapper.setError("请输入6位数有效的密码哦!");
                     btnLogin.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_login_gray_background));
                 } else {
-                    btnLogin.setBackgroundDrawable( getResources().getDrawable(R.drawable.btn_login_background));
-                    isSelected=true;
+                    btnLogin.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_login_background));
+                    isSelected = true;
                     passwordWrapper.setErrorEnabled(false);
                     hideKeyboard();
                 }
@@ -202,7 +202,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnPhoneLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this,PhoneLoginActivity.class);
+                Intent intent = new Intent(LoginActivity.this, PhoneLoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -210,7 +210,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
 
                 startActivity(intent);
             }
@@ -223,25 +223,36 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btn_login:
                 username = edUserName.getText().toString();
                 password = edPwd.getText().toString();
-                if (username.equals("zs")&&password.equals("123456")){
+                if (username.equals("zs") && password.equals("123456")) {
                     SharedPreferences.Editor editor = sharedPreferences.getEditor();
-                    editor.putString("username",username);
-                    editor.putString("password",password);
+                    editor.putString("username", username);
+                    editor.putString("password", password);
+                    editor.putBoolean("isAuto", true);
                     editor.commit();
                     Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     overridePendingTransition(0, 0);
-                }else if (isSelected) {
+                } else if (username.equals("ls") && password.equals("123456")) {
+                    SharedPreferences.Editor editor = sharedPreferences.getEditor();
+                    editor.putString("username", username);
+                    editor.putString("password", password);
+                    editor.putBoolean("isAuto", true);
+                    editor.commit();
+                    Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    overridePendingTransition(0, 0);
+                } else if (isSelected) {
                     username = edUserName.getText().toString();
                     password = edPwd.getText().toString();
-                    OkHttpLogin(username,password);
-                }else {
+                    OkHttpLogin(username, password);
+                } else {
                     Toast.makeText(LoginActivity.this, "请检查用户名或密码", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.qq_name:
-                Log.e("qq","开始QQ登录..");
+                Log.e("qq", "开始QQ登录..");
                 if (!mTencent.isSessionValid()) {
                     //注销登录 mTencent.logout(this);
                     mTencent.login(LoginActivity.this, "all", listener);
@@ -272,7 +283,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 InputMethodManager imm = (InputMethodManager) mContext
                         .getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(etID, 0);
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
             }
         });
     }
@@ -286,16 +297,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return password.length() > 5;
     }
 
-    private class BaseUiListener  implements IUiListener {
+    private class BaseUiListener implements IUiListener {
 
         @Override
         public void onComplete(Object o) {
-            Log.e("qq","授权:"+o.toString());
+            Log.e("qq", "授权:" + o.toString());
             try {
                 org.json.JSONObject jsonObject = new org.json.JSONObject(o.toString());
                 initOpenidAndToken(jsonObject);
                 updateUserInfo();
-            }catch (org.json.JSONException e) {
+            } catch (org.json.JSONException e) {
                 e.printStackTrace();
             }
         }
@@ -306,17 +317,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onError(UiError e) {
                     }
+
                     @Override
                     public void onComplete(final Object response) {
                         Message msg = new Message();
                         msg.obj = response;
-                        Log.e("qq","................"+response.toString());
+                        Log.e("qq", "................" + response.toString());
                         msg.what = 9;
                         mHandler.sendMessage(msg);
                     }
+
                     @Override
                     public void onCancel() {
-                        Log.e("qq","登录取消..");
+                        Log.e("qq", "登录取消..");
                     }
                 };
                 userInfo = new UserInfo(LoginActivity.this, mTencent.getQQToken());
@@ -335,31 +348,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     mTencent.setOpenId(openId);
                     QQ_uid = openId;
                 }
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
 
-
         @Override
         public void onError(UiError e) {
-            Log.e("qq","onError:code:" + e.errorCode +
+            Log.e("qq", "onError:code:" + e.errorCode +
                     ", msg:" + e.errorMessage + ", detail:" + e.errorDetail);
         }
+
         @Override
         public void onCancel() {
-            Log.e("qq","onCancel");
+            Log.e("qq", "onCancel");
         }
 
     }
+
     /**
      * 用户名密码登录
      */
-    private void OkHttpLogin(final String username, String password){
+    private void OkHttpLogin(final String username, String password) {
 
         //2.创建Request对象
-        Request request = new Request.Builder().url(BASE_URL + "loginByUsernameAndPassword?username="+username+"&password="+password).build();
+        Request request = new Request.Builder().url(BASE_URL + "loginByUsernameAndPassword?username=" + username + "&password=" + password).build();
         //3.创建Call对象
         final Call call = okHttpClient.newCall(request);
 
@@ -380,36 +394,37 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 try {
                     JSONObject jsonObject = new JSONObject(responseJson);
                     String state = jsonObject.getString("state");
-                    if (Integer.valueOf(state)==LOGIN_SUCCESS){
+                    if (Integer.valueOf(state) == LOGIN_SUCCESS) {
                         //登录成功
                         String userJson = jsonObject.getString("user");
-                        User user = new Gson().fromJson(userJson,User.class);
+                        User user = new Gson().fromJson(userJson, User.class);
 
                         SharedPreferences.Editor editor = sharedPreferences.getEditor();
-                        editor.putString("username",user.getUsername());
-                        editor.putString("password",user.getPassword());
-                        editor.putString("imgName",user.getImgname());
-                        editor.putString("imgPath",user.getImgpath());
-                        editor.putString("address",user.getAddress());
-                        editor.putBoolean("isAuto",true);
+                        editor.putString("username", user.getUsername());
+                        editor.putString("password", user.getPassword());
+                        editor.putString("imgName", user.getImgname());
+                        editor.putString("imgPath", user.getImgpath());
+                        editor.putString("address", user.getAddress());
+                        editor.putBoolean("isAuto", true);
                         editor.commit();
                         Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
 
-                    }else if(Integer.valueOf(state)==PASSWORD_WRONG){
+                    } else if (Integer.valueOf(state) == PASSWORD_WRONG) {
                         //密码错误
                         Message msg = new Message();
                         msg.obj = response;
-                        msg.what =PASSWORD_WRONG;
+                        msg.what = PASSWORD_WRONG;
                         mHandler.sendMessage(msg);
-                    }else if (Integer.valueOf(state)==USER_NO_EXISTS){
+                    } else if (Integer.valueOf(state) == USER_NO_EXISTS) {
                         //用户不存在
                         Message msg = new Message();
                         msg.obj = response;
-                        msg.what =USER_NO_EXISTS;
-                        mHandler.sendMessage(msg);                    }
+                        msg.what = USER_NO_EXISTS;
+                        mHandler.sendMessage(msg);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
