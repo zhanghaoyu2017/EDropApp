@@ -93,4 +93,9 @@
     </string>
     <string name="title_activity_recognition_result">RecognitionResultActivity</string>
     <string name="search">搜索</string>
+    <string name="filluserinfo">
+        "根据国家相关法律法规的要求，请绑定您的手机号。此外，绑定后您也将得到更好的使用体验：\n"
+        "关键操作时可用手机二次验证并收到短信提醒，信息更安全\n"
+        "可以选择使用手机号登录及找回密码，更方便轻松\n"
+    </string>
 </resources>

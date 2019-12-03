@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <!-- 打电话权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <!--环信所需权限-->
+    <!-- 环信所需权限 -->
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <!-- Required -->
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -23,7 +23,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -49,6 +50,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.FillPersonalInforActivity"/>
         <activity android:name=".activity.SearchRubblishActivity" />
         <activity
             android:name=".activity.IntroductionEDropActivity"
@@ -76,7 +78,7 @@
         <activity
             android:name=".activity.RecognitionResultActivity"
             android:label="@string/title_activity_recognition_result" />
-        <activity android:name=".activity.ChatViewActivity"/>
+        <activity android:name=".activity.ChatViewActivity" />
         <!-- QQ登录配置 start -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -113,6 +115,7 @@
         <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
                 <data android:scheme="package" />
             </intent-filter>
             <!-- 可选filter -->
@@ -121,7 +124,7 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
-        <!-- 声明SDK所需的receiver结束-->
+        <!-- 声明SDK所需的receiver结束 -->
     </application>
 
 </manifest>
