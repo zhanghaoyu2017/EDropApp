@@ -65,6 +65,7 @@
                 android:textSize="@dimen/size_30" />
 
             <EditText
+                android:id="@+id/et_regName"
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-5dp"
@@ -99,11 +100,14 @@
                 android:textSize="@dimen/size_30" />
 
             <EditText
+                android:id="@+id/et_regPsd"
                 android:layout_width="230dp"
+                android:maxLength="6"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-5dp"
                 android:background="@null"
-                android:hint="请输入密码"
+                android:inputType="numberPassword"
+                android:hint="请输入密码(6位)"
                 android:textSize="@dimen/size_18" />
 
 
@@ -133,14 +137,18 @@
                 android:textSize="@dimen/size_30" />
 
             <EditText
+                android:id="@+id/et_regPsd2"
+                android:inputType="numberPassword"
+                android:maxLength="6"
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-5dp"
                 android:background="@null"
-                android:hint="确认密码"
+                android:hint="确认密码(6位)"
                 android:textSize="@dimen/size_18" />
         </LinearLayout>
         <Button
+            android:id="@+id/btn_reg"
             android:layout_marginTop="@dimen/size_30"
             android:layout_width="300dp"
             android:layout_height="wrap_content"

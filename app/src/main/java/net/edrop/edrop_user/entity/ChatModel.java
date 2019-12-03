@@ -30,4 +30,13 @@ public class ChatModel implements Serializable {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "ChatModel{" +
+                "icon='" + icon + '\'' +
+                ", content='" + content + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }

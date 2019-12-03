@@ -105,6 +105,7 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter implements View.OnClickLis
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ChatViewActivity.class);
+                intent.putExtra("userId","zs");
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(intent);
             }

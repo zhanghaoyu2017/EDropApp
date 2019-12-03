@@ -25,8 +25,7 @@ public class RecognitionResultActivity extends Activity {
     private ImageView imgPhoto;
     private List<Recognition> dataSource;
     private ListView listView;
-
-        private TextView textView;
+    private TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

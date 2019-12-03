@@ -29,6 +29,7 @@ import com.tencent.tauth.UiError;
 import net.edrop.edrop_user.utils.QQConfig;
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.entity.QQUser;
+import net.edrop.edrop_user.utils.SystemTransUtil;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
@@ -53,30 +54,9 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
     private UserInfo userInfo;
     private static PhoneLoginActivity.BaseUiListener listener = null;
     private String QQ_uid;//qq_openid
-    private boolean lightStatusBar=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // 5.0以上系统状态栏透明
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            //将状态栏文字颜色改为黑色
-            lightStatusBar=true;
-            View decor = window.getDecorView();
-            int ui = decor.getSystemUiVisibility();
-            if (lightStatusBar) {
-                ui |=View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体的颜色为黑色
-            } else {
-                ui &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体颜色为白色
-            }
-            decor.setSystemUiVisibility(ui);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
+        new SystemTransUtil().trans(PhoneLoginActivity.this);
         super.onCreate(savedInstanceState);
         listener = new BaseUiListener();
         mTencent = Tencent.createInstance(QQConfig.QQ_LOGIN_APP_ID, this.getApplicationContext());

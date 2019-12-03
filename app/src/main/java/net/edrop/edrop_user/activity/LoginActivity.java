@@ -27,6 +27,8 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.common.Constants;
 import com.tencent.tauth.IUiListener;
@@ -49,6 +51,11 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 import static net.edrop.edrop_user.utils.Constant.BASE_URL;
 import static net.edrop.edrop_user.utils.Constant.LOGIN_SUCCESS;
@@ -97,7 +104,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (msg.what == USER_NO_EXISTS) {
 //                edUserName.setText("");
 //                edPwd.setText("");
-                Toast.makeText(LoginActivity.this, "改账号不存在，请先注册！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "该账号不存在，请先注册！", Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -221,13 +228,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
-                username = edUserName.getText().toString();
-                password = edPwd.getText().toString();
+                username = edUserName.getText().toString().trim();
+                password = edPwd.getText().toString().trim();
                 if (username.equals("zs") && password.equals("123456")) {
                     SharedPreferences.Editor editor = sharedPreferences.getEditor();
                     editor.putString("username", username);
                     editor.putString("password", password);
                     editor.putBoolean("isAuto", true);
+                    login(username,password);
                     editor.commit();
                     Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -238,6 +246,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     editor.putString("username", username);
                     editor.putString("password", password);
                     editor.putBoolean("isAuto", true);
+                    login(username,password);
                     editor.commit();
                     Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -259,6 +268,44 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 break;
         }
+    }
+
+    /**
+     * 登录用户（异步）
+     */
+    private void login(final String username, final String password){
+        Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(final Subscriber<? super String> subscriber) {
+                EMClient.getInstance().login(username,password,new EMCallBack() {//回调
+                    @Override
+                    public void onSuccess() {
+                        EMClient.getInstance().groupManager().loadAllGroups();
+                        EMClient.getInstance().chatManager().loadAllConversations();
+                        startActivity(new Intent(LoginActivity.this,Main2Activity.class));
+                        subscriber.onNext("登录聊天服务器成功");
+                    }
+
+                    @Override
+                    public void onProgress(int progress, String status) {
+
+                    }
+
+                    @Override
+                    public void onError(int code, String message) {
+                        subscriber.onNext("登录聊天服务器失败："+code);
+                    }
+                });
+            }
+
+        }).subscribeOn(Schedulers.immediate())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        Toast.makeText(LoginActivity.this, s, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     /***
@@ -382,7 +429,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();//打印异常信息
-
             }
 
             //请求成功时回调

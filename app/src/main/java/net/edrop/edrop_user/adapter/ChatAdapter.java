@@ -1,6 +1,7 @@
 package net.edrop.edrop_user.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +97,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BaseAdapter> {
             super(view);
             ic_user = (ImageView) itemView.findViewById(R.id.ic_user);
             tv = (TextView) itemView.findViewById(R.id.tv);
-
         }
 
         @Override

@@ -110,7 +110,7 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
     public Context getContext() {
         activity = getActivity();
         if (activity == null) {
-            return MyApplication.getInstance();
+            return MyApplication.getInstance2();
         }
         return activity;
     }

@@ -12,4 +12,12 @@ public class ItemModel implements Serializable {
         this.type = type;
         this.object = object;
     }
+
+    @Override
+    public String toString() {
+        return "ItemModel{" +
+                "type=" + type +
+                ", object=" + object +
+                '}';
+    }
 }
