@@ -83,7 +83,7 @@ public class MsgPageFragment extends Fragment {
 
             swipeAdapter.notifyDataSetChanged();
             //结束加载更多的动画
-            refeshLayout.finishLoadMore();
+            refeshLayout.finishRefresh();
         }
     }
 
