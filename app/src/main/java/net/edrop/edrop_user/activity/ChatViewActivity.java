@@ -58,7 +58,7 @@ public class ChatViewActivity extends AppCompatActivity implements EMMessageList
                 ArrayList<ItemModel> data = new ArrayList<>();
                 ChatModel model = new ChatModel();
                 model.setContent(new Gson().fromJson((String) msg.obj,String.class));
-                model.setIcon("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1575350832236&di=e8215ffd4f9f90aa84de073cc938bf79&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F16%2F10%2F26%2F9bc07e2e036ef363d0abb3059e1b03fa.jpg");
+                model.setIcon("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1575200975280&di=013453a7f9804cfa5ca5966f3d4ec05e&imgtype=0&src=http%3A%2F%2Fwww.uimaker.com%2Fuploads%2Fallimg%2F20140731%2F1406774235170879.png");
                 data.add(new ItemModel(ItemModel.CHAT_A, model));
                 adapter.notifyDataSetChanged();
                 adapter.addAll(data);
@@ -78,6 +78,7 @@ public class ChatViewActivity extends AppCompatActivity implements EMMessageList
         adapter.replaceAll(TestData.getTestAdData());// 测试用的
 
         userId = getIntent().getExtras().getString("userId");
+        chatNav.setText(userId);
         EMClient.getInstance().chatManager().addMessageListener(this);
 
         initData();
@@ -151,7 +152,6 @@ public class ChatViewActivity extends AppCompatActivity implements EMMessageList
             @Override
             public void call(EMMessage emMessage) {
                 EMTextMessageBody emtextmessage = (EMTextMessageBody) emMessage.getBody();
-
                 Message msg = new Message();
                 msg.obj = new Gson().toJson(emtextmessage.getMessage());
                 msg.what = RECEVIED_MSG;
