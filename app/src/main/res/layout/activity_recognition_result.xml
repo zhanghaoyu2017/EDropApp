@@ -12,10 +12,10 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/size_25" />
 
-    <TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/tv_json"/>
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:id="@+id/tv_json"/>-->
     <!--<TextView-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
@@ -24,11 +24,11 @@
         <!--android:textColor="#000"-->
         <!--android:textSize="@dimen/size_20" />-->
     <!--&lt;!&ndash;显示识别结果的listView&ndash;&gt;-->
-    <!--<ListView-->
-        <!--android:id="@+id/lv_recognition"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginTop="@dimen/size_10" />-->
+    <ListView
+        android:id="@+id/lv_recognition"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/size_10" />
 
 
 </LinearLayout>

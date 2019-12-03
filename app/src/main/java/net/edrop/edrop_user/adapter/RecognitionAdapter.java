@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 
 import net.edrop.edrop_user.R;
+import net.edrop.edrop_user.entity.NewsList;
 import net.edrop.edrop_user.entity.Recognition;
 
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
  */
 public class RecognitionAdapter extends BaseAdapter {
     // 原始数据
-    private List<Recognition> dataSource = null;
+    private List<NewsList> dataSource = null;
     // 上下文环境
     private Context context;
     // item对应的布局文件
@@ -39,7 +40,7 @@ public class RecognitionAdapter extends BaseAdapter {
      * @param item_layout_id item对应的布局文件
      */
     public RecognitionAdapter(Context context,
-                              List<Recognition> dataSource,
+                              List<NewsList> dataSource,
                               int item_layout_id) {
         this.context = context;
         this.dataSource = dataSource;
@@ -69,21 +70,20 @@ public class RecognitionAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(item_layout_id, null);
             viewHolder = new ViewHolder();
-            viewHolder.imgId = convertView.findViewById(R.id.img_recognition);
+//            viewHolder.imgId = convertView.findViewById(R.id.img_recognition);
             viewHolder.text = convertView.findViewById(R.id.tv_recognition);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        Recognition recognition = dataSource.get(position);
-        viewHolder.text.setText(recognition.getText());
-        viewHolder.imgId.setImageResource(recognition.getImgId());
+        NewsList newsList = dataSource.get(position);
+        viewHolder.text.setText(newsList.getName());
 
         return convertView;
     }
 
     private class ViewHolder {
-        public ImageView imgId;
+//        public ImageView imgId;
         public TextView text;
     }
 }
