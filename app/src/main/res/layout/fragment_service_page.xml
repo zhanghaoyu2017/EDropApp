@@ -5,34 +5,29 @@
     android:background="#fff"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp">
-        <!--立即预约-->
-        <ImageView
-            android:id="@+id/img_service_reservation"
-            android:layout_width="@dimen/size_120"
-            android:layout_height="@dimen/size_120"
-            android:layout_centerInParent="true"
-            android:src="@drawable/reservation_logo" />
-        <!--什么是易扔？-->
+        android:layout_height="250dp"
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/tv_service_what"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/img_service_reservation"
-            android:paddingBottom="@dimen/size_100"
+            android:layout_height="@dimen/size_20"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/size_40"
+            android:layout_marginTop="@dimen/size_50"
             android:text="什么是易扔？"
             android:textColor="@android:color/holo_green_light" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+        <Button
+            android:id="@+id/img_service_reservation"
+            android:layout_width="@dimen/size_120"
+            android:layout_height="@dimen/size_120"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/reservation_logo"
             android:text="立即预约" />
-
-    </RelativeLayout>
+    </LinearLayout>
 
     <ListView
         android:id="@+id/lv_service"

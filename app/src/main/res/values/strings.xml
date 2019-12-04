@@ -52,4 +52,5 @@
         "关键操作时可用手机二次验证并收到短信提醒，信息更安全\n"
         "可以选择使用手机号登录及找回密码，更方便轻松\n"
     </string>
+    <string name="title_activity_tset">TsetActivity</string>
 </resources>

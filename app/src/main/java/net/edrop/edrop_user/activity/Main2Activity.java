@@ -393,8 +393,6 @@ public class Main2Activity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        ImageView imageView = findViewById(R.id.iv);
-//        if (requestCode == 100 && resultCode == RESULT_OK){
         Log.e("拍照测试", "拍照成功");
         bitmap = (Bitmap) data.getExtras().get("data");//获取拍取的照片
 
@@ -446,7 +444,6 @@ public class Main2Activity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-//                JSONObject object = new JSONObject();
                 String success = response.body().string();
                 Log.e("11111", success);
                 byte[] buf = new byte[1024];

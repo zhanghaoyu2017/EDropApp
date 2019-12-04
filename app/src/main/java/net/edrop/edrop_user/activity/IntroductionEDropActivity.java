@@ -16,6 +16,7 @@ import android.widget.SimpleAdapter;
 
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.adapter.SimpleIntroduceAdapter;
+import net.edrop.edrop_user.utils.SystemTransUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class IntroductionEDropActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        new SystemTransUtil().transform(IntroductionEDropActivity.this);
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_introduction_edrop);

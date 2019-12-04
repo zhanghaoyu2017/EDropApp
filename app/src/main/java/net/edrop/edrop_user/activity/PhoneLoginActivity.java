@@ -1,8 +1,6 @@
 package net.edrop.edrop_user.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.Handler;
@@ -11,8 +9,6 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,8 +27,17 @@ import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.entity.QQUser;
 import net.edrop.edrop_user.utils.SystemTransUtil;
 
+import java.io.IOException;
+
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import static net.edrop.edrop_user.utils.Constant.BASE_URL;
 
 public class PhoneLoginActivity extends Activity implements View.OnClickListener{
     private String APPKEY = "2d3bde91c4a25";
@@ -54,6 +59,7 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
     private UserInfo userInfo;
     private static PhoneLoginActivity.BaseUiListener listener = null;
     private String QQ_uid;//qq_openid
+    private OkHttpClient okHttpClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         new SystemTransUtil().trans(PhoneLoginActivity.this);
@@ -76,6 +82,7 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
         requestCodeBtn = (Button) findViewById(R.id.login_request_code_btn);
         btnPhoneLogin = (Button) findViewById(R.id.btn_request_login);
         qqLogin=findViewById(R.id.qq);
+        okHttpClient = new OkHttpClient();
 
         // 启动短信验证sdk
         MobSDK.init(this, APPKEY, APPSECRET);
@@ -150,6 +157,7 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
 
             case R.id.btn_request_login:
                 //将收到的验证码和手机号提交再次核对
+                Log.e("test", "zcxhaha1");
                 SMSSDK.submitVerificationCode("86", phoneNums, inputCodeEt
                         .getText().toString());
                 break;
@@ -173,17 +181,23 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
                 Object data = msg.obj;
                 Log.e("event", "event=" + event);
                 if (result == SMSSDK.RESULT_COMPLETE) {
+                    Log.e("test", "1");
                     // 短信注册成功后，返回MainActivity,然后提示
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {// 提交验证码成功
 //                        Toast.makeText(getApplicationContext(), "提交验证码成功",
 //                                Toast.LENGTH_SHORT).show();
+                        Log.e("test", "2");
+//                        String phoneNums = inputPhoneEt.getText().toString();
+//                        OkHttpPhoneLogin(phoneNums);
+
                         Intent intent = new Intent(PhoneLoginActivity.this,
-                                Main2Activity.class);
+                                TestPhoneNumActivity.class);
                         Bundle bundle = new Bundle();
-                        bundle.putString("userName", inputPhoneEt.getText().toString().trim());
+                        bundle.putString("phoneNum", inputPhoneEt.getText().toString().trim());
                         intent.putExtras(bundle);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
+
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                         Toast.makeText(getApplicationContext(), "正在获取验证码，请及时接收登录",
                                 Toast.LENGTH_SHORT).show();
@@ -195,8 +209,31 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
             }
         }
     };
+    //通过okhttp发送通过验证的手机号
+
+    private void OkHttpPhoneLogin(final String phoneNum) {
+
+//        File
+        //2.创建Request对象
+        Request request = new Request.Builder().url(BASE_URL + "loginByPhone?phone=" +phoneNum).build();
+        //3.创建Call对象
+        final Call call = okHttpClient.newCall(request);
+        //4.发送请求 获得响应数据
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseJson = response.body().string();
+                Log.e("response", responseJson);
+            }
+        });
 
 
+    }
     /**
      * 判断手机号码是否合理
      *
