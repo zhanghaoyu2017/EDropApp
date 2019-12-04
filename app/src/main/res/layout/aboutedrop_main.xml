@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/size_20"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_30"
+                android:text="简介"
+                android:textColor="#000066"
+                android:textSize="@dimen/size_25"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_10"
+                android:text="\t\t\t\t易扔是专门为垃圾回收量身设计、开发的一款专业国际垃圾回收利用管理软件。本软件人性化模拟垃圾回收到处理流程，实现了足不出户就可解决垃圾分类的烦恼，软件从一键预约代扔到工作人员上门服务、从集中混乱到垃圾的合理分类、从分类的模模糊糊到实时查询精确分类。在大数据与人工智能快速发展的时代，这些都可以让你的体验感变得爆棚。当然，我们还有客服一对一的服务，随时随地解决用户的烦恼以及对订单的问题的实时解答处理、我们还有社区的实时动态，与社区用户分享心得体会，这里也是你的第二个乐园、我们还可参加知识竞赛，提升自己的知识储备量，响应时代进步的步伐。用户可随时随地的安排自己的时间，提升工作效率的同时提高生活的幸福度。 易扔开创预约、下单、接单、审单、上门服务、确认订单、完成订单“一步到位” 的信息化管理新模式。易扔打破了我国垃圾回收管理行业中费力的常规，并可在智能识别应用的基础上，实现了垃圾分类的简便体验。本系统以其便捷、快速、高效、人性化的操作模式，获得了很多同行同业以及广大群众的认可。"
+                android:textSize="@dimen/size_18" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_20"
+                android:text="软件的6大优势："
+                android:textColor="#000066"
+                android:textSize="@dimen/size_25"
+                android:textStyle="bold" />
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_20"
+                android:text="优势1、智能识别，即时提醒，降低错误！"
+                android:textSize="@dimen/size_20"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_10"
+                android:text="\t\t\t\t具有智能识别和图像处理功能，实时对不清楚的垃圾分类拍照上传到服务器，服务器自动获取解析图像，通过识别图像处理算法，准确返回图像的分类信息，提高分类的正确率，大大降低了自己分类和其他环节所造成的失误率。"
+                android:textSize="@dimen/size_18" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_20"
+                android:text="优势2  一键预约，上门服务、提高效率！"
+                android:textSize="@dimen/size_20"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_10"
+                android:text="\t\t\t\t辅助预约系统，采用智能输入和网络传输技术，实现用户根据自己的时间自主预约，无需人工二次操作，即可大大节省人工成本，提高工作效率，也可解决因人工录入导致的数据错误。"
+                android:textSize="@dimen/size_18" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_20"
+                android:text="优势3  即时查询，方便、快捷！"
+                android:textSize="@dimen/size_20"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_10"
+                android:text="\t\t\t\t具有完整的垃圾分类查询数据库，可实时对不熟悉的垃圾查询。"
+                android:textSize="@dimen/size_18" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_20"
+                android:text="优势4  垃圾真实数据 ，数据无缝抽取！"
+                android:textSize="@dimen/size_20"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_10"
+                android:text="\t\t\t\t利用大数据技术，后台大数据技术可以实时爬取自动获取当前最新最热的垃圾分类信息，后台再进行数据库的更新。无需任何人工成本，完全自动化进行，让易扔后台系统获得相关垃圾分类数据，便于管理。"
+                android:textSize="@dimen/size_18" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_20"
+                android:text="优势5 订单实时跟踪，联网查询！"
+                android:textSize="@dimen/size_20"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_10"
+                android:text="\t\t\t\t利用现代信息技术，实现了预约订单进度的实时跟踪、查询功能。同时，为垃圾分类提供了互联网数据接口，让您的客户及时通过网络查询订单进度和订单单详情。"
+                android:textSize="@dimen/size_18" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_20"
+                android:text="优势6 易学、易用、操作方便！"
+                android:textSize="@dimen/size_20"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_10"
+                android:text="\t\t\t\t人性化模拟垃圾回收流程，功能齐全，易用，无需学习，打开即用，操作简单方便！"
+                android:textSize="@dimen/size_18" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_30" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
