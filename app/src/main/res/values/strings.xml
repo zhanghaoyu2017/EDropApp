@@ -3,93 +3,47 @@
     <string name="title_activity_phone_login">PhoneLoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="introduction_text">
-        "Material is the metaphor.\n\n"
+        "\t\tEDrop由de_dust2小组合作开发完成.\n\n"
 
-        "A material metaphor is the unifying theory of a rationalized space and a system of motion."
-        "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
-        "technologically advanced and open to imagination and magic.\n"
-        "Surfaces and edges of the material provide visual cues that are grounded in reality. The "
-        "use of familiar tactile attributes helps users quickly understand affordances. Yet the "
-        "flexibility of the material creates new affordances that supercede those in the physical "
-        "world, without breaking the rules of physics.\n"
-        "The fundamentals of light, surface, and movement are key to conveying how objects move, "
-        "interact, and exist in space and in relation to each other. Realistic lighting shows "
-        "seams, divides space, and indicates moving parts.\n\n"
+        "简介\n\n"
+        "\t\t\t\t易扔是专门为垃圾回收量身设计、开发的一款专业国际垃圾回收利用管理软件。"
+        "本软件人性化模拟垃圾回收到处理流程，实现了足不出户就可解决垃圾分类的烦恼，软件从一键预约代扔"
+       "到工作人员上门服务、从集中混乱到垃圾的合理分类、从分类的模模糊糊到实时查询精确分类。在大数据与人工"
+        "智能快速发展的时代，这些都可以让你的体验感变得爆棚。当然，我们还有客服一对一的服务，随时随地解决用"
+       "户的烦恼以及对订单的问题的实时解答处理、我们还有社区的实时动态，与社区用户分享心得体会，这里也是你"
+        "的第二个乐园、我们还可参加知识竞赛，提升自己的知识储备量，响应时代进步的步伐。用户可随时随地的安排"
+       "自己的时间，提升工作效率的同时提高生活的幸福度。易扔开创预约、下单、接单、审单、上门服务、确认订单"
+        "、完成订单“一步到位” 的信息化管理新模式。易扔打破了我国垃圾回收管理行业中费力的常规，并可在智能"
+        "识别应用的基础上，实现了垃圾分类的简便体验。本系统以其便捷、快速、高效、人性化的操作模式，获得了很"
+        "多同行同业以及广大群众的认可。\n\n"
+        "软件的6大优势：\n\n"
+        "优势1  智能识别，即时提醒，降低错误！\n"
+        "\t\t\t\t具有智能识别和图像处理功能，实时对不清楚的垃圾分类拍照上传到服务器，服务器自动获取解析图像，通过"
+        "识别图像处理算法，准确返回图像的分类信息，提高分类的正确率，大大降低了自己分类和其他环节所造成的失"
+        "误率。\n\n"
 
-        "Bold, graphic, intentional.\n\n"
+        "优势2  一键预约，上门服务、提高效率！\n"
+        "\t\t\t\t辅助预约系统，采用智能输入和网络传输技术，实现用户根据自己的时间自主预约，无需人工二次操作，即"
+        "可大大节省人工成本，提高工作效率，也可解决因人工录入导致的数据错误。\n\n"
 
-        "The foundational elements of print based design typography, grids, space, scale, color, "
-        "and use of imagery guide visual treatments. These elements do far more than please the "
-        "eye. They create hierarchy, meaning, and focus. Deliberate color choices, edge to edge "
-        "imagery, large scale typography, and intentional white space create a bold and graphic "
-        "interface that immerse the user in the experience.\n"
-        "An emphasis on user actions makes core functionality immediately apparent and provides "
-        "waypoints for the user.\n\n"
+         "优势3  即时查询，方便、快捷！\n"
+        "\t\t\t\t具有完整的垃圾分类查询数据库，可实时对不熟悉的垃圾查询。\n\n"
 
-        "Motion provides meaning.\n\n"
 
-        "Motion respects and reinforces the user as the prime mover. Primary user actions are "
-        "inflection points that initiate motion, transforming the whole design.\n"
-        "All action takes place in a single environment. Objects are presented to the user without "
-        "breaking the continuity of experience even as they transform and reorganize.\n"
-        "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
-        "Feedback is subtle yet clear. Transitions are efﬁcient yet coherent.\n\n"
+        "优势4  垃圾真实数据 ，数据无缝抽取！\n"
+        "\t\t\t\t利用大数据技术，后台大数据技术可以实时爬取自动获取当前最新最热的垃圾分类信息，后台再进行数据库"
+        "的更新。无需任何人工成本，完全自动化进行，让易扔后台系统获得相关垃圾分类数据，便于管理。\n\n"
 
-        "3D world.\n\n"
 
-        "The material environment is a 3D space, which means all objects have x, y, and z "
-        "dimensions. The z-axis is perpendicularly aligned to the plane of the display, with the "
-        "positive z-axis extending towards the viewer. Every sheet of material occupies a single "
-        "position along the z-axis and has a standard 1dp thickness.\n"
-        "On the web, the z-axis is used for layering and not for perspective. The 3D world is "
-        "emulated by manipulating the y-axis.\n\n"
+        "优势5 订单实时跟踪，联网查询！\n"
+        "\t\t\t\t利用现代信息技术，实现了预约订单进度的实时跟踪、查询功能。同时，为垃圾分类提供了互联网数据接口"
+        "，让您的客户及时通过网络查询订单进度和订单单详情。\n\n"
 
-        "Light and shadow.\n\n"
+         "优势6 易学、易用、操作方便！\n"
+        "\t\t\t\t人性化模拟垃圾回收流程，功能齐全，易用，无需学习，打开即用，操作简单方便！\n\n"
 
-        "Within the material environment, virtual lights illuminate the scene. Key lights create "
-        "directional shadows, while ambient light creates soft shadows from all angles.\n"
-        "Shadows in the material environment are cast by these two light sources. In Android "
-        "development, shadows occur when light sources are blocked by sheets of material at "
-        "various positions along the z-axis. On the web, shadows are depicted by manipulating the "
-        "y-axis only. The following example shows the card with a height of 6dp.\n\n"
 
-        "Resting elevation.\n\n"
 
-        "All material objects, regardless of size, have a resting elevation, or default elevation "
-        "that does not change. If an object changes elevation, it should return to its resting "
-        "elevation as soon as possible.\n\n"
-
-        "Component elevations.\n\n"
-
-        "The resting elevation for a component type is consistent across apps (e.g., FAB elevation "
-        "does not vary from 6dp in one app to 16dp in another app).\n"
-        "Components may have different resting elevations across platforms, depending on the depth "
-        "of the environment (e.g., TV has a greater depth than mobile or desktop).\n\n"
-
-        "Responsive elevation and dynamic elevation offsets.\n\n"
-
-        "Some component types have responsive elevation, meaning they change elevation in response "
-        "to user input (e.g., normal, focused, and pressed) or system events. These elevation "
-        "changes are consistently implemented using dynamic elevation offsets.\n"
-        "Dynamic elevation offsets are the goal elevation that a component moves towards, relative "
-        "to the component’s resting state. They ensure that elevation changes are consistent "
-        "across actions and component types. For example, all components that lift on press have "
-        "the same elevation change relative to their resting elevation.\n"
-        "Once the input event is completed or cancelled, the component will return to its resting "
-        "elevation.\n\n"
-
-        "Avoiding elevation interference.\n\n"
-
-        "Components with responsive elevations may encounter other components as they move between "
-        "their resting elevations and dynamic elevation offsets. Because material cannot pass "
-        "through other material, components avoid interfering with one another any number of ways, "
-        "whether on a per component basis or using the entire app layout.\n"
-        "On a component level, components can move or be removed before they cause interference. "
-        "For example, a floating action button (FAB) can disappear or move off screen before a "
-        "user picks up a card, or it can move if a snackbar appears.\n"
-        "On the layout level, design your app layout to minimize opportunities for interference. "
-        "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
-        "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_recognition_result">RecognitionResultActivity</string>
     <string name="search">搜索</string>
