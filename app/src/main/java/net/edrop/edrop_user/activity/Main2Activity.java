@@ -393,12 +393,16 @@ public class Main2Activity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e("拍照测试", "拍照成功");
-        bitmap = (Bitmap) data.getExtras().get("data");//获取拍取的照片
+        if (requestCode == 100 && resultCode == RESULT_OK){
+            Log.e("拍照测试", "拍照成功");
+            bitmap = (Bitmap) data.getExtras().get("data");//获取拍取的照片
 
-        //BitMap转成文件
-        File f = convertBitmapToFile(bitmap);
-        postFile(f);
+            //BitMap转成文件
+            File f = convertBitmapToFile(bitmap);
+            postFile(f);
+
+        }
+
 
 
     }
