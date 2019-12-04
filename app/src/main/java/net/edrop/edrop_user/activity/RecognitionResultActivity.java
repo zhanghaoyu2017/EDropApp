@@ -43,21 +43,14 @@ public class RecognitionResultActivity extends Activity {
         new SystemTransUtil().trans(RecognitionResultActivity.this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recognition_result);
-//        initData();
         initViews();
-//
-
         Intent intent = getIntent();
         byte buf[] = intent.getByteArrayExtra("photo_bmp");
         Bitmap photo_bmp = BitmapFactory.decodeByteArray(buf, 0, buf.length);
         imgPhoto.setImageBitmap(photo_bmp);
         String json = intent.getStringExtra("json");
-
         dataSource = jsonArrayStr2ObjectList(json);
-//        textView.setText(json);
         setMyAdapter();
-//
-        Log.e("testtttttttttt", jsonArrayStr2ObjectList(json).toString());
     }
 
     /**
@@ -89,12 +82,11 @@ public class RecognitionResultActivity extends Activity {
         );
         listView.setAdapter(adapter);
     }
-    
+
 
     private void initViews() {
         imgPhoto = findViewById(R.id.iv_photo);
         listView = findViewById(R.id.lv_recognition);
-//        textView = findViewById(R.id.tv_json);
 
     }
 
