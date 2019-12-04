@@ -79,4 +79,6 @@ dependencies {
     //环信依赖
     implementation 'io.reactivex:rxandroid:1.2.1'
     implementation 'io.reactivex:rxjava:1.1.6'
+    //三级联动
+    implementation 'liji.library.dev:citypickerview:5.0.0'
 }

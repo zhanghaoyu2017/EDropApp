@@ -3,9 +3,130 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <TextView
-        android:text="123"
-        android:gravity="center"
+    <!--用户名-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/size_25"
+        android:layout_marginLeft="@dimen/size_30"
+        android:layout_marginRight="@dimen/size_30"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="用户名："
+            android:textSize="@dimen/size_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="zs"
+            android:textSize="@dimen/size_22"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_change"
+            android:text="         修改 "
+            android:textSize="@dimen/size_15"
+            android:textColor="@color/color_blue_4562e9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textSize="@dimen/size_15"
+            android:text="可用于登录，请牢记哦"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!--性别-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/size_10"
+        android:layout_marginLeft="@dimen/size_30"
+        android:layout_marginRight="@dimen/size_30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="性别："
+            android:textSize="@dimen/size_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioGroup
+            android:id="@+id/rg_sex"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <RadioButton
+                android:id="@+id/rb_secret"
+                android:text="保密"
+                android:checked="true"
+                android:textSize="@dimen/size_18"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <RadioButton
+                android:id="@+id/rb_boy"
+                android:text="男"
+                android:textSize="@dimen/size_18"
+                android:layout_marginLeft="@dimen/size_18"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <RadioButton
+                android:id="@+id/rb_girl"
+                android:text="女"
+                android:layout_marginLeft="@dimen/size_18"
+                android:textSize="@dimen/size_18"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </RadioGroup>
+    </LinearLayout>
+    <!--地址-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/size_10"
+        android:layout_marginLeft="@dimen/size_30"
+        android:layout_marginRight="@dimen/size_30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="地址："
+            android:textSize="@dimen/size_20"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_select"
+            android:text="请选择城市"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <!--详细地址-->
+    <TextView
+        android:text="详细地址："
+        android:textSize="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_5"
+        android:layout_marginLeft="@dimen/size_30"
+        android:layout_marginRight="@dimen/size_30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/tv_detail_address"
+        android:minLines="5"
+        android:enabled="true"
+        android:inputType="textMultiLine"
+        android:layout_marginTop="@dimen/size_5"
+        android:layout_marginLeft="@dimen/size_30"
+        android:layout_marginRight="@dimen/size_30"
+        android:layout_width="fill_parent"
+        android:scrollbars="horizontal"
+        android:background="@drawable/register_shape"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btn_update"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/size_5"
+        android:layout_marginLeft="@dimen/size_30"
+        android:layout_marginRight="@dimen/size_30"
+        android:text="更新信息"
+        android:background="@drawable/btn_login_green_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

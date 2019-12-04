@@ -10,10 +10,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TabHost;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.lljjcoder.Interface.OnCityItemClickListener;
+import com.lljjcoder.bean.CityBean;
+import com.lljjcoder.bean.DistrictBean;
+import com.lljjcoder.bean.ProvinceBean;
+import com.lljjcoder.citywheel.CityConfig;
+import com.lljjcoder.style.citylist.Toast.ToastUtils;
+import com.lljjcoder.style.citypickerview.CityPickerView;
 
 import net.edrop.edrop_user.R;
-import net.edrop.edrop_user.adapter.MyPagerAdapter;
 import net.edrop.edrop_user.utils.SystemTransUtil;
 
 import java.util.ArrayList;
@@ -27,17 +37,37 @@ public class FillPersonalInforActivity extends AppCompatActivity {
     private View view1, view2;//页卡视图
     private List<View> mViewList = new ArrayList<>();//页卡视图集合
     private ImageView btnReturn;
+    //性别
+    private RadioGroup rgSex = null;
+    private RadioButton rbBoy=null;
+    private RadioButton rbGirl=null;
+    private RadioButton rbSecret=null;
+    //三级联动
+    private CityPickerView mPicker = new CityPickerView();
+    private TextView tvSelect;
+    private TextView tvChange;
+    private TextView tvDetailAddress;
+    private Button btnUpdata;
+    private String strSex = null;
+    private String address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         new SystemTransUtil().trans(FillPersonalInforActivity.this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fill_personal_infor);
-
+        mPicker.init(this);
         initView();
-        setLinstener();
 
         view1 = mInflater.inflate(R.layout.item_fill_base_info, null);
+        tvSelect = (TextView) view1.findViewById(R.id.tv_select);
+        tvChange = (TextView) view1.findViewById(R.id.tv_change);
+        tvDetailAddress = (TextView) view1.findViewById(R.id.tv_detail_address);
+        btnUpdata = (Button) view1.findViewById(R.id.btn_update);
+        rgSex = view1.findViewById(R.id.rg_sex);
+        rbBoy = view1.findViewById(R.id.rb_boy);
+        rbGirl = view1.findViewById(R.id.rb_girl);
+        rbSecret = view1.findViewById(R.id.rb_secret);
         view2 = mInflater.inflate(R.layout.item_fill_img_info, null);
         //添加页卡视图
         mViewList.add(view1);
@@ -51,27 +81,107 @@ public class FillPersonalInforActivity extends AppCompatActivity {
         MyPagerAdapter mAdapter = new MyPagerAdapter(mViewList);
         //给ViewPager设置适配器
         mViewPager.setAdapter(mAdapter);
-
         //将TabLayout和ViewPager关联起来
         mTabLayout.setupWithViewPager(mViewPager);
         //给Tabs设置适配器
         mTabLayout.setTabsFromPagerAdapter(mAdapter);
+
+        setLinstener();
     }
 
     private void setLinstener() {
         btnReturn.setOnClickListener(new MyLinsener());
+        tvSelect.setOnClickListener(new MyLinsener());
+        tvChange.setOnClickListener(new MyLinsener());
+        tvDetailAddress.setOnClickListener(new MyLinsener());
+        btnUpdata.setOnClickListener(new MyLinsener());
     }
 
-    private class MyLinsener implements View.OnClickListener{
+    private class MyLinsener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.iv_return:
                     finish();
+                    break;
+                case R.id.tv_select:
+                    CityConfig cityConfig = new CityConfig.Builder()
+                            .title("选择城市")//标题
+                            .titleTextSize(18)//标题文字大小
+                            .titleTextColor("#585858")//标题文字颜 色
+                            .titleBackgroundColor("#E9E9E9")//标题栏背景色
+                            .confirTextColor("#585858")//确认按钮文字颜色
+                            .confirmText("确认")//确认按钮文字
+                            .confirmTextSize(16)//确认按钮文字大小
+                            .cancelTextColor("#585858")//取消按钮文字颜色
+                            .cancelText("取消")//取消按钮文字
+                            .cancelTextSize(16)//取消按钮文字大小
+                            .setCityWheelType(CityConfig.WheelType.PRO_CITY_DIS)//显示类，只显示省份一级，显示省市两级还是显示省市区三级
+                            .showBackground(true)//是否显示半透明背景
+                            .visibleItemsCount(7)//显示item的数量
+                            .province("河北省")//默认显示的省份
+                            .city("石家庄市")//默认显示省份下面的城市
+                            .district("裕华区")//默认显示省市下面的区县数据
+                            .provinceCyclic(true)//省份滚轮是否可以循环滚动
+                            .cityCyclic(true)//城市滚轮是否可以循环滚动
+                            .districtCyclic(true)//区县滚轮是否循环滚动
+                            .setCustomItemLayout(R.layout.activity_main)//自定义item的布局
+                            .drawShadows(false)//滚轮不显示模糊效果
+                            .setLineColor("#1DC850")//中间横线的颜色
+                            .setLineHeigh(5)//中间横线的高度
+                            .setShowGAT(true)//是否显示港澳台数据，默认不显示
+                            .build();
+                    mPicker.setConfig(cityConfig);
+                    //监听选择点击事件及返回结果
+                    mPicker.setOnCityItemClickListener(new OnCityItemClickListener() {
+                        @Override
+                        public void onSelected(ProvinceBean province, CityBean city, DistrictBean district) {
+                            //省份province
+                            //城市city
+                            //地区district
+                            tvSelect.setText(province+"\t"+city+"\t"+district);
+                            address=province+"-"+city+"-"+district;
+//                            Toast.makeText(FillPersonalInforActivity.this,province+"-"+city+"-"+district,Toast.LENGTH_LONG).show();
+                        }
+                        @Override
+                        public void onCancel() {
+                            ToastUtils.showLongToast(FillPersonalInforActivity.this, "已取消");
+                        }
+                    });
+                    //显示
+                    mPicker.showCityPicker();
+                    break;
+                case R.id.tv_change:
+                    break;
+                case R.id.tv_detail_address:
+                    tvDetailAddress.getText().toString();
+                    break;
+                case R.id.btn_update:
+                    switch (rgSex.getCheckedRadioButtonId()) {
+                        case R.id.rb_boy:
+                            strSex = "boy";
+                            rbGirl.setChecked(false);
+                            rbSecret.setChecked(false);
+                            break;
+                        case R.id.rb_girl:
+                            strSex = "girl";
+                            rbBoy.setChecked(false);
+                            rbSecret.setChecked(false);
+                            break;
+                        case R.id.rb_secret:
+                            strSex = "secret";
+                            rbGirl.setChecked(false);
+                            rbBoy.setChecked(false);
+                            break;
+                    }
+                    Toast.makeText(FillPersonalInforActivity.this,
+                            strSex+"\t"+address+"\t"+tvDetailAddress.getText().toString(),
+                            Toast.LENGTH_SHORT).show();
                     break;
             }
         }
     }
+
     private void initView() {
         btnReturn = (ImageView) findViewById(R.id.iv_return);
         mViewPager = (ViewPager) findViewById(R.id.vp_view);
@@ -79,8 +189,10 @@ public class FillPersonalInforActivity extends AppCompatActivity {
         mInflater = LayoutInflater.from(this);
     }
 
-    //ViewPager适配器
-    class MyPagerAdapter extends PagerAdapter {
+    /**
+     * ViewPager适配器
+     **/
+    private class MyPagerAdapter extends PagerAdapter {
         private List<View> mViewList;
 
         public MyPagerAdapter(List<View> mViewList) {
