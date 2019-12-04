@@ -27,6 +27,7 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
     private ImageView gender;
     private ImageView personalBack;
     private Button cancelLogin;
+    private TextView tvEditInfo;
 
     protected void onCreate(Bundle savedInstanceState) {
         new SystemTransUtil().trans(PersonalCenterManagerActivity.this);
@@ -39,9 +40,11 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
     private void setListener() {
         cancelLogin.setOnClickListener(new MyListener());
         personalBack.setOnClickListener(new MyListener());
+        tvEditInfo.setOnClickListener(new MyListener());
     }
 
     private void initView() {
+        tvEditInfo=findViewById(R.id.tv_edit_info);
         cancelLogin=findViewById(R.id.btn_cancel_login);
         personalBack=findViewById(R.id.personal_back);
     }
@@ -65,7 +68,11 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
                 case R.id.personal_back:
                     finish();
                     break;
-
+                case R.id.tv_edit_info:
+                    Intent intent = new Intent(PersonalCenterManagerActivity.this, FillPersonalInforActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    break;
             }
         }
         /**

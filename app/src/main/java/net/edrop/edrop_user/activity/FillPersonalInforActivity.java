@@ -34,7 +34,7 @@ public class FillPersonalInforActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private LayoutInflater mInflater;
     private List<String> mTitleList = new ArrayList<String>();//页卡标题集合
-    private View view1, view2;//页卡视图
+    private View view1, view2 ,view3;//页卡视图
     private List<View> mViewList = new ArrayList<>();//页卡视图集合
     private ImageView btnReturn;
     //性别
@@ -69,15 +69,19 @@ public class FillPersonalInforActivity extends AppCompatActivity {
         rbGirl = view1.findViewById(R.id.rb_girl);
         rbSecret = view1.findViewById(R.id.rb_secret);
         view2 = mInflater.inflate(R.layout.item_fill_img_info, null);
+        view3 = mInflater.inflate(R.layout.item_fill_img_info, null);
         //添加页卡视图
         mViewList.add(view1);
         mViewList.add(view2);
+        mViewList.add(view3);
         //添加页卡标题
         mTitleList.add("基本信息");
         mTitleList.add("头像信息");
+        mTitleList.add("密码修改");
         //添加tab选项卡，默认第一个选中
         mTabLayout.addTab(mTabLayout.newTab().setText(mTitleList.get(0)), true);
         mTabLayout.addTab(mTabLayout.newTab().setText(mTitleList.get(1)));
+        mTabLayout.addTab(mTabLayout.newTab().setText(mTitleList.get(2)));
         MyPagerAdapter mAdapter = new MyPagerAdapter(mViewList);
         //给ViewPager设置适配器
         mViewPager.setAdapter(mAdapter);

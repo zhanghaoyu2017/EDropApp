@@ -54,6 +54,15 @@
                 android:src="@drawable/gender_boy"
                 android:layout_width="@dimen/size_50"
                 android:layout_height="@dimen/size_25" />
+            <TextView
+                android:id="@+id/tv_edit_info"
+                android:text="编辑信息"
+                android:textSize="@dimen/size_15"
+                android:textColor="@color/liji_material_blue_500"
+                android:layout_marginLeft="@dimen/size_10"
+                android:layout_alignBottom="@+id/change_head_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </RelativeLayout>
         <!--用户名-->
