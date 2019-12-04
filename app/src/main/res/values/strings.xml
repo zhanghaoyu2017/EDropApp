@@ -43,8 +43,6 @@
          "优势6   易学、易用、操作方便！\n"
         "\t\t\t\t人性化模拟垃圾回收流程，功能齐全，易用，无需学习，打开即用，操作简单方便！\n\n"
 
-
-
     </string>
     <string name="title_activity_recognition_result">RecognitionResultActivity</string>
     <string name="search">搜索</string>
@@ -54,4 +52,5 @@
         "可以选择使用手机号登录及找回密码，更方便轻松\n"
     </string>
     <string name="title_activity_tset">TsetActivity</string>
+    <string name="select_photo">♟选择您想要上传的头像</string>
 </resources>

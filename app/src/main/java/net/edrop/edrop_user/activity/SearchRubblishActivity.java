@@ -61,8 +61,6 @@ import static net.edrop.edrop_user.utils.Constant.SEARCH_SUCCESS;
 import static net.edrop.edrop_user.utils.Constant.USER_NO_EXISTS;
 
 public class SearchRubblishActivity extends AppCompatActivity {
-    private Window window;
-    private boolean lightStatusBar = false;
     //搜索框控件
     private SearchView searchView;
     private AutoCompleteTextView mAutoCompleteTextView;//搜索输入框

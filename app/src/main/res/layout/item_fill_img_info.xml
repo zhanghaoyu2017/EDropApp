@@ -3,5 +3,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <Button
+        android:id="@+id/btn_select_img"
+        android:text="@string/select_photo"
+        android:layout_marginTop="@dimen/size_15"
+        android:layout_marginLeft="@dimen/size_30"
+        android:layout_marginRight="@dimen/size_30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="仅支持JPG、GIF、PNG、JPEG、BMP格式，文件小于4M"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="@dimen/size_30"
+        android:layout_marginRight="@dimen/size_30"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/size_30"
+        android:layout_marginRight="@dimen/size_30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_head_img"
+            android:src="@drawable/no_img"
+            android:layout_width="@dimen/size_200"
+            android:layout_height="@dimen/size_200" />
+        <TextView
+            android:text="    图片预览"
+            android:textStyle="bold"
+            android:textColor="@color/color_green_32BA88"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <Button
+        android:text="保存"
+        android:textSize="@dimen/size_20"
+        android:textColor="#fff"
+        android:background="@drawable/btn_register_background"
+        android:layout_marginLeft="@dimen/size_30"
+        android:layout_marginRight="@dimen/size_30"
+        android:layout_marginTop="@dimen/size_30"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content" />
 </LinearLayout>

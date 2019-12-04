@@ -1,20 +1,39 @@
 package net.edrop.edrop_user.activity;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.lljjcoder.Interface.OnCityItemClickListener;
 import com.lljjcoder.bean.CityBean;
 import com.lljjcoder.bean.DistrictBean;
@@ -25,11 +44,15 @@ import com.lljjcoder.style.citypickerview.CityPickerView;
 
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.utils.SystemTransUtil;
+import net.edrop.edrop_user.utils.getPhotoFromPhotoAlbum;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FillPersonalInforActivity extends AppCompatActivity {
+import pub.devrel.easypermissions.EasyPermissions;
+
+public class FillPersonalInforActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private LayoutInflater mInflater;
@@ -49,6 +72,19 @@ public class FillPersonalInforActivity extends AppCompatActivity {
     private Button btnUpdata;
     private String strSex = null;
     private String address;
+    //照片
+    private String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private Button btnSelectImg;
+    private ImageView ivHeadImg;
+    private File cameraSavePath;//拍照照片路径
+    private Uri uri;
+    //popupWindow
+    private PopupWindow popupWindow = null;
+    private View popupView = null;
+    //新密码
+    private EditText etNewPsd;
+    private EditText etNewPsd2;
+    private Button btnOk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +103,17 @@ public class FillPersonalInforActivity extends AppCompatActivity {
         rbBoy = view1.findViewById(R.id.rb_boy);
         rbGirl = view1.findViewById(R.id.rb_girl);
         rbSecret = view1.findViewById(R.id.rb_secret);
+
         view2 = mInflater.inflate(R.layout.item_fill_img_info, null);
-        view3 = mInflater.inflate(R.layout.item_fill_img_info, null);
+        btnSelectImg = view2.findViewById(R.id.btn_select_img);
+        ivHeadImg = view2.findViewById(R.id.iv_head_img);
+        cameraSavePath = new File(Environment.getExternalStorageDirectory().getPath() + "/" + System.currentTimeMillis() + ".jpg");
+        getPermission();
+        view3 = mInflater.inflate(R.layout.item_fill_psd_info, null);
+        etNewPsd=view3.findViewById(R.id.et_newPsd);
+        etNewPsd2=view3.findViewById(R.id.et_newPsd2);
+        btnOk=view3.findViewById(R.id.btn_new_ok);
+
         //添加页卡视图
         mViewList.add(view1);
         mViewList.add(view2);
@@ -92,7 +137,82 @@ public class FillPersonalInforActivity extends AppCompatActivity {
         setLinstener();
     }
 
+    //获取权限
+    private void getPermission() {
+        if (EasyPermissions.hasPermissions(this, permissions)) {
+            //已经打开权限
+            Toast.makeText(this, "已经申请相关权限", Toast.LENGTH_SHORT).show();
+        } else {
+            //没有打开相关权限、申请权限
+            EasyPermissions.requestPermissions(this, "需要获取您的相册、照相使用权限", 1, permissions);
+        }
+    }
+
+    //激活相册操作
+    private void goPhotoAlbum() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, 2);
+    }
+
+    //激活相机操作
+    private void goCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uri = FileProvider.getUriForFile(FillPersonalInforActivity.this, "net.edrop.edrop_user.fileprovider", cameraSavePath);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            uri = Uri.fromFile(cameraSavePath);
+        }
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        FillPersonalInforActivity.this.startActivityForResult(intent, 1);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //框架要求必须这么写
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    //成功打开权限
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+
+        Toast.makeText(this, "相关权限获取成功", Toast.LENGTH_SHORT).show();
+    }
+    //用户未同意权限
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        Toast.makeText(this, "请同意相关权限，否则功能无法使用", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (popupWindow.isShowing()){
+            popupWindow.dismiss();
+        }
+        String photoPath;
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                photoPath = String.valueOf(cameraSavePath);
+            } else {
+                photoPath = uri.getEncodedPath();
+            }
+            Log.e("拍照返回图片路径:", photoPath);
+            Glide.with(this).load(photoPath).into(ivHeadImg);
+        } else if (requestCode == 2 && resultCode == RESULT_OK) {
+            photoPath = getPhotoFromPhotoAlbum.getRealPathFromUri(this, data.getData());
+            Glide.with(FillPersonalInforActivity.this).load(photoPath).into(ivHeadImg);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     private void setLinstener() {
+        btnOk.setOnClickListener(new MyLinsener());
+        btnSelectImg.setOnClickListener(new MyLinsener());
         tvSelect.setOnClickListener(new MyLinsener());
         tvChange.setOnClickListener(new MyLinsener());
         tvDetailAddress.setOnClickListener(new MyLinsener());
@@ -140,7 +260,6 @@ public class FillPersonalInforActivity extends AppCompatActivity {
                             //地区district
                             tvSelect.setText(province + "\t" + city + "\t" + district);
                             address = province + "-" + city + "-" + district;
-//                            Toast.makeText(FillPersonalInforActivity.this,province+"-"+city+"-"+district,Toast.LENGTH_LONG).show();
                         }
 
                         @Override
@@ -178,9 +297,82 @@ public class FillPersonalInforActivity extends AppCompatActivity {
                             strSex + "\t" + address + "\t" + tvDetailAddress.getText().toString(),
                             Toast.LENGTH_SHORT).show();
                     break;
+                case R.id.btn_select_img:
+                    // 显示PopupWindow
+                    if(popupWindow==null || !popupWindow.isShowing())
+                        showPopupWindow();
+                    break;
+                case R.id.btn_new_ok:
+                    //确认新密码
+                    String newPsd = etNewPsd.getText().toString();
+                    String newPsd2 = etNewPsd2.getText().toString();
+                    if (newPsd.equals(newPsd2)){
+
+                    }else {
+                        Toast.makeText(FillPersonalInforActivity.this,"密码不一致",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
             }
         }
     }
+
+    private void showPopupWindow() {
+        // 创建popupWindow对象
+        setBackgroundAlpha(0.5f,this);
+        popupWindow = new PopupWindow();
+        popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        // 通过布局填充器创建View
+        popupView = getLayoutInflater().inflate(R.layout.item_popupwindow_photo, null);
+        // 设置PopupWindow显示的内容视图
+        popupWindow.setContentView(popupView);
+        // 设置PopupWindow是否能响应外部点击事件
+        popupWindow.setOutsideTouchable(true);
+        // 设置PopupWindow是否相应点击事件
+        popupWindow.setTouchable(true);
+        popupView.setFocusable(true);
+        View view_list = View.inflate(this, R.layout.item_popupwindow_photo, null);
+        popupWindow.setOnDismissListener(new poponDismissListener());
+        popupWindow.showAtLocation(view_list.findViewById(R.id.popup_photo), Gravity.BOTTOM, 0, 0);
+
+        // 获取按钮并添加监听器
+        Button btnAlbum = popupView.findViewById(R.id.btn_album);
+        Button btnCamera = popupView.findViewById(R.id.btn_camera);
+        Button btnCancel = popupView.findViewById(R.id.btn_cancel_popup);
+        btnAlbum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goPhotoAlbum();
+            }
+        });
+        btnCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goCamera();
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+            }
+        });
+    }
+    private class poponDismissListener implements PopupWindow.OnDismissListener {
+        @Override
+        public void onDismiss() {
+            setBackgroundAlpha(1f,FillPersonalInforActivity.this);
+        }
+    }
+
+    public static void setBackgroundAlpha(float bgAlpha, Context mContext) {
+        WindowManager.LayoutParams lp = ((Activity) mContext).getWindow()
+                .getAttributes();
+        lp.alpha = bgAlpha;
+        ((Activity) mContext).getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        ((Activity) mContext).getWindow().setAttributes(lp);
+    }
+
 
     private void initView() {
         mViewPager = (ViewPager) findViewById(R.id.vp_view);

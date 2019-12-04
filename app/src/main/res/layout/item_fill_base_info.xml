@@ -25,7 +25,7 @@
         <TextView
             android:id="@+id/tv_change"
             android:text="         修改 "
-            android:textSize="@dimen/size_15"
+            android:textSize="@dimen/size_10"
             android:textColor="@color/color_blue_4562e9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -121,12 +121,14 @@
         android:layout_height="wrap_content" />
     <Button
         android:id="@+id/btn_update"
+        android:textSize="@dimen/size_20"
+        android:textColor="#fff"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="@dimen/size_5"
         android:layout_marginLeft="@dimen/size_30"
         android:layout_marginRight="@dimen/size_30"
         android:text="更新信息"
-        android:background="@drawable/btn_login_green_background"
+        android:background="@drawable/btn_register_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>
