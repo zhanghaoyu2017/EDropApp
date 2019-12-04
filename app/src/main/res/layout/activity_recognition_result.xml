@@ -22,8 +22,19 @@
     <ListView
         android:id="@+id/lv_recognition"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_10" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/size_20"
+        android:layout_marginRight="@dimen/size_10"
+        android:layout_marginTop="@dimen/size_20"
+        android:gravity="right"
+        android:text="识别不准?直接搜索"
+        android:textColor="#4169E1"
+        android:textSize="15dp" />
 
 
 </LinearLayout>

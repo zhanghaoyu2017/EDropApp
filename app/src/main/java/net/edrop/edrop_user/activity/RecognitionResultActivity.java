@@ -78,6 +78,7 @@ public class RecognitionResultActivity extends Activity {
         RecognitionAdapter adapter = new RecognitionAdapter(
                 RecognitionResultActivity.this,
                 dataSource,
+                RecognitionResultActivity.this,
                 R.layout.activity_recognition_result_item
         );
         listView.setAdapter(adapter);
