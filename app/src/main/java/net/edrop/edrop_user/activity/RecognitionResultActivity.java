@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -36,7 +37,7 @@ public class RecognitionResultActivity extends Activity {
     private ImageView imgPhoto;
     private List<NewsList> dataSource;
     private ListView listView;
-    private TextView textView;
+    private TextView tvNoFind;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class RecognitionResultActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recognition_result);
         initViews();
+        setListener();
         Intent intent = getIntent();
         byte buf[] = intent.getByteArrayExtra("photo_bmp");
         Bitmap photo_bmp = BitmapFactory.decodeByteArray(buf, 0, buf.length);
@@ -88,6 +90,18 @@ public class RecognitionResultActivity extends Activity {
     private void initViews() {
         imgPhoto = findViewById(R.id.iv_photo);
         listView = findViewById(R.id.lv_recognition);
+        tvNoFind = findViewById(R.id.tv_nofind);
+
+    }
+    private void setListener(){
+        tvNoFind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RecognitionResultActivity.this, SearchRubblishActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
 
     }
 
