@@ -34,14 +34,13 @@ public class FillPersonalInforActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private LayoutInflater mInflater;
     private List<String> mTitleList = new ArrayList<String>();//页卡标题集合
-    private View view1, view2 ,view3;//页卡视图
+    private View view1, view2, view3;//页卡视图
     private List<View> mViewList = new ArrayList<>();//页卡视图集合
-    private ImageView btnReturn;
     //性别
     private RadioGroup rgSex = null;
-    private RadioButton rbBoy=null;
-    private RadioButton rbGirl=null;
-    private RadioButton rbSecret=null;
+    private RadioButton rbBoy = null;
+    private RadioButton rbGirl = null;
+    private RadioButton rbSecret = null;
     //三级联动
     private CityPickerView mPicker = new CityPickerView();
     private TextView tvSelect;
@@ -94,7 +93,6 @@ public class FillPersonalInforActivity extends AppCompatActivity {
     }
 
     private void setLinstener() {
-        btnReturn.setOnClickListener(new MyLinsener());
         tvSelect.setOnClickListener(new MyLinsener());
         tvChange.setOnClickListener(new MyLinsener());
         tvDetailAddress.setOnClickListener(new MyLinsener());
@@ -105,9 +103,6 @@ public class FillPersonalInforActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.iv_return:
-                    finish();
-                    break;
                 case R.id.tv_select:
                     CityConfig cityConfig = new CityConfig.Builder()
                             .title("选择城市")//标题
@@ -143,10 +138,11 @@ public class FillPersonalInforActivity extends AppCompatActivity {
                             //省份province
                             //城市city
                             //地区district
-                            tvSelect.setText(province+"\t"+city+"\t"+district);
-                            address=province+"-"+city+"-"+district;
+                            tvSelect.setText(province + "\t" + city + "\t" + district);
+                            address = province + "-" + city + "-" + district;
 //                            Toast.makeText(FillPersonalInforActivity.this,province+"-"+city+"-"+district,Toast.LENGTH_LONG).show();
                         }
+
                         @Override
                         public void onCancel() {
                             ToastUtils.showLongToast(FillPersonalInforActivity.this, "已取消");
@@ -179,7 +175,7 @@ public class FillPersonalInforActivity extends AppCompatActivity {
                             break;
                     }
                     Toast.makeText(FillPersonalInforActivity.this,
-                            strSex+"\t"+address+"\t"+tvDetailAddress.getText().toString(),
+                            strSex + "\t" + address + "\t" + tvDetailAddress.getText().toString(),
                             Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -187,7 +183,6 @@ public class FillPersonalInforActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        btnReturn = (ImageView) findViewById(R.id.iv_return);
         mViewPager = (ViewPager) findViewById(R.id.vp_view);
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
         mInflater = LayoutInflater.from(this);

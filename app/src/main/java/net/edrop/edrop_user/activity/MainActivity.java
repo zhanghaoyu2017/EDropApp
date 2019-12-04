@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.adapter.MyPagerAdapter;
+import net.edrop.edrop_user.utils.SystemTransUtil;
 
 import java.util.ArrayList;
 
@@ -25,17 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // 5.0以上系统状态栏透明
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
+        new SystemTransUtil().transform(MainActivity.this);
         super.onCreate(savedInstanceState);
         //判断是不是第一次登陆
         SharedPreferences sharedPreferences=this.getSharedPreferences("share",MODE_PRIVATE);

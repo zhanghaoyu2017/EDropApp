@@ -2,7 +2,7 @@ package net.edrop.edrop_user.entity;
 
 import java.io.Serializable;
 
-public class QQUser implements Serializable{
+public class QQUser implements Serializable {
 
     private int ret;
     private String msg;
