@@ -23,6 +23,7 @@ public class AboutEDrop extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        new SystemTransUtil().trans(AboutEDrop.this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aboutedrop_main);
 

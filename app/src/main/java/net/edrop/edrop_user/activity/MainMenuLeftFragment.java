@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.utils.SharedPreferencesUtils;
+import net.edrop.edrop_user.utils.SystemTransUtil;
 
 public class MainMenuLeftFragment extends Fragment {
     private View myView;
@@ -28,7 +29,6 @@ public class MainMenuLeftFragment extends Fragment {
     private TextView setting;
     private TextView feedback;
     private MyListener myListener;
-    private Intent intent;
 
     //重写
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -100,9 +100,9 @@ public class MainMenuLeftFragment extends Fragment {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.tv_userName:
-                    intent = new Intent(getActivity(), PersonalCenterManagerActivity.class);
+                    Intent intent = new Intent(getContext(), PersonalCenterManagerActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    getContext().startActivity(intent);
+                    startActivity(intent);
                     break;
                 case R.id.myMoney:
                     Toast.makeText(getActivity(), myMoney.getText().toString(), Toast.LENGTH_SHORT).show();
@@ -121,9 +121,9 @@ public class MainMenuLeftFragment extends Fragment {
                     break;
                 case R.id.aboutEDrop:
                     //跳转到详细介绍页面
-                    intent = new Intent(getActivity(), AboutEDrop.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    getActivity().startActivity(intent);
+                    Intent intent1 = new Intent(getContext(), AboutEDrop.class);
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent1);
                     break;
                 case R.id.setting:
                     Toast.makeText(getActivity(), setting.getText().toString(), Toast.LENGTH_SHORT).show();
