@@ -213,7 +213,6 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
 
     private void OkHttpPhoneLogin(final String phoneNum) {
 
-//        File
         //2.创建Request对象
         Request request = new Request.Builder().url(BASE_URL + "loginByPhone?phone=" +phoneNum).build();
         //3.创建Call对象
