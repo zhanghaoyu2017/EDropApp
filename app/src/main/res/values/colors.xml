@@ -57,4 +57,7 @@
     <color name="color_cyan_3fa1a9">#3fa1a9</color>
 
     <color name="color_yellow_f5ae53">#f5ae53</color>
+
+    <color name="red">#ff0000</color>
+    <color name="blue">#0096ff</color>
 </resources>

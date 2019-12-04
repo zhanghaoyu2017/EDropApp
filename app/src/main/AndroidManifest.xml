@@ -37,13 +37,13 @@
 
     <application
         android:name=".MyApplication"
-        tools:replace="android:icon, android:theme"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/ThemeNoTitle">
+        android:theme="@style/ThemeNoTitle"
+        tools:replace="android:icon, android:theme">
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,7 +51,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.FillPersonalInforActivity"/>
+        <activity android:name=".activity.FillPersonalInforActivity" />
         <activity android:name=".activity.SearchRubblishActivity" />
         <activity
             android:name=".activity.IntroductionEDropActivity"
@@ -126,6 +126,13 @@
             </intent-filter>
         </receiver>
         <!-- 声明SDK所需的receiver结束 -->
+        <activity android:name=".activity.LoadingActivity">
+            <intent-filter>
+                <action android:name="cat"/>
+                <category android:name="money"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

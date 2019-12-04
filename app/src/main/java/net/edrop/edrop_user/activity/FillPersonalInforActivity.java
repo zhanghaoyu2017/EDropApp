@@ -36,7 +36,6 @@ public class FillPersonalInforActivity extends AppCompatActivity {
     private List<String> mTitleList = new ArrayList<String>();//页卡标题集合
     private View view1, view2 ,view3;//页卡视图
     private List<View> mViewList = new ArrayList<>();//页卡视图集合
-    private ImageView btnReturn;
     //性别
     private RadioGroup rgSex = null;
     private RadioButton rbBoy=null;
@@ -94,7 +93,6 @@ public class FillPersonalInforActivity extends AppCompatActivity {
     }
 
     private void setLinstener() {
-        btnReturn.setOnClickListener(new MyLinsener());
         tvSelect.setOnClickListener(new MyLinsener());
         tvChange.setOnClickListener(new MyLinsener());
         tvDetailAddress.setOnClickListener(new MyLinsener());
@@ -105,9 +103,6 @@ public class FillPersonalInforActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.iv_return:
-                    finish();
-                    break;
                 case R.id.tv_select:
                     CityConfig cityConfig = new CityConfig.Builder()
                             .title("选择城市")//标题
@@ -187,7 +182,6 @@ public class FillPersonalInforActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        btnReturn = (ImageView) findViewById(R.id.iv_return);
         mViewPager = (ViewPager) findViewById(R.id.vp_view);
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
         mInflater = LayoutInflater.from(this);

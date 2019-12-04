@@ -5,13 +5,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTabHost;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -23,13 +22,12 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,10 +35,9 @@ import com.nineoldandroids.view.ViewHelper;
 
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.adapter.FragmentIndexAdapter;
+import net.edrop.edrop_user.utils.WaitLoadingView;
 import net.edrop.edrop_user.utils.MyViewPager;
 import net.edrop.edrop_user.utils.SystemTransUtil;
-
-import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -48,7 +45,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,12 +84,14 @@ public class Main2Activity extends AppCompatActivity {
     private long touchTime = 0;
     private final int REQUEST_CAMERA = 1;//请求相机权限的请求码
     private OkHttpClient okHttpClient;
-   private Bitmap bitmap;
+    private Bitmap bitmap;
+
+    private File file =null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         new SystemTransUtil().transform(Main2Activity.this);
-        fillUserInfo();
+//        fillUserInfo();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         //初始化控件
@@ -314,12 +312,14 @@ public class Main2Activity extends AppCompatActivity {
                         Log.i("Main2Activity", "已经获取了权限");
                         Intent intent1 = new Intent();
                         intent1.setAction(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivityForResult(intent1, 100);
                     }
                 } else {
                     //这个说明系统版本在6.0之下，不需要动态获取权限。
                     Intent intent1 = new Intent();
                     intent1.setAction(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivityForResult(intent1, 100);
 
                 }
@@ -389,20 +389,27 @@ public class Main2Activity extends AppCompatActivity {
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, Gravity.LEFT);
     }
 
+
     //拍照成功回调
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 //        ImageView imageView = findViewById(R.id.iv);
-//        if (requestCode == 100 && resultCode == RESULT_OK){
-        Log.e("拍照测试", "拍照成功");
-        bitmap = (Bitmap) data.getExtras().get("data");//获取拍取的照片
-
-        //BitMap转成文件
-        File f = convertBitmapToFile(bitmap);
-        postFile(f);
-
-
+        if (requestCode==100&&resultCode==RESULT_OK) {
+            Log.e("拍照测试", "拍照成功");
+            bitmap = (Bitmap) data.getExtras().get("data");//获取拍取的照片
+            //BitMap转成文件
+            file = convertBitmapToFile(bitmap);
+//            Intent intent = new Intent();
+//            intent.setAction("cat");
+//            intent.addCategory("money");
+//            Bundle bundle=new Bundle();
+//            bundle.putSerializable("file",file);
+//            intent.putExtra("f",bundle);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            startActivity(intent);
+        postFile(file);
+        }
     }
 
     private byte[] Bitmap2Bytes(Bitmap bm) {
@@ -433,33 +440,45 @@ public class Main2Activity extends AppCompatActivity {
 
     //通过okhttp传图片给服务器
     private void postFile(File f) {
-        RequestBody requestBody = RequestBody.create(
-                MediaType.parse("application/octet-stream"), f);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/octet-stream"), f);
         Request.Builder builder = new Request.Builder();
         Request request = builder.post(requestBody).url(BASE_URL + "indentify").build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                e.printStackTrace();
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-//                JSONObject object = new JSONObject();
                 String success = response.body().string();
-                Log.e("11111", success);
+                Log.e("success", success);
                 byte[] buf = new byte[1024];
                 buf=Bitmap2Bytes(bitmap);
                 Intent intent = new Intent(Main2Activity.this,RecognitionResultActivity.class);
                 intent.putExtra("photo_bmp",buf);
                 intent.putExtra("json",success);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
 
             }
         });
 
 
+    }
+
+    private void sleepMetch() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @Override
