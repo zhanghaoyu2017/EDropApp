@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="#fff"
     android:orientation="vertical">
+
     <!--顶部-->
     <RelativeLayout
         android:layout_width="match_parent"
