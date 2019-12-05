@@ -43,10 +43,14 @@ public class LoadingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
+        initViews();
 
+    }
+    private void initViews() {
         loadingView = findViewById(R.id.loading);
         loadingView.start();
         okHttpClient=new OkHttpClient();
+
 
         if (Build.VERSION.SDK_INT > 22) {
             if (ContextCompat.checkSelfPermission(LoadingActivity.this,
@@ -55,7 +59,6 @@ public class LoadingActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(LoadingActivity.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
             } else {
                 //说明已经获取到摄像头权限了
-                Log.i("Main2Activity", "已经获取了权限");
                 Intent intent1 = new Intent();
                 intent1.setAction(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent1, 100);
@@ -67,6 +70,7 @@ public class LoadingActivity extends AppCompatActivity {
             startActivityForResult(intent1, 100);
 
         }
+
     }
     //拍照成功回调
     @Override
