@@ -6,11 +6,13 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -93,7 +95,8 @@ public class RecognitionResultActivity extends Activity {
         tvNoFind = findViewById(R.id.tv_nofind);
 
     }
-    private void setListener(){
+
+    private void setListener() {
         tvNoFind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,4 +108,15 @@ public class RecognitionResultActivity extends Activity {
 
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+                //启动一个意图,回到桌面
+                Intent intent = new Intent(RecognitionResultActivity.this,Main2Activity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

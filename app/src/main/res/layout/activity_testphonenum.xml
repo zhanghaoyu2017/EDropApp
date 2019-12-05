@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.TestPhoneNumActivity">
-
-</android.support.constraint.ConstraintLayout>
+    android:background="#fff"
+    android:orientation="vertical">
+    
+    
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="@dimen/size_80"
+        android:layout_height="@dimen/size_80"
+        android:layout_marginTop="250dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/login"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="正在登陆"
+        android:textColor="#000"
+        android:textSize="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_5"
+        android:layout_gravity="center_horizontal"/>
+</LinearLayout> 

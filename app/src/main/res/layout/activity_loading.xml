@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <baiduloading.ly.com.baiduloading.BaiduLoadingView
+    <net.edrop.edrop_user.utils.WaitLoadingView
         android:id="@+id/loading"
         android:layout_width="100dp"
         android:layout_height="15dp"
