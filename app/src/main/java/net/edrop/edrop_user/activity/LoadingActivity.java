@@ -86,8 +86,6 @@ public class LoadingActivity extends AppCompatActivity {
 
         }
 
-
-
     }
 
     private byte[] Bitmap2Bytes(Bitmap bm) {
@@ -126,7 +124,7 @@ public class LoadingActivity extends AppCompatActivity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                e.printStackTrace();
             }
 
             @Override

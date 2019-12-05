@@ -36,6 +36,7 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
     <Button
+        android:id="@+id/btnSave"
         android:text="保存"
         android:textSize="@dimen/size_20"
         android:textColor="#fff"

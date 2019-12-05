@@ -58,8 +58,12 @@ import java.util.List;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -90,8 +94,11 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     private String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private Button btnSelectImg;
     private ImageView ivHeadImg;
+    private Button btnSave;
     private File cameraSavePath;//拍照照片路径
     private Uri uri;
+    private String photoPath;
+    private MultipartBody.Builder multipartBody = new MultipartBody.Builder();
     //popupWindow
     private PopupWindow popupWindow = null;
     private View popupView = null;
@@ -128,6 +135,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         view2 = mInflater.inflate(R.layout.item_fill_img_info, null);
         btnSelectImg = view2.findViewById(R.id.btn_select_img);
         ivHeadImg = view2.findViewById(R.id.iv_head_img);
+        btnSave=view2.findViewById(R.id.btnSave);
         cameraSavePath = new File(Environment.getExternalStorageDirectory().getPath() + "/" + System.currentTimeMillis() + ".jpg");
         getPermission();
         view3 = mInflater.inflate(R.layout.item_fill_psd_info, null);
@@ -243,7 +251,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         if (popupWindow.isShowing()){
             popupWindow.dismiss();
         }
-        String photoPath;
+
         if (requestCode == 1 && resultCode == RESULT_OK) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 photoPath = String.valueOf(cameraSavePath);
@@ -267,6 +275,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     }
 
     private void setLinstener() {
+        btnSave.setOnClickListener(new MyLinsener());
         btnOk.setOnClickListener(new MyLinsener());
         btnSelectImg.setOnClickListener(new MyLinsener());
         tvSelect.setOnClickListener(new MyLinsener());
@@ -369,8 +378,47 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                         Toast.makeText(FillPersonalInforActivity.this,"密码不一致",Toast.LENGTH_SHORT).show();
                     }
                     break;
+                case R.id.btnSave:
+                    postFormImg();
+                    break;
             }
         }
+    }
+
+    private void postFormImg() {
+        File file = new File(photoPath);
+        RequestBody fileBody = RequestBody.create(MediaType.parse("image/png"), file);
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("imgFile", file.getName(), fileBody)
+                .addFormDataPart("png", userId+"")
+                .build();
+
+//        multipartBody.setType(MultipartBody.FORM);
+//        File file = new File(photoPath);
+//        RequestBody requestBody = RequestBody.
+//        multipartBody.addFormDataPart("imgFile",file.getName(),MultipartBody.create(MediaType.parse("multipart/form-data"),file));
+//        multipartBody.addPart()
+        Request request = new Request.Builder()
+                .url(Constant.BASE_URL + "addUserInfo")
+                .post(requestBody)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String string = response.body().string();
+                if (string.equals(UPDATE_USER_SUCCESS+"")){
+                    Toast.makeText(FillPersonalInforActivity.this,"密码更新完成",Toast.LENGTH_SHORT).show();
+                }else if (string.equals(UPDATE_USER_FAIL+"")){
+                    Toast.makeText(FillPersonalInforActivity.this,"服务器错误",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void postFormPsd() {
