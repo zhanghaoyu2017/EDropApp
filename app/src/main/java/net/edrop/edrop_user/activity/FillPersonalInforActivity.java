@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -224,6 +225,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.tv_select:
+                    hideKeyboard();
                     CityConfig cityConfig = new CityConfig.Builder()
                             .title("选择城市")//标题
                             .titleTextSize(18)//标题文字大小
@@ -255,9 +257,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                     mPicker.setOnCityItemClickListener(new OnCityItemClickListener() {
                         @Override
                         public void onSelected(ProvinceBean province, CityBean city, DistrictBean district) {
-                            //省份province
-                            //城市city
-                            //地区district
+                            //省份province-城市city-地区district
                             tvSelect.setText(province + "\t" + city + "\t" + district);
                             address = province + "-" + city + "-" + district;
                         }
@@ -378,6 +378,14 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         mViewPager = (ViewPager) findViewById(R.id.vp_view);
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
         mInflater = LayoutInflater.from(this);
+    }
+
+    /***
+     * 隐藏键盘
+     */
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     /**
