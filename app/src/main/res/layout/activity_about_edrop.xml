@@ -29,6 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_10"
+                android:lineSpacingExtra="@dimen/size_5"
                 android:text="\t\t\t\t易扔是专门为垃圾回收量身设计、开发的一款专业国际垃圾回收利用管理软件。本软件人性化模拟垃圾回收到处理流程，实现了足不出户就可解决垃圾分类的烦恼，软件从一键预约代扔到工作人员上门服务、从集中混乱到垃圾的合理分类、从分类的模模糊糊到实时查询精确分类。在大数据与人工智能快速发展的时代，这些都可以让你的体验感变得爆棚。当然，我们还有客服一对一的服务，随时随地解决用户的烦恼以及对订单的问题的实时解答处理、我们还有社区的实时动态，与社区用户分享心得体会，这里也是你的第二个乐园、我们还可参加知识竞赛，提升自己的知识储备量，响应时代进步的步伐。用户可随时随地的安排自己的时间，提升工作效率的同时提高生活的幸福度。 易扔开创预约、下单、接单、审单、上门服务、确认订单、完成订单“一步到位” 的信息化管理新模式。易扔打破了我国垃圾回收管理行业中费力的常规，并可在智能识别应用的基础上，实现了垃圾分类的简便体验。本系统以其便捷、快速、高效、人性化的操作模式，获得了很多同行同业以及广大群众的认可。"
                 android:textSize="@dimen/size_18" />
 
@@ -42,7 +43,6 @@
                 android:textStyle="bold" />
 
             <TextView
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_20"
@@ -51,6 +51,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:lineSpacingExtra="@dimen/size_5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_10"
@@ -66,6 +67,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:lineSpacingExtra="@dimen/size_5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_10"
@@ -81,6 +83,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:lineSpacingExtra="@dimen/size_5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_10"
@@ -96,6 +99,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:lineSpacingExtra="@dimen/size_5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_10"
@@ -111,6 +115,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:lineSpacingExtra="@dimen/size_5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_10"
@@ -126,6 +131,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:lineSpacingExtra="@dimen/size_5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_10"
@@ -135,7 +141,6 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_30" />
-
 
         </LinearLayout>
     </ScrollView>

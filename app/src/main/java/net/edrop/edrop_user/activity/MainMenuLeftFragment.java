@@ -1,10 +1,8 @@
 package net.edrop.edrop_user.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,6 @@ import android.widget.Toast;
 
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.utils.SharedPreferencesUtils;
-import net.edrop.edrop_user.utils.SystemTransUtil;
 
 public class MainMenuLeftFragment extends Fragment {
     private View myView;
@@ -121,7 +118,7 @@ public class MainMenuLeftFragment extends Fragment {
                     break;
                 case R.id.aboutEDrop:
                     //跳转到详细介绍页面
-                    Intent intent1 = new Intent(getContext(), AboutEDrop.class);
+                    Intent intent1 = new Intent(getContext(), AboutEDropActivity.class);
                     intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent1);
                     break;
