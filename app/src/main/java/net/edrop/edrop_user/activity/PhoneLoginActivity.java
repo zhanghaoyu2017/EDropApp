@@ -59,7 +59,6 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
     private UserInfo userInfo;
     private static PhoneLoginActivity.BaseUiListener listener = null;
     private String QQ_uid;//qq_openid
-    private OkHttpClient okHttpClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         new SystemTransUtil().trans(PhoneLoginActivity.this);
@@ -82,7 +81,6 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
         requestCodeBtn = (Button) findViewById(R.id.login_request_code_btn);
         btnPhoneLogin = (Button) findViewById(R.id.btn_request_login);
         qqLogin=findViewById(R.id.qq);
-        okHttpClient = new OkHttpClient();
 
         // 启动短信验证sdk
         MobSDK.init(this, APPKEY, APPSECRET);
@@ -187,14 +185,15 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
 //                        Toast.makeText(getApplicationContext(), "提交验证码成功",
 //                                Toast.LENGTH_SHORT).show();
                         Log.e("test", "2");
-//                        String phoneNums = inputPhoneEt.getText().toString();
+                        String phoneNums = inputPhoneEt.getText().toString();
 //                        OkHttpPhoneLogin(phoneNums);
 
                         Intent intent = new Intent(PhoneLoginActivity.this,
                                 TestPhoneNumActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("phoneNum", inputPhoneEt.getText().toString().trim());
-                        intent.putExtras(bundle);
+                        intent.putExtra("phoneNum",phoneNums);
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("phoneNum", inputPhoneEt.getText().toString().trim());
+//                        intent.putExtras(bundle);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
 
@@ -209,30 +208,7 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
             }
         }
     };
-    //通过okhttp发送通过验证的手机号
 
-    private void OkHttpPhoneLogin(final String phoneNum) {
-
-        //2.创建Request对象
-        Request request = new Request.Builder().url(BASE_URL + "loginByPhone?phone=" +phoneNum).build();
-        //3.创建Call对象
-        final Call call = okHttpClient.newCall(request);
-        //4.发送请求 获得响应数据
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String responseJson = response.body().string();
-                Log.e("response", responseJson);
-            }
-        });
-
-
-    }
     /**
      * 判断手机号码是否合理
      *

@@ -58,7 +58,6 @@ import okhttp3.Response;
 
 import static net.edrop.edrop_user.utils.Constant.BASE_URL;
 import static net.edrop.edrop_user.utils.Constant.SEARCH_SUCCESS;
-import static net.edrop.edrop_user.utils.Constant.USER_NO_EXISTS;
 
 public class SearchRubblishActivity extends AppCompatActivity {
     //搜索框控件
