@@ -7,10 +7,13 @@ package net.edrop.edrop_user.utils;
  * Time: 17:18
  */
 public class Constant {
-    //        public static final String BASE_URL = "http://10.7.88.157:8080/EDropService/";
-    public static final String BASE_URL = "http://122.51.69.212:8080/EDropService/";
+    public static final String BASE_URL = "http://10.7.88.157:8080/EDropService/";
+//    public static final String BASE_URL = "http://122.51.69.212:8080/EDropService/";
     //聊天发送消息
     public static final int RECEVIED_MSG = -3;
+    //表单提交状态码
+    public static final int UPDATE_USER_FAIL = 7;
+    public static final int UPDATE_USER_SUCCESS = 8;
     //登录相关
     public static final int USER_NO_EXISTS = 1;
     public static final int PASSWORD_WRONG = 3;

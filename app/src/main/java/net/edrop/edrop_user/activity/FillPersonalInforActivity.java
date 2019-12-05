@@ -44,14 +44,27 @@ import com.lljjcoder.style.citylist.Toast.ToastUtils;
 import com.lljjcoder.style.citypickerview.CityPickerView;
 
 import net.edrop.edrop_user.R;
+import net.edrop.edrop_user.adapter.MyPagerAdapter;
+import net.edrop.edrop_user.utils.Constant;
+import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 import net.edrop.edrop_user.utils.SystemTransUtil;
 import net.edrop.edrop_user.utils.getPhotoFromPhotoAlbum;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import pub.devrel.easypermissions.EasyPermissions;
+
+import static net.edrop.edrop_user.utils.Constant.UPDATE_USER_FAIL;
+import static net.edrop.edrop_user.utils.Constant.UPDATE_USER_SUCCESS;
 
 public class FillPersonalInforActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
     private TabLayout mTabLayout;
@@ -71,8 +84,8 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     private TextView tvChange;
     private TextView tvDetailAddress;
     private Button btnUpdata;
-    private String strSex = null;
-    private String address;
+    private String strSex ;
+    private TextView tvUserName;
     //照片
     private String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private Button btnSelectImg;
@@ -86,6 +99,10 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     private EditText etNewPsd;
     private EditText etNewPsd2;
     private Button btnOk;
+    private String newPsd ="";
+
+    private OkHttpClient okHttpClient;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,9 +110,12 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fill_personal_infor);
         mPicker.init(this);
+        //1.创建OkHttpClient对象
+        okHttpClient = new OkHttpClient();
         initView();
 
         view1 = mInflater.inflate(R.layout.item_fill_base_info, null);
+        tvUserName=view1.findViewById(R.id.tv_base_name);
         tvSelect = (TextView) view1.findViewById(R.id.tv_select);
         tvChange = (TextView) view1.findViewById(R.id.tv_change);
         tvDetailAddress = (TextView) view1.findViewById(R.id.tv_detail_address);
@@ -136,6 +156,35 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         mTabLayout.setTabsFromPagerAdapter(mAdapter);
 
         setLinstener();
+        initDate();
+    }
+
+    private void initDate() {
+        SharedPreferencesUtils loginInfo = new SharedPreferencesUtils(FillPersonalInforActivity.this, "loginInfo");
+        String username = loginInfo.getString("username", "");
+        String gender = loginInfo.getString("gender", "");
+        String address = loginInfo.getString("address", "");
+        String detailAddress = loginInfo.getString("detailAddress", "");
+        tvDetailAddress.setText(detailAddress);
+        userId = loginInfo.getInt("userId");
+        tvSelect.setText(address);
+        tvUserName.setText(username);
+        switch (gender){
+            case "boy":
+                rbGirl.setChecked(false);
+                rbSecret.setChecked(false);
+                break;
+            case "girl":
+                rbBoy.setChecked(false);
+                rbSecret.setChecked(false);
+                break;
+            case "secret":
+                rbGirl.setChecked(false);
+                rbBoy.setChecked(false);
+                break;
+            default:
+                break;
+        }
     }
 
     //获取权限
@@ -181,8 +230,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     //成功打开权限
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-
-        Toast.makeText(this, "相关权限获取成功", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "相关权限获取成功", Toast.LENGTH_SHORT).show();
     }
     //用户未同意权限
     @Override
@@ -203,10 +251,17 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                 photoPath = uri.getEncodedPath();
             }
             Log.e("拍照返回图片路径:", photoPath);
-            Glide.with(this).load(photoPath).into(ivHeadImg);
+            RequestOptions options = new RequestOptions().centerCrop();
+            Glide.with(this).load(photoPath).apply(options).into(ivHeadImg);
+
         } else if (requestCode == 2 && resultCode == RESULT_OK) {
             photoPath = getPhotoFromPhotoAlbum.getRealPathFromUri(this, data.getData());
-            Glide.with(FillPersonalInforActivity.this).load(photoPath).into(ivHeadImg);
+            RequestOptions options = new RequestOptions().centerCrop();
+            Glide.with(FillPersonalInforActivity.this).load(photoPath).apply(options).into(ivHeadImg);
+        }else if (requestCode==88 && resultCode == 90){
+            String nameInfo ="zs";
+            nameInfo = data.getStringExtra("nameInfo");
+            tvUserName.setText(nameInfo);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -259,7 +314,6 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                         public void onSelected(ProvinceBean province, CityBean city, DistrictBean district) {
                             //省份province-城市city-地区district
                             tvSelect.setText(province + "\t" + city + "\t" + district);
-                            address = province + "-" + city + "-" + district;
                         }
 
                         @Override
@@ -271,6 +325,11 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                     mPicker.showCityPicker();
                     break;
                 case R.id.tv_change:
+                    Intent intent = new Intent();
+                    intent.setClass(FillPersonalInforActivity.this, ChangeViewActivity.class);
+                    intent.putExtra("name",tvUserName.getText().toString());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivityForResult(intent,88);
                     break;
                 case R.id.tv_detail_address:
                     tvDetailAddress.getText().toString();
@@ -293,9 +352,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                             rbBoy.setChecked(false);
                             break;
                     }
-                    Toast.makeText(FillPersonalInforActivity.this,
-                            strSex + "\t" + address + "\t" + tvDetailAddress.getText().toString(),
-                            Toast.LENGTH_SHORT).show();
+                    postFormData();//发送form表单数据
                     break;
                 case R.id.btn_select_img:
                     // 显示PopupWindow
@@ -304,16 +361,75 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                     break;
                 case R.id.btn_new_ok:
                     //确认新密码
-                    String newPsd = etNewPsd.getText().toString();
+                    newPsd = etNewPsd.getText().toString();
                     String newPsd2 = etNewPsd2.getText().toString();
                     if (newPsd.equals(newPsd2)){
-
+                        postFormPsd();
                     }else {
                         Toast.makeText(FillPersonalInforActivity.this,"密码不一致",Toast.LENGTH_SHORT).show();
                     }
                     break;
             }
         }
+    }
+
+    private void postFormPsd() {
+        //创建FormBody对象
+        FormBody formBody = new FormBody.Builder()
+                .add("id",userId+"")
+                .add("password",newPsd)
+                .build();
+        Request request = new Request.Builder()
+                .url(Constant.BASE_URL + "addUserInfo")
+                .post(formBody)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String string = response.body().string();
+                if (string.equals(UPDATE_USER_SUCCESS+"")){
+                    Toast.makeText(FillPersonalInforActivity.this,"密码更新完成",Toast.LENGTH_SHORT).show();
+                }else if (string.equals(UPDATE_USER_FAIL+"")){
+                    Toast.makeText(FillPersonalInforActivity.this,"服务器错误",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void postFormData() {
+        //创建FormBody对象
+        FormBody formBody = new FormBody.Builder()
+                .add("id",userId+"")
+                .add("username", tvUserName.getText().toString())
+                .add("gender", strSex)
+                .add("address", tvSelect.getText().toString())
+                .add("detailAddress",tvDetailAddress.getText().toString())
+                .build();
+        Request request = new Request.Builder()
+                .url(Constant.BASE_URL + "addUserInfo")
+                .post(formBody)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String string = response.body().string();
+                if (string.equals(UPDATE_USER_SUCCESS+"")){
+                    Toast.makeText(FillPersonalInforActivity.this,"基本信息更新完成",Toast.LENGTH_SHORT).show();
+                }else if (string.equals(UPDATE_USER_FAIL+"")){
+                    Toast.makeText(FillPersonalInforActivity.this,"服务器错误",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void showPopupWindow() {
@@ -384,8 +500,10 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
      * 隐藏键盘
      */
     private void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        if(getWindow().getAttributes().softInputMode == WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
     /**

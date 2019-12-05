@@ -427,11 +427,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         User user = new Gson().fromJson(userJson, User.class);
 
                         SharedPreferences.Editor editor = sharedPreferences.getEditor();
+                        editor.putInt("userId",user.getId());
+                        editor.putString("gender",user.getGender());
                         editor.putString("username", user.getUsername());
                         editor.putString("password", user.getPassword());
                         editor.putString("imgName", user.getImgname());
                         editor.putString("imgPath", user.getImgpath());
                         editor.putString("address", user.getAddress());
+                        editor.putString("detailAddress",user.getDetailAddress());
                         editor.putBoolean("isAuto", true);
                         editor.commit();
                         Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
