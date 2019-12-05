@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 
 import net.edrop.edrop_user.R;
+import net.edrop.edrop_user.utils.SystemTransUtil;
 import net.edrop.edrop_user.utils.WaitLoadingView;
 
 import java.io.ByteArrayInputStream;
@@ -41,6 +42,7 @@ public class LoadingActivity extends AppCompatActivity {
     private Bitmap bitmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        new SystemTransUtil().trans(LoadingActivity.this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
         initViews();

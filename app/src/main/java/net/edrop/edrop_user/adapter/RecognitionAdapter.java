@@ -111,7 +111,8 @@ public class RecognitionAdapter extends BaseAdapter {
     private void showPopupWindow(int position) {
         if (dataSource.get(position).getLajitype() != 4) {
             //创建popupwindow对象
-            backgroundAlpha(0.5f);
+//            backgroundAlpha(0.5f);
+            setBackgroundAlpha(0.5f,context);
             popupWindow = new PopupWindow();
             popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
             popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -156,6 +157,14 @@ public class RecognitionAdapter extends BaseAdapter {
 
     }
 
+    public static void setBackgroundAlpha(float bgAlpha, Context mContext) {
+        WindowManager.LayoutParams lp = ((Activity) mContext).getWindow()
+                .getAttributes();
+        lp.alpha = bgAlpha;
+        ((Activity) mContext).getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        ((Activity) mContext).getWindow().setAttributes(lp);
+    }
+
     public void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
@@ -166,7 +175,8 @@ public class RecognitionAdapter extends BaseAdapter {
 
         @Override
         public void onDismiss() {
-            backgroundAlpha(1f);
+//            backgroundAlpha(1f);
+            setBackgroundAlpha(1f,context);
         }
     }
 }
