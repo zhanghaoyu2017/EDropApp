@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -291,5 +292,16 @@ public class SearchRubblishActivity extends AppCompatActivity {
         horizontalScrollView.smoothScrollTo(scrollX, 0);
 
         String s = "CenterLocked Item: " + ((TextView) view).getText();
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            //启动一个意图,回到桌面
+            Intent intent = new Intent(SearchRubblishActivity.this,Main2Activity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
