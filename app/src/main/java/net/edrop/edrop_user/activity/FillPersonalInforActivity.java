@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -25,6 +27,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -50,6 +53,9 @@ import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 import net.edrop.edrop_user.utils.SystemTransUtil;
 import net.edrop.edrop_user.utils.getPhotoFromPhotoAlbum;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,10 +73,16 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import pub.devrel.easypermissions.EasyPermissions;
 
+import static net.edrop.edrop_user.utils.Constant.BASE_FAIL;
+import static net.edrop.edrop_user.utils.Constant.BASE_SUCCESS;
+import static net.edrop.edrop_user.utils.Constant.IMG_FAIL;
+import static net.edrop.edrop_user.utils.Constant.IMG_SUCCESS;
+import static net.edrop.edrop_user.utils.Constant.PSD_FAIL;
+import static net.edrop.edrop_user.utils.Constant.PSD_SUCCESS;
 import static net.edrop.edrop_user.utils.Constant.UPDATE_USER_FAIL;
 import static net.edrop.edrop_user.utils.Constant.UPDATE_USER_SUCCESS;
 
-public class FillPersonalInforActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
+public class FillPersonalInforActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private LayoutInflater mInflater;
@@ -82,13 +94,15 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     private RadioButton rbBoy = null;
     private RadioButton rbGirl = null;
     private RadioButton rbSecret = null;
+
     //三级联动
     private CityPickerView mPicker = new CityPickerView();
     private TextView tvSelect;
-    private TextView tvChange;
+    private TextView tvChangeName;
+    private TextView tvChangePhone;
     private TextView tvDetailAddress;
     private Button btnUpdata;
-    private String strSex ;
+    private String strSex;
     private TextView tvUserName;
     //照片
     private String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -106,10 +120,29 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     private EditText etNewPsd;
     private EditText etNewPsd2;
     private Button btnOk;
-    private String newPsd ="";
+    private String newPsd = "";
 
     private OkHttpClient okHttpClient;
     private int userId;
+    private Message msg = new Message();
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == PSD_SUCCESS) {
+                Toast.makeText(FillPersonalInforActivity.this, msg.obj + "", Toast.LENGTH_SHORT).show();
+            } else if (msg.what == PSD_FAIL) {
+                Toast.makeText(FillPersonalInforActivity.this, msg.obj + "", Toast.LENGTH_SHORT).show();
+            } else if (msg.what == BASE_SUCCESS) {
+                Toast.makeText(FillPersonalInforActivity.this, msg.obj + "", Toast.LENGTH_SHORT).show();
+            } else if (msg.what == BASE_FAIL) {
+                Toast.makeText(FillPersonalInforActivity.this, msg.obj + "", Toast.LENGTH_SHORT).show();
+            } else if (msg.what == IMG_SUCCESS) {
+                Toast.makeText(FillPersonalInforActivity.this, msg.obj + "", Toast.LENGTH_SHORT).show();
+            } else if (msg.what == IMG_FAIL) {
+                Toast.makeText(FillPersonalInforActivity.this, msg.obj + "", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,9 +155,10 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         initView();
 
         view1 = mInflater.inflate(R.layout.item_fill_base_info, null);
-        tvUserName=view1.findViewById(R.id.tv_base_name);
+        tvChangePhone = view1.findViewById(R.id.tv_phone_select);
+        tvUserName = view1.findViewById(R.id.tv_base_name);
         tvSelect = (TextView) view1.findViewById(R.id.tv_select);
-        tvChange = (TextView) view1.findViewById(R.id.tv_change);
+        tvChangeName = (TextView) view1.findViewById(R.id.tv_change_name);
         tvDetailAddress = (TextView) view1.findViewById(R.id.tv_detail_address);
         btnUpdata = (Button) view1.findViewById(R.id.btn_update);
         rgSex = view1.findViewById(R.id.rg_sex);
@@ -135,13 +169,14 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         view2 = mInflater.inflate(R.layout.item_fill_img_info, null);
         btnSelectImg = view2.findViewById(R.id.btn_select_img);
         ivHeadImg = view2.findViewById(R.id.iv_head_img);
-        btnSave=view2.findViewById(R.id.btnSave);
+        btnSave = view2.findViewById(R.id.btnSave);
         cameraSavePath = new File(Environment.getExternalStorageDirectory().getPath() + "/" + System.currentTimeMillis() + ".jpg");
         getPermission();
+        GridLayout grid_view= view2.findViewById(R.id.grid_view);
         view3 = mInflater.inflate(R.layout.item_fill_psd_info, null);
-        etNewPsd=view3.findViewById(R.id.et_newPsd);
-        etNewPsd2=view3.findViewById(R.id.et_newPsd2);
-        btnOk=view3.findViewById(R.id.btn_new_ok);
+        etNewPsd = view3.findViewById(R.id.et_newPsd);
+        etNewPsd2 = view3.findViewById(R.id.et_newPsd2);
+        btnOk = view3.findViewById(R.id.btn_new_ok);
 
         //添加页卡视图
         mViewList.add(view1);
@@ -170,6 +205,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     private void initDate() {
         SharedPreferencesUtils loginInfo = new SharedPreferencesUtils(FillPersonalInforActivity.this, "loginInfo");
         String username = loginInfo.getString("username", "");
+        String phone = loginInfo.getString("phone", "");
         String gender = loginInfo.getString("gender", "");
         String address = loginInfo.getString("address", "");
         String detailAddress = loginInfo.getString("detailAddress", "");
@@ -177,7 +213,13 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         userId = loginInfo.getInt("userId");
         tvSelect.setText(address);
         tvUserName.setText(username);
-        switch (gender){
+        String str="****";
+        if (!phone.equals("")) {
+            StringBuffer sb = new StringBuffer(phone);
+            sb.replace(3, 7, str);
+            tvChangePhone.setText(sb.toString());
+        }
+        switch (gender) {
             case "boy":
                 rbGirl.setChecked(false);
                 rbSecret.setChecked(false);
@@ -199,7 +241,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     private void getPermission() {
         if (EasyPermissions.hasPermissions(this, permissions)) {
             //已经打开权限
-            Toast.makeText(this, "已经申请相关权限", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "已经申请相关权限", Toast.LENGTH_SHORT).show();
         } else {
             //没有打开相关权限、申请权限
             EasyPermissions.requestPermissions(this, "需要获取您的相册、照相使用权限", 1, permissions);
@@ -240,6 +282,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
 //        Toast.makeText(this, "相关权限获取成功", Toast.LENGTH_SHORT).show();
     }
+
     //用户未同意权限
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
@@ -248,12 +291,11 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (popupWindow.isShowing()){
+        if (popupWindow.isShowing()) {
             popupWindow.dismiss();
         }
-
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//相机拍照
                 photoPath = String.valueOf(cameraSavePath);
             } else {
                 photoPath = uri.getEncodedPath();
@@ -262,14 +304,24 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
             RequestOptions options = new RequestOptions().centerCrop();
             Glide.with(this).load(photoPath).apply(options).into(ivHeadImg);
 
-        } else if (requestCode == 2 && resultCode == RESULT_OK) {
+        } else if (requestCode == 2 && resultCode == RESULT_OK) {//相册选择
             photoPath = getPhotoFromPhotoAlbum.getRealPathFromUri(this, data.getData());
             RequestOptions options = new RequestOptions().centerCrop();
             Glide.with(FillPersonalInforActivity.this).load(photoPath).apply(options).into(ivHeadImg);
-        }else if (requestCode==88 && resultCode == 90){
-            String nameInfo ="zs";
+        } else if (requestCode == 88 && resultCode == 90) {//用户名
+            String nameInfo = "zs";
             nameInfo = data.getStringExtra("nameInfo");
             tvUserName.setText(nameInfo);
+        }else if (requestCode == 77 && resultCode == 90) {//手机号
+            String nameInfo = "";
+            nameInfo = data.getStringExtra("nameInfo");
+            String str="****";
+            if (!nameInfo.equals("")) {
+                StringBuffer sb = new StringBuffer(nameInfo);
+                sb.replace(3, 7, str);
+                tvChangePhone.setText(sb.toString());
+            }
+            tvChangePhone.setText(nameInfo);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -279,7 +331,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         btnOk.setOnClickListener(new MyLinsener());
         btnSelectImg.setOnClickListener(new MyLinsener());
         tvSelect.setOnClickListener(new MyLinsener());
-        tvChange.setOnClickListener(new MyLinsener());
+        tvChangeName.setOnClickListener(new MyLinsener());
         tvDetailAddress.setOnClickListener(new MyLinsener());
         btnUpdata.setOnClickListener(new MyLinsener());
     }
@@ -333,12 +385,21 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                     //显示
                     mPicker.showCityPicker();
                     break;
-                case R.id.tv_change:
+                case R.id.tv_change_name://用户名
                     Intent intent = new Intent();
                     intent.setClass(FillPersonalInforActivity.this, ChangeViewActivity.class);
-                    intent.putExtra("name",tvUserName.getText().toString());
+                    intent.putExtra("name", tvUserName.getText().toString());
+                    intent.putExtra("state","name");
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivityForResult(intent,88);
+                    startActivityForResult(intent, 88);
+                    break;
+                case R.id.tv_phone_select://手机号
+                    Intent intent1 = new Intent();
+                    intent1.setClass(FillPersonalInforActivity.this, ChangeViewActivity.class);
+                    intent1.putExtra("name", tvChangePhone.getText().toString());
+                    intent1.putExtra("state","phone");
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivityForResult(intent1, 77);
                     break;
                 case R.id.tv_detail_address:
                     tvDetailAddress.getText().toString();
@@ -365,17 +426,17 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                     break;
                 case R.id.btn_select_img:
                     // 显示PopupWindow
-                    if(popupWindow==null || !popupWindow.isShowing())
+                    if (popupWindow == null || !popupWindow.isShowing())
                         showPopupWindow();
                     break;
                 case R.id.btn_new_ok:
                     //确认新密码
                     newPsd = etNewPsd.getText().toString();
                     String newPsd2 = etNewPsd2.getText().toString();
-                    if (newPsd.equals(newPsd2)){
+                    if (newPsd.equals(newPsd2)) {
                         postFormPsd();
-                    }else {
-                        Toast.makeText(FillPersonalInforActivity.this,"密码不一致",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(FillPersonalInforActivity.this, "密码不一致", Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case R.id.btnSave:
@@ -387,45 +448,46 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
 
     private void postFormImg() {
         File file = new File(photoPath);
-        RequestBody fileBody = RequestBody.create(MediaType.parse("image/png"), file);
-        RequestBody requestBody = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("imgFile", file.getName(), fileBody)
-                .addFormDataPart("png", userId+"")
-                .build();
-
-//        multipartBody.setType(MultipartBody.FORM);
-//        File file = new File(photoPath);
-//        RequestBody requestBody = RequestBody.
-//        multipartBody.addFormDataPart("imgFile",file.getName(),MultipartBody.create(MediaType.parse("multipart/form-data"),file));
-//        multipartBody.addPart()
-        Request request = new Request.Builder()
-                .url(Constant.BASE_URL + "addUserInfo")
-                .post(requestBody)
-                .build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String string = response.body().string();
-                if (string.equals(UPDATE_USER_SUCCESS+"")){
-                    Toast.makeText(FillPersonalInforActivity.this,"密码更新完成",Toast.LENGTH_SHORT).show();
-                }else if (string.equals(UPDATE_USER_FAIL+"")){
-                    Toast.makeText(FillPersonalInforActivity.this,"服务器错误",Toast.LENGTH_SHORT).show();
+        if (file.exists()) {
+            RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpg"), file);
+            RequestBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("id", userId + "")
+                    .addFormDataPart("imgFile", file.getName(), fileBody)
+                    .build();
+            Request request = new Request.Builder()
+                    .url(Constant.BASE_URL + "addUserInfo")
+                    .post(requestBody)
+                    .build();
+            Call call = okHttpClient.newCall(request);
+            call.enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    e.printStackTrace();
                 }
-            }
-        });
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String string = response.body().string();
+                    if (string.equals(UPDATE_USER_SUCCESS + "")) {
+                        msg.obj = "密码更新完成";
+                        msg.what = IMG_SUCCESS;
+                        mHandler.sendMessage(msg);
+                    } else if (string.equals(UPDATE_USER_FAIL + "")) {
+                        msg.obj = "密码更新失败";
+                        msg.what = IMG_FAIL;
+                        mHandler.sendMessage(msg);
+                    }
+                }
+            });
+        }
     }
 
     private void postFormPsd() {
         //创建FormBody对象
         FormBody formBody = new FormBody.Builder()
-                .add("id",userId+"")
-                .add("password",newPsd)
+                .add("id", userId + "")
+                .add("password", newPsd)
                 .build();
         Request request = new Request.Builder()
                 .url(Constant.BASE_URL + "addUserInfo")
@@ -437,13 +499,25 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
             }
+
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
-                if (string.equals(UPDATE_USER_SUCCESS+"")){
-                    Toast.makeText(FillPersonalInforActivity.this,"密码更新完成",Toast.LENGTH_SHORT).show();
-                }else if (string.equals(UPDATE_USER_FAIL+"")){
-                    Toast.makeText(FillPersonalInforActivity.this,"服务器错误",Toast.LENGTH_SHORT).show();
+                int state = 0;
+                try {
+                    JSONObject jsonObject = new JSONObject(string);
+                    state = jsonObject.getInt("state");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (state == UPDATE_USER_SUCCESS) {
+                    msg.obj = "密码更新完成";
+                    msg.what = PSD_SUCCESS;
+                    mHandler.sendMessage(msg);
+                } else if (string.equals(UPDATE_USER_FAIL + "")) {
+                    msg.obj = "服务器错误";
+                    msg.what = PSD_FAIL;
+                    mHandler.sendMessage(msg);
                 }
             }
         });
@@ -452,11 +526,12 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     private void postFormData() {
         //创建FormBody对象
         FormBody formBody = new FormBody.Builder()
-                .add("id",userId+"")
+                .add("id", userId + "")
                 .add("username", tvUserName.getText().toString())
+                .add("phone", tvChangePhone.getText().toString())
                 .add("gender", strSex)
                 .add("address", tvSelect.getText().toString())
-                .add("detailAddress",tvDetailAddress.getText().toString())
+                .add("detailAddress", tvDetailAddress.getText().toString())
                 .build();
         Request request = new Request.Builder()
                 .url(Constant.BASE_URL + "addUserInfo")
@@ -468,13 +543,25 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
             }
+
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
-                if (string.equals(UPDATE_USER_SUCCESS+"")){
-                    Toast.makeText(FillPersonalInforActivity.this,"基本信息更新完成",Toast.LENGTH_SHORT).show();
-                }else if (string.equals(UPDATE_USER_FAIL+"")){
-                    Toast.makeText(FillPersonalInforActivity.this,"服务器错误",Toast.LENGTH_SHORT).show();
+                int state = 0;
+                try {
+                    JSONObject jsonObject = new JSONObject(string);
+                    state = jsonObject.getInt("state");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (state == UPDATE_USER_SUCCESS) {
+                    msg.obj = "基本信息更新完成";
+                    msg.what = BASE_SUCCESS;
+                    mHandler.sendMessage(msg);
+                } else if (string.equals(UPDATE_USER_FAIL + "")) {
+                    msg.obj = "服务器错误";
+                    msg.what = BASE_FAIL;
+                    mHandler.sendMessage(msg);
                 }
             }
         });
@@ -482,7 +569,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
 
     private void showPopupWindow() {
         // 创建popupWindow对象
-        setBackgroundAlpha(0.5f,this);
+        setBackgroundAlpha(0.5f, this);
         popupWindow = new PopupWindow();
         popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -496,7 +583,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         popupWindow.setTouchable(true);
         popupView.setFocusable(true);
         View view_list = View.inflate(this, R.layout.item_popupwindow_photo, null);
-        popupWindow.setOnDismissListener(new poponDismissListener());
+        popupWindow.setOnDismissListener(new popupDismissListener());
         popupWindow.showAtLocation(view_list.findViewById(R.id.popup_photo), Gravity.BOTTOM, 0, 0);
 
         // 获取按钮并添加监听器
@@ -522,10 +609,11 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
             }
         });
     }
-    private class poponDismissListener implements PopupWindow.OnDismissListener {
+
+    private class popupDismissListener implements PopupWindow.OnDismissListener {
         @Override
         public void onDismiss() {
-            setBackgroundAlpha(1f,FillPersonalInforActivity.this);
+            setBackgroundAlpha(1f, FillPersonalInforActivity.this);
         }
     }
 
@@ -537,7 +625,6 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         ((Activity) mContext).getWindow().setAttributes(lp);
     }
 
-
     private void initView() {
         mViewPager = (ViewPager) findViewById(R.id.vp_view);
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -548,7 +635,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
      * 隐藏键盘
      */
     private void hideKeyboard() {
-        if(getWindow().getAttributes().softInputMode == WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE) {
+        if (getWindow().getAttributes().softInputMode == WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         }
@@ -590,5 +677,14 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
             return mTitleList.get(position);//页卡标题
         }
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            startActivity(new Intent(FillPersonalInforActivity.this,Main2Activity.class));
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

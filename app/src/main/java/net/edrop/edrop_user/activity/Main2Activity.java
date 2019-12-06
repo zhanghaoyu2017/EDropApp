@@ -54,6 +54,7 @@ public class Main2Activity extends AppCompatActivity {
     private ImageView imgSweep;
     private long waitTime = 2000;
     private long touchTime = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         new SystemTransUtil().transform(Main2Activity.this);
@@ -72,25 +73,32 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     private void fillUserInfo() {
-        // 创建一个AlertDialog构造器，构造者
-        AlertDialog.Builder adBuilder = new AlertDialog.Builder(Main2Activity.this);
-        // 对构造器进行设置
-        adBuilder.setTitle("提示");
-        adBuilder.setMessage(getResources().getString(R.string.filluserinfo));
-        // 积极-Positive  消极-Negative   中立-Neutral
-        adBuilder.setPositiveButton("马上完善",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog,int which) {
-                        Intent intent = new Intent(Main2Activity.this, FillPersonalInforActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                    }
-                });
-        adBuilder.setNegativeButton("取消", null);
-        AlertDialog alertDialog = adBuilder.create();// 通过构造器创建AlertDialog
-        alertDialog.setCancelable(false);// 设置对话框不能被取消（点击界面其它地方，对话框自动关闭）
-        alertDialog.show();
+        SharedPreferencesUtils loginInfo = new SharedPreferencesUtils(Main2Activity.this, "loginInfo");
+        String username = loginInfo.getString("username", "");
+        String phone = loginInfo.getString("phone","");
+        if (!username.equals("")&&!phone.equals("")){
+
+        }else {
+            // 创建一个AlertDialog构造器，构造者
+            AlertDialog.Builder adBuilder = new AlertDialog.Builder(Main2Activity.this);
+            // 对构造器进行设置
+            adBuilder.setTitle("提示");
+            adBuilder.setMessage(getResources().getString(R.string.filluserinfo));
+            // 积极-Positive  消极-Negative   中立-Neutral
+            adBuilder.setPositiveButton("马上完善",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(Main2Activity.this, FillPersonalInforActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
+                    });
+            adBuilder.setNegativeButton("取消", null);
+            AlertDialog alertDialog = adBuilder.create();// 通过构造器创建AlertDialog
+            alertDialog.setCancelable(false);// 设置对话框不能被取消（点击界面其它地方，对话框自动关闭）
+            alertDialog.show();
+        }
     }
 
     private void initViews() {

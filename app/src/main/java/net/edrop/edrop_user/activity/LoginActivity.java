@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
@@ -93,18 +94,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (user != null) {
                     Log.e("qq", "userInfo:昵称：" + user.getNickname() + "  性别:" + user.getGender() + "  地址：" + user.getProvince() + user.getCity());
                     Log.e("qq", "头像路径：" + user.getFigureurl_qq_2());
-//                        Glide.with(QQLoginActivity.this).load(user.getFigureurl_qq_2()).into(ivHead);
-                }
+                    Log.e("qq", "qquid：" + QQ_uid);
 
+                }
             }
             if (msg.what == PASSWORD_WRONG) {
-//                edUserName.setText("");
-//                edPwd.setText("");
                 Toast.makeText(LoginActivity.this, "密码错误，请重试!", Toast.LENGTH_SHORT).show();
             }
             if (msg.what == USER_NO_EXISTS) {
-//                edUserName.setText("");
-//                edPwd.setText("");
                 Toast.makeText(LoginActivity.this, "该账号不存在，请先注册！", Toast.LENGTH_SHORT).show();
             }
         }
@@ -122,6 +119,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         listener = new BaseUiListener();
         mTencent = Tencent.createInstance(QQConfig.QQ_LOGIN_APP_ID, this.getApplicationContext());
         initView();
+        okHttpClient = new OkHttpClient();
     }
 
     //判断是否是第一次登陆
@@ -154,7 +152,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         qqLogin = findViewById(R.id.qq_name);
         usernameWrapper.setHint("请输入用户名");
         passwordWrapper.setHint("请输入密码");
-        okHttpClient = new OkHttpClient();
         edPwd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -199,7 +196,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -343,8 +340,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (mTencent != null && mTencent.isSessionValid()) {
                 IUiListener listener = new IUiListener() {
                     @Override
-                    public void onError(UiError e) {
-                    }
+                    public void onError(UiError e) { }
 
                     @Override
                     public void onComplete(final Object response) {
@@ -429,6 +425,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         SharedPreferences.Editor editor = sharedPreferences.getEditor();
                         editor.putInt("userId",user.getId());
                         editor.putString("gender",user.getGender());
+                        editor.putString("phone",user.getPhone());
                         editor.putString("username", user.getUsername());
                         editor.putString("password", user.getPassword());
                         editor.putString("imgName", user.getImgname());

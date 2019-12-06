@@ -3,7 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <View
+        android:background="#32BA88"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"/>
     <LinearLayout
         android:background="@color/color_green_32BA88"
         android:layout_width="match_parent"
@@ -33,6 +36,7 @@
             android:text="完成"
             android:textSize="@dimen/size_20"
             android:gravity="center"
+            android:layout_marginRight="@dimen/size_10"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
     </LinearLayout>
