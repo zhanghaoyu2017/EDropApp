@@ -30,7 +30,7 @@ public class IntroductionEDropActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         new SystemTransUtil().transform(IntroductionEDropActivity.this);
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_introduction_edrop);
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.maincollapsing);
         collapsingToolbar.setTitle("EDrop简介");
