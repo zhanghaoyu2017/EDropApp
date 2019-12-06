@@ -112,7 +112,6 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     private File cameraSavePath;//拍照照片路径
     private Uri uri;
     private String photoPath;
-    private MultipartBody.Builder multipartBody = new MultipartBody.Builder();
     //popupWindow
     private PopupWindow popupWindow = null;
     private View popupView = null;
@@ -211,13 +210,19 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         String detailAddress = loginInfo.getString("detailAddress", "");
         tvDetailAddress.setText(detailAddress);
         userId = loginInfo.getInt("userId");
-        tvSelect.setText(address);
+        if (address.equals("")){
+            tvSelect.setText("请选择城市");
+        }else {
+            tvSelect.setText(address);
+        }
         tvUserName.setText(username);
         String str="****";
         if (!phone.equals("")) {
             StringBuffer sb = new StringBuffer(phone);
             sb.replace(3, 7, str);
             tvChangePhone.setText(sb.toString());
+        }else {
+            tvChangePhone.setText("请输入手机号");
         }
         switch (gender) {
             case "boy":
@@ -327,6 +332,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     }
 
     private void setLinstener() {
+        tvChangePhone.setOnClickListener(new MyLinsener());
         btnSave.setOnClickListener(new MyLinsener());
         btnOk.setOnClickListener(new MyLinsener());
         btnSelectImg.setOnClickListener(new MyLinsener());
@@ -449,11 +455,10 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     private void postFormImg() {
         File file = new File(photoPath);
         if (file.exists()) {
-            RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpg"), file);
-            RequestBody requestBody = new MultipartBody.Builder()
+            MultipartBody requestBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
-                    .addFormDataPart("id", userId + "")
-                    .addFormDataPart("imgFile", file.getName(), fileBody)
+                    .addFormDataPart("id",userId + "")
+                    .addFormDataPart("imgFile", file.getName(), RequestBody.create(MediaType.parse("image/jpg"), file))
                     .build();
             Request request = new Request.Builder()
                     .url(Constant.BASE_URL + "addUserInfo")
@@ -469,12 +474,19 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String string = response.body().string();
-                    if (string.equals(UPDATE_USER_SUCCESS + "")) {
-                        msg.obj = "密码更新完成";
+                    int state = 0;
+                    try {
+                        JSONObject jsonObject = new JSONObject(string);
+                        state = jsonObject.getInt("state");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if (state==UPDATE_USER_SUCCESS) {
+                        msg.obj = "头像更新完成";
                         msg.what = IMG_SUCCESS;
                         mHandler.sendMessage(msg);
-                    } else if (string.equals(UPDATE_USER_FAIL + "")) {
-                        msg.obj = "密码更新失败";
+                    } else if (state==UPDATE_USER_FAIL) {
+                        msg.obj = "头像更新失败";
                         msg.what = IMG_FAIL;
                         mHandler.sendMessage(msg);
                     }
@@ -514,7 +526,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                     msg.obj = "密码更新完成";
                     msg.what = PSD_SUCCESS;
                     mHandler.sendMessage(msg);
-                } else if (string.equals(UPDATE_USER_FAIL + "")) {
+                } else if (state==UPDATE_USER_FAIL) {
                     msg.obj = "服务器错误";
                     msg.what = PSD_FAIL;
                     mHandler.sendMessage(msg);
@@ -558,7 +570,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                     msg.obj = "基本信息更新完成";
                     msg.what = BASE_SUCCESS;
                     mHandler.sendMessage(msg);
-                } else if (string.equals(UPDATE_USER_FAIL + "")) {
+                } else if (state==UPDATE_USER_FAIL) {
                     msg.obj = "服务器错误";
                     msg.what = BASE_FAIL;
                     mHandler.sendMessage(msg);

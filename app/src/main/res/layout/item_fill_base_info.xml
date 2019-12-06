@@ -93,6 +93,7 @@
 
         <TextView
             android:id="@+id/tv_phone_select"
+            android:text="请输入手机号"
             android:gravity="center"
             android:textStyle="bold"
             android:layout_width="wrap_content"
@@ -139,7 +140,6 @@
         android:layout_marginRight="@dimen/size_30"
         android:layout_width="fill_parent"
         android:scrollbars="horizontal"
-        android:focusable="false"
         android:background="@drawable/register_shape"
         android:layout_height="wrap_content" />
     <Button
