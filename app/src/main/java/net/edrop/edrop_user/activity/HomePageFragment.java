@@ -2,13 +2,16 @@ package net.edrop.edrop_user.activity;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -61,7 +64,6 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
     private List<View> dots;//小点
     // 图片数据，包括图片标题、图片链接、数据、点击要打开的网站（点击打开的网页或一些提示指令）
     private List<ImageInfo> imageInfoList;
-    private CustomClickListener customClickListener = new CustomClickListener();
     //定义手势检测器实例
     private GestureDetector detector;
 
@@ -132,17 +134,17 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
 
     private void setListener(){
         //搜索框
-        search.setOnClickListener(customClickListener);
+        search.setOnClickListener(new CustomClickListener());
         //可回收垃圾介绍
-        recyclable.setOnClickListener(customClickListener);
+        recyclable.setOnClickListener(new CustomClickListener());
         //有害垃圾介绍
-        hazardous.setOnClickListener(customClickListener);
+        hazardous.setOnClickListener(new CustomClickListener());
         //湿垃圾介绍
-        housefood.setOnClickListener(customClickListener);
+        housefood.setOnClickListener(new CustomClickListener());
         //干垃圾介绍
-        residoual.setOnClickListener(customClickListener);
+        residoual.setOnClickListener(new CustomClickListener());
         //答题
-        questions.setOnClickListener(customClickListener);
+        questions.setOnClickListener(new CustomClickListener());
     }
 
     @Override
@@ -192,13 +194,24 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
     //初始化事件
     private void initEvent() {
         imageInfoList = new ArrayList<>();
-        imageInfoList.add(new ImageInfo(1, "图片1，啦啦啦啦", "", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574784053918&di=f58933482d84cefcfc063e8833cdb2d6&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2Fa%2F5879b4884d8e1.jpg", "http://www.cnblogs.com/luhuan/"));
-        imageInfoList.add(new ImageInfo(1, "图片2，啦啦啦啦", "", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574784053918&di=88033b9a50f2bb5d763517435d047223&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F3%2F59c86223661fc.jpg", "http://www.cnblogs.com/luhuan/"));
-        imageInfoList.add(new ImageInfo(1, "图片3，啦啦啦啦", "", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574784053917&di=7f551a19ac7867bcc5a9fe0749547f7f&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F3%2F5423b8a480e35.jpg", "http://www.cnblogs.com/luhuan/"));
-        imageInfoList.add(new ImageInfo(1, "图片4，啦啦啦啦", "仅展示", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574784053917&di=3af840e99adc4a6be5c74c6a22e6d298&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2%2F58fec381a6036.jpg", ""));
-        imageInfoList.add(new ImageInfo(1, "图片5，啦啦啦啦", "仅展示", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574784053917&di=506193046c67fc511a7bfea446b783a0&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0166e45c396cf8a8012090db10f36f.jpg", ""));
+        imageInfoList.add(new ImageInfo(1, "图片1，啦啦啦啦", "", getResourcesUri(R.drawable.slideshow1), "https://www.baidu.com/"));
+        imageInfoList.add(new ImageInfo(2, "图片2，啦啦啦啦", "", getResourcesUri(R.drawable.slideshow2), "https://www.baidu.com/"));
+        imageInfoList.add(new ImageInfo(3, "图片3，啦啦啦啦", "", getResourcesUri(R.drawable.slideshow3), "https://www.baidu.com/"));
+        imageInfoList.add(new ImageInfo(4, "图片4，啦啦啦啦", "仅展示", getResourcesUri(R.drawable.slideshow4), "https://www.baidu.com/"));
+        imageInfoList.add(new ImageInfo(5, "图片5，啦啦啦啦", "仅展示", getResourcesUri(R.drawable.slideshow5), "https://www.baidu.com/"));
     }
 
+    //获取图片资源的绝对路径
+    private String getResourcesUri(@DrawableRes int id) {
+        Resources resources = getResources();
+        String uriPath = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+                resources.getResourcePackageName(id) + "/" +
+                resources.getResourceTypeName(id) + "/" +
+                resources.getResourceEntryName(id);
+        return uriPath;
+    }
+
+    //轮播
     private void imageStart() {
         int[] imgaeIds = new int[]{R.id.pager_image1, R.id.pager_image2, R.id.pager_image3, R.id.pager_image4, R.id.pager_image5, R.id.pager_image6, R.id.pager_image7, R.id.pager_image8};
         String[] titles = new String[imageInfoList.size()];
