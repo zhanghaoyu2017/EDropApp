@@ -85,7 +85,6 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
                 android:textSize="@dimen/size_20"
-                android:text="用户123"
                 android:layout_height="50dp" />
         </LinearLayout>
         <View
@@ -111,7 +110,6 @@
                 android:id="@+id/change_phone"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="15131723090"
                 android:gravity="center_vertical|right"
                 android:textSize="@dimen/size_20"
                 android:layout_height="match_parent" />
@@ -140,7 +138,6 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_marginTop="5dp"
-                android:text="hebei1shifandaxue1"
                 android:gravity="center_vertical|right"
                 android:textSize="@dimen/size_20"
                 android:layout_height="40dp" />

@@ -22,9 +22,11 @@ import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 import net.edrop.edrop_user.utils.SystemTransUtil;
 
 public class PersonalCenterManagerActivity extends AppCompatActivity {
-    private TextView etUsername;
+    private TextView tvUsername;
+    private TextView tvPhone;
+    private TextView tvAddress;
     private ImageView userImg;
-    private ImageView gender;
+    private ImageView ivGender;
     private ImageView personalBack;
     private Button cancelLogin;
     private TextView tvEditInfo;
@@ -35,6 +37,25 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_personal_center);
         initView();
         setListener();
+        initData();
+    }
+
+    private void initData() {
+        SharedPreferencesUtils sharedPreferences = new SharedPreferencesUtils(PersonalCenterManagerActivity.this,"loginInfo");
+        tvUsername.setText(sharedPreferences.getString("username",""));
+        tvPhone.setText(sharedPreferences.getString("phone",""));
+        tvAddress.setText(sharedPreferences.getString("address",""));
+        String gender = sharedPreferences.getString("gender", "");
+        switch (gender){
+            case "boy":
+                ivGender.setImageDrawable(getResources().getDrawable(R.drawable.gender_boy));
+                break;
+            case "girl":
+                ivGender.setImageDrawable(getResources().getDrawable(R.drawable.gender_girl));
+                break;
+            default:
+                break;
+        }
     }
 
     private void setListener() {
@@ -44,6 +65,10 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        ivGender=findViewById(R.id.change_gender);
+        tvAddress=findViewById(R.id.change_address);
+        tvPhone=findViewById(R.id.change_phone);
+        tvUsername=findViewById(R.id.change_username);
         tvEditInfo=findViewById(R.id.tv_edit_info);
         cancelLogin=findViewById(R.id.btn_cancel_login);
         personalBack=findViewById(R.id.personal_back);
@@ -54,10 +79,10 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.btn_cancel_login:
-                    SharedPreferencesUtils sharedPreferences2 = new SharedPreferencesUtils(PersonalCenterManagerActivity.this,"loginInfo");
-                    sharedPreferences2.removeValues("username");
-                    sharedPreferences2.removeValues("password");
-                    SharedPreferences.Editor editor2 = sharedPreferences2.getEditor();
+                    SharedPreferencesUtils sharedPreferences = new SharedPreferencesUtils(PersonalCenterManagerActivity.this,"loginInfo");
+                    sharedPreferences.removeValues("username");
+                    sharedPreferences.removeValues("password");
+                    SharedPreferences.Editor editor2 = sharedPreferences.getEditor();
                     editor2.putBoolean("isAuto",false);
                     editor2.commit();
                     getLoginExit();

@@ -688,7 +688,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            startActivity(new Intent(FillPersonalInforActivity.this,Main2Activity.class));
+            startActivity(new Intent(FillPersonalInforActivity.this,PersonalCenterManagerActivity.class));
             finish();
         }
         return super.onKeyDown(keyCode, event);
