@@ -395,7 +395,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      * 用户名密码登录
      */
     private void OkHttpLogin(final String username, String password) {
-
         //2.创建Request对象
         Request request = new Request.Builder().url(BASE_URL + "loginByUsernameAndPassword?username=" + username + "&password=" + password).build();
         //3.创建Call对象
