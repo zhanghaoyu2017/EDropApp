@@ -226,16 +226,13 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         }
         switch (gender) {
             case "boy":
-                rbGirl.setChecked(false);
-                rbSecret.setChecked(false);
+                rbBoy.setChecked(true);
                 break;
             case "girl":
-                rbBoy.setChecked(false);
-                rbSecret.setChecked(false);
+                rbGirl.setChecked(true);
                 break;
             case "secret":
-                rbGirl.setChecked(false);
-                rbBoy.setChecked(false);
+                rbSecret.setChecked(true);
                 break;
             default:
                 break;
@@ -414,18 +411,15 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                     switch (rgSex.getCheckedRadioButtonId()) {
                         case R.id.rb_boy:
                             strSex = "boy";
-                            rbGirl.setChecked(false);
-                            rbSecret.setChecked(false);
+                            rbBoy.setChecked(true);
                             break;
                         case R.id.rb_girl:
                             strSex = "girl";
-                            rbBoy.setChecked(false);
-                            rbSecret.setChecked(false);
+                            rbGirl.setChecked(true);
                             break;
                         case R.id.rb_secret:
                             strSex = "secret";
-                            rbGirl.setChecked(false);
-                            rbBoy.setChecked(false);
+                            rbSecret.setChecked(true);
                             break;
                     }
                     postFormData();//发送form表单数据
