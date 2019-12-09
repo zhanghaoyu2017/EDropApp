@@ -5,7 +5,10 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -13,13 +16,31 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 
 import net.edrop.edrop_user.R;
+import net.edrop.edrop_user.entity.User;
 import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 import net.edrop.edrop_user.utils.SystemTransUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import static net.edrop.edrop_user.utils.Constant.BASE_URL;
 
 public class PersonalCenterManagerActivity extends AppCompatActivity {
     private TextView tvUsername;
@@ -30,18 +51,33 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
     private ImageView personalBack;
     private Button cancelLogin;
     private TextView tvEditInfo;
+    private OkHttpClient okHttpClient;
+    private SharedPreferencesUtils sharedPreferences;
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 888) {
+                RequestOptions options = new RequestOptions().centerCrop();
+                Toast.makeText(PersonalCenterManagerActivity.this,(String)msg.obj,Toast.LENGTH_SHORT).show();
+                Glide.with(PersonalCenterManagerActivity.this)
+                        .load(msg.obj)
+                        .apply(options)
+                        .into(userImg);
+            }
+        }
+    };
 
     protected void onCreate(Bundle savedInstanceState) {
         new SystemTransUtil().trans(PersonalCenterManagerActivity.this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_center);
+        sharedPreferences = new SharedPreferencesUtils(PersonalCenterManagerActivity.this,"loginInfo");
         initView();
         setListener();
         initData();
     }
 
     private void initData() {
-        SharedPreferencesUtils sharedPreferences = new SharedPreferencesUtils(PersonalCenterManagerActivity.this,"loginInfo");
         tvUsername.setText(sharedPreferences.getString("username",""));
         tvPhone.setText(sharedPreferences.getString("phone",""));
         tvAddress.setText(sharedPreferences.getString("address",""));
@@ -53,9 +89,48 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
             case "girl":
                 ivGender.setImageDrawable(getResources().getDrawable(R.drawable.gender_girl));
                 break;
+            case "secret":
+                ivGender.setImageDrawable(getResources().getDrawable(R.drawable.gender_secret));
             default:
                 break;
         }
+        okHttpClient=new OkHttpClient();
+        getImg();
+    }
+
+    private void getImg() {
+        //2.创建Request对象
+        Request request = new Request.Builder().url(BASE_URL + "getUserInfoById?id=" + sharedPreferences.getInt("userId")).build();
+        //3.创建Call对象
+        final Call call = okHttpClient.newCall(request);
+
+        //4.发送请求 获得响应数据
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();//打印异常信息
+            }
+            //请求成功时回调
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String str = response.body().string();
+                String imgPath="";
+                String imgName="";
+                Log.e("response", str);
+                try {
+                    JSONObject jsonObject = new JSONObject(str);
+                    imgName = jsonObject.getString("imgname");
+                    imgPath = jsonObject.getString("imgpath");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                String substring = BASE_URL.substring(0, BASE_URL.length() - 1);
+                Message message =new Message();
+                message.what=888;
+                message.obj=substring+imgPath+"/"+imgName;
+                handler.sendMessage(message);
+            }
+        });
     }
 
     private void setListener() {
@@ -72,6 +147,7 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
         tvEditInfo=findViewById(R.id.tv_edit_info);
         cancelLogin=findViewById(R.id.btn_cancel_login);
         personalBack=findViewById(R.id.personal_back);
+        userImg=findViewById(R.id.change_head_img);
     }
 
     private class MyListener implements View.OnClickListener{

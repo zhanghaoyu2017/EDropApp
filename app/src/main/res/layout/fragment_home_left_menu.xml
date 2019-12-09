@@ -18,7 +18,7 @@
             android:layout_height="80dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="30dp"
-            android:src="@drawable/user" />
+            android:src="@drawable/no_img" />
 
         <TextView
             android:id="@+id/tv_userName"
@@ -29,6 +29,7 @@
             android:textSize="32dp" />
 
         <ImageView
+            android:id="@+id/iv_head_img_main"
             android:layout_width="50dp"
             android:layout_height="30dp"
             android:layout_alignParentBottom="true"

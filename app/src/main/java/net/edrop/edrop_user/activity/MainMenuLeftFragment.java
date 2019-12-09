@@ -2,7 +2,10 @@ package net.edrop.edrop_user.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +13,32 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.module.AppGlideModule;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
+
 import net.edrop.edrop_user.R;
+import net.edrop.edrop_user.entity.User;
 import net.edrop.edrop_user.utils.SharedPreferencesUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import static net.edrop.edrop_user.utils.Constant.BASE_URL;
 
 public class MainMenuLeftFragment extends Fragment {
     private View myView;
+    private ImageView userSex;
     private ImageView userImg;
     private TextView userName;
     private TextView myMoney;
@@ -25,7 +49,21 @@ public class MainMenuLeftFragment extends Fragment {
     private TextView aboutEDrop;
     private TextView setting;
     private TextView feedback;
-    private MyListener myListener;
+    private OkHttpClient okHttpClient;
+    private SharedPreferencesUtils sharedPreferences;
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 888) {
+                RequestOptions options = new RequestOptions().centerCrop();
+                Toast.makeText(myView.getContext(),(String)msg.obj,Toast.LENGTH_SHORT).show();
+                Glide.with(myView.getContext())
+                        .load(msg.obj)
+                        .apply(options)
+                        .into(userImg);
+            }
+        }
+    };
 
     //重写
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,16 +89,17 @@ public class MainMenuLeftFragment extends Fragment {
      * 初始化控件
      */
     private void initView() {
-        userImg = getActivity().findViewById(R.id.iv_userImg);
-        userName = getActivity().findViewById(R.id.tv_userName);
-        myMoney = getActivity().findViewById(R.id.myMoney);
-        myAddress = getActivity().findViewById(R.id.myAddress);
-        myOrder = getActivity().findViewById(R.id.myOrder);
-        inviteFriends = getActivity().findViewById(R.id.inviteFriends);
-        businessCooperation = getActivity().findViewById(R.id.businessCooperation);
-        aboutEDrop = getActivity().findViewById(R.id.aboutEDrop);
-        setting = getActivity().findViewById(R.id.setting);
-        feedback = getActivity().findViewById(R.id.feedback);
+        userImg = myView.findViewById(R.id.iv_userImg);
+        userName = myView.findViewById(R.id.tv_userName);
+        myMoney = myView.findViewById(R.id.myMoney);
+        myAddress = myView.findViewById(R.id.myAddress);
+        myOrder = myView.findViewById(R.id.myOrder);
+        inviteFriends = myView.findViewById(R.id.inviteFriends);
+        businessCooperation = myView.findViewById(R.id.businessCooperation);
+        aboutEDrop = myView.findViewById(R.id.aboutEDrop);
+        setting = myView.findViewById(R.id.setting);
+        feedback = myView.findViewById(R.id.feedback);
+        userSex = myView.findViewById(R.id.iv_head_img_main);
     }
 
     /**
@@ -69,26 +108,76 @@ public class MainMenuLeftFragment extends Fragment {
      */
     public void setDefaultDatas() {
         //修改首页左边数据
-        SharedPreferencesUtils sharedPreferences = new SharedPreferencesUtils(getContext(), "loginInfo");
+        sharedPreferences = new SharedPreferencesUtils(myView.getContext(), "loginInfo");
         String username = sharedPreferences.getString("username", "");
+        String gender = sharedPreferences.getString("gender", "");
         userName.setText(username);
+        switch (gender){
+            case "boy":
+                userSex.setImageDrawable(getResources().getDrawable(R.drawable.gender_boy));
+                break;
+            case "girl":
+                userSex.setImageDrawable(getResources().getDrawable(R.drawable.gender_girl));
+                break;
+            case "secret":
+                userSex.setImageDrawable(getResources().getDrawable(R.drawable.gender_secret));
+            default:
+                break;
+        }
+        okHttpClient=new OkHttpClient();
+        getImg();
+    }
+
+    private void getImg() {
+        //2.创建Request对象
+        Request request = new Request.Builder().url(BASE_URL + "getUserInfoById?id=" + sharedPreferences.getInt("userId")).build();
+        //3.创建Call对象
+        final Call call = okHttpClient.newCall(request);
+
+        //4.发送请求 获得响应数据
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();//打印异常信息
+            }
+            //请求成功时回调
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String str = response.body().string();
+                String imgPath="";
+                String imgName="";
+                Log.e("response", str);
+                try {
+                    JSONObject jsonObject = new JSONObject(str);
+                    imgPath=jsonObject.getString("imgpath");
+                    imgName=jsonObject.getString("imgname");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                String substring = BASE_URL.substring(0, BASE_URL.length() - 1);
+
+                Message message =new Message();
+                message.what=888;
+                message.obj=substring+imgPath+"/"+imgName;
+                handler.sendMessage(message);
+            }
+        });
     }
 
     /**
      * 初始化监听事件
      */
     private void initEvent() {
-        myListener = new MyListener();
-        userName.setOnClickListener(myListener);
-        userImg.setOnClickListener(myListener);
-        myMoney.setOnClickListener(myListener);
-        myAddress.setOnClickListener(myListener);
-        myOrder.setOnClickListener(myListener);
-        inviteFriends.setOnClickListener(myListener);
-        businessCooperation.setOnClickListener(myListener);
-        aboutEDrop.setOnClickListener(myListener);
-        setting.setOnClickListener(myListener);
-        feedback.setOnClickListener(myListener);
+        userName.setOnClickListener(new MyListener());
+        userImg.setOnClickListener(new MyListener());
+        myMoney.setOnClickListener(new MyListener());
+        myAddress.setOnClickListener(new MyListener());
+        myOrder.setOnClickListener(new MyListener());
+        inviteFriends.setOnClickListener(new MyListener());
+        businessCooperation.setOnClickListener(new MyListener());
+        aboutEDrop.setOnClickListener(new MyListener());
+        setting.setOnClickListener(new MyListener());
+        feedback.setOnClickListener(new MyListener());
     }
 
     private class MyListener implements View.OnClickListener {

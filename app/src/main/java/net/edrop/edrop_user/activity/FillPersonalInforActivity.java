@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -128,10 +129,22 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == PSD_SUCCESS) {
+                SharedPreferencesUtils sp = new SharedPreferencesUtils(FillPersonalInforActivity.this, "loginInfo");
+                SharedPreferences.Editor editor = sp.getEditor();
+                editor.putString("password",etNewPsd.getText().toString().trim());
+                editor.commit();
                 Toast.makeText(FillPersonalInforActivity.this, msg.obj + "", Toast.LENGTH_SHORT).show();
             } else if (msg.what == PSD_FAIL) {
                 Toast.makeText(FillPersonalInforActivity.this, msg.obj + "", Toast.LENGTH_SHORT).show();
             } else if (msg.what == BASE_SUCCESS) {
+                SharedPreferencesUtils sp = new SharedPreferencesUtils(FillPersonalInforActivity.this, "loginInfo");
+                SharedPreferences.Editor editor = sp.getEditor();
+                editor.putString("username",tvChangeName.getText().toString().trim());
+                editor.putString("sex",strSex);
+                editor.putString("phone",tvChangePhone.getText().toString().trim());
+                editor.putString("address",tvSelect.getText().toString());
+                editor.putString("detailAddress",tvDetailAddress.getText().toString().trim());
+                editor.commit();
                 Toast.makeText(FillPersonalInforActivity.this, msg.obj + "", Toast.LENGTH_SHORT).show();
             } else if (msg.what == BASE_FAIL) {
                 Toast.makeText(FillPersonalInforActivity.this, msg.obj + "", Toast.LENGTH_SHORT).show();
