@@ -53,4 +53,5 @@
     </string>
     <string name="title_activity_tset">TsetActivity</string>
     <string name="select_photo">♟选择您想要上传的头像</string>
+    <string name="title_activity_immediate_appointment">ImmediateAppointmentActivity</string>
 </resources>

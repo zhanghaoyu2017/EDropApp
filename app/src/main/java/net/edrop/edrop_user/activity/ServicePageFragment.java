@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ public class ServicePageFragment extends Fragment {
     private List<Map<String, Object>> dataSource = null;
     private ListView listView;
     private View view;
+    private Button btnService;
 
     public static ServicePageFragment newInstance(String sectionNumber) {
         ServicePageFragment fragment = new ServicePageFragment();
@@ -48,12 +50,12 @@ public class ServicePageFragment extends Fragment {
         InitData();
         findView();
         setAdapter();
-        introductionEdrop();
+        setListener();
         return view;
     }
 
     //什么是易扔？的点击事件
-    private void introductionEdrop() {
+    private void setListener() {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,12 +65,20 @@ public class ServicePageFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        btnService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),ImmediateAppointmentActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     //找到控件对象
     private void findView() {
         listView = view.findViewById(R.id.lv_service);
         textView = view.findViewById(R.id.tv_service_what);
+        btnService = view.findViewById(R.id.btn_service_reservation);
     }
 
     //将数据传入adapter
