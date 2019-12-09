@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--listView自定义下划线的样式-->
+    <item
+        android:left="20dp"
+        android:right="20dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#C0C0C0"></solid>
+        </shape>
+    </item>
+</layer-list>

@@ -108,6 +108,7 @@ public class FeedBackOptionAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, FeedBackActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("msg", str);
                 /*发生intent请求*/
                 context.startActivity(intent);

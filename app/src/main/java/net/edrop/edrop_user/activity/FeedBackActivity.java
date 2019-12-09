@@ -112,7 +112,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
                 Toast.makeText(this, "发送请求！！", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.im_feedback_index:
-                Toast.makeText(this, "代开相册选择截图！！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "图片功能待完善！！", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
