@@ -366,4 +366,15 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/btn_order"
+        android:layout_marginTop="@dimen/size_30"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="生成订单"
+        android:textSize="@dimen/size_22"
+        android:textColor="#fff"
+        android:background="@drawable/btn_register_background"/>
+
 </LinearLayout>
