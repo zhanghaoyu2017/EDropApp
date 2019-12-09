@@ -55,6 +55,7 @@
                 android:textSize="@dimen/size_18" />
 
             <EditText
+                android:id="@+id/et_realName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -96,6 +97,7 @@
                 android:textSize="@dimen/size_18" />
 
             <EditText
+                android:id="@+id/et_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -188,6 +190,7 @@
                 android:textSize="@dimen/size_18" />
 
             <EditText
+                android:id="@+id/et_detail_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -370,9 +373,9 @@
         android:id="@+id/btn_order"
         android:layout_marginTop="@dimen/size_30"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/size_40"
         android:layout_gravity="center_horizontal"
-        android:text="生成订单"
+        android:text="预约订单"
         android:textSize="@dimen/size_22"
         android:textColor="#fff"
         android:background="@drawable/btn_register_background"/>

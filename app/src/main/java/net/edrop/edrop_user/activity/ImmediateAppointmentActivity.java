@@ -3,12 +3,16 @@ package net.edrop.edrop_user.activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -22,11 +26,22 @@ import com.lljjcoder.style.citylist.Toast.ToastUtils;
 import com.lljjcoder.style.citypickerview.CityPickerView;
 
 import net.edrop.edrop_user.R;
+import net.edrop.edrop_user.utils.Constant;
+import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 import net.edrop.edrop_user.utils.SystemTransUtil;
 
+import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class ImmediateAppointmentActivity extends Activity {
     private CityPickerView mPicker = new CityPickerView();
@@ -36,7 +51,11 @@ public class ImmediateAppointmentActivity extends Activity {
     private LinearLayout llCitySelect;
     private LinearLayout llDateSelect;
     private LinearLayout llTimeSelect;
-    DateFormat format = DateFormat.getDateTimeInstance();
+    private EditText etRealName;
+    private EditText etPhoneNum;
+    private EditText etAddressDetail;
+    private Button btnOrder;
+    private OkHttpClient okHttpClient;
     Calendar calendar = Calendar.getInstance(Locale.CHINA);
 
     @Override
@@ -46,6 +65,19 @@ public class ImmediateAppointmentActivity extends Activity {
         setContentView(R.layout.activity_immediate_appointment);
         initView();
         setListener();
+
+    }
+
+    private void initData() {
+        SharedPreferencesUtils loginInfo = new SharedPreferencesUtils(ImmediateAppointmentActivity.this, "loginInfo");
+        int userId = loginInfo.getInt("userId");
+        String realname = etRealName.getText().toString();
+        String phone = etPhoneNum.getText().toString();
+        String address = tvSelect.getText().toString() + etAddressDetail.getText().toString();
+        String reserveTime = tvDateSelect.getText().toString() + " " + tvTimeSelect.getText().toString();
+
+        Log.e("qqqqqqqqqq", userId + "===" + realname + "===" + phone + "===" + address + "===" + reserveTime);
+
     }
 
     private void initView() {
@@ -56,7 +88,11 @@ public class ImmediateAppointmentActivity extends Activity {
         llCitySelect = findViewById(R.id.ll_immediate_select);
         llDateSelect = findViewById(R.id.ll_date_select);
         llTimeSelect = findViewById(R.id.ll_time_select);
-
+        etRealName = findViewById(R.id.et_realName);
+        etPhoneNum = findViewById(R.id.et_phone);
+        etAddressDetail = findViewById(R.id.et_detail_address);
+        btnOrder = findViewById(R.id.btn_order);
+        okHttpClient = new OkHttpClient();
     }
 
     private void setListener() {
@@ -64,6 +100,7 @@ public class ImmediateAppointmentActivity extends Activity {
         llCitySelect.setOnClickListener(new MyListener());
         llDateSelect.setOnClickListener(new MyListener());
         llTimeSelect.setOnClickListener(new MyListener());
+        btnOrder.setOnClickListener(new MyListener());
     }
 
     private class MyListener implements View.OnClickListener {
@@ -104,7 +141,7 @@ public class ImmediateAppointmentActivity extends Activity {
                         @Override
                         public void onSelected(ProvinceBean province, CityBean city, DistrictBean district) {
                             //省份province-城市city-地区district
-                            tvSelect.setText(province + "\t" + city + "\t\t" + district);
+                            tvSelect.setText(province + "" + city + "" + district);
                         }
 
                         @Override
@@ -120,6 +157,9 @@ public class ImmediateAppointmentActivity extends Activity {
                     break;
                 case R.id.ll_time_select:
                     showTimePickerDialog(ImmediateAppointmentActivity.this, R.style.MyDatePickerDialogTheme, tvTimeSelect, calendar);
+                    break;
+                case R.id.btn_order:
+                    initData();
                     break;
             }
         }
@@ -150,7 +190,7 @@ public class ImmediateAppointmentActivity extends Activity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 // 此处得到选择的时间，可以进行你想要的操作
-                tv.setText(year + "年" + (monthOfYear + 1) + "月" + dayOfMonth + "日");
+                tv.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
             }
         }
                 // 设置初始日期
@@ -176,7 +216,7 @@ public class ImmediateAppointmentActivity extends Activity {
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        tv.setText(hourOfDay + "时" + minute + "分");
+                        tv.setText(hourOfDay + ":" + minute);
                     }
                 }
                 // 设置初始时间
@@ -184,5 +224,41 @@ public class ImmediateAppointmentActivity extends Activity {
                 , calendar.get(Calendar.MINUTE)
                 // true表示采用24小时制
                 , true).show();
+    }
+
+    /**
+     * 通过okhttp传输数据
+     *
+     * @param userId
+     * @param realName
+     * @param phone
+     * @param address
+     * @param reserveTime
+     */
+    private void sendOrderByOkHttp(String userId, String realName, String phone, String address, String reserveTime) {
+        FormBody formBody = new FormBody.Builder()
+                .add("userId", userId + "")
+                .add("realName", realName)
+                .add("phone", phone)
+                .add("address", address)
+                .add("reserveTime", reserveTime.toString())
+                .build();
+        Request request = new Request.Builder()
+                .url(Constant.BASE_URL + "addUserInfo")
+                .post(formBody)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+            }
+        });
+
     }
 }

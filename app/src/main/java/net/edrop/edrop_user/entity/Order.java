@@ -22,22 +22,12 @@ public class Order {
     private int userDeleteState;
     private int employeeDeleteState;
     private String orderAddress;
-    public Timestamp getReserveTime() {
-        return reserveTime;
-    }
-    public void setReserveTime(Timestamp reserveTime) {
-        this.reserveTime = reserveTime;
-    }
-    public String getOrderAddress() {
-        return orderAddress;
-    }
-    public void setOrderAddress(String orderAddress) {
-        this.orderAddress = orderAddress;
-    }
+    private String ouname;
+    private String outelephone;
 
     public Order(Integer id, String number, Integer userId, Integer employeeId, Timestamp reserveTime,
                  Timestamp createTime, Timestamp finishTime, int state, User user, Employee employee, int userDeleteState,
-                 int employeeDeleteState, String orderAddress) {
+                 int employeeDeleteState, String orderAddress, String ouname, String outelephone) {
         super();
         this.id = id;
         this.number = number;
@@ -52,7 +42,34 @@ public class Order {
         this.userDeleteState = userDeleteState;
         this.employeeDeleteState = employeeDeleteState;
         this.orderAddress = orderAddress;
+        this.ouname = ouname;
+        this.outelephone = outelephone;
     }
+    public String getOuname() {
+        return ouname;
+    }
+    public void setOuname(String ouname) {
+        this.ouname = ouname;
+    }
+    public String getOutelephone() {
+        return outelephone;
+    }
+    public void setOutelephone(String outelephone) {
+        this.outelephone = outelephone;
+    }
+    public Timestamp getReserveTime() {
+        return reserveTime;
+    }
+    public void setReserveTime(Timestamp reserveTime) {
+        this.reserveTime = reserveTime;
+    }
+    public String getOrderAddress() {
+        return orderAddress;
+    }
+    public void setOrderAddress(String orderAddress) {
+        this.orderAddress = orderAddress;
+    }
+
     public User getUser() {
         return user;
     }
@@ -125,10 +142,9 @@ public class Order {
                 + ", reserveTime=" + reserveTime + ", createTime=" + createTime + ", finishTime=" + finishTime
                 + ", state=" + state + ", user=" + user + ", employee=" + employee + ", userDeleteState="
                 + userDeleteState + ", employeeDeleteState=" + employeeDeleteState + ", orderAddress=" + orderAddress
-                + "]";
+                + ", ouname=" + ouname + ", outelephone=" + outelephone + "]";
     }
     public Order() {
         super();
-        // TODO Auto-generated constructor stub
     }
 }
