@@ -21,7 +21,7 @@
             android:textColor="@android:color/holo_green_light" />
 
         <Button
-            android:id="@+id/img_service_reservation"
+            android:id="@+id/btn_service_reservation"
             android:layout_width="@dimen/size_120"
             android:layout_height="@dimen/size_120"
             android:layout_gravity="center_horizontal"

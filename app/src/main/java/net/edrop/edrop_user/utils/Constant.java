@@ -30,6 +30,5 @@ public class Constant {
     public static final int IMG_FAIL = -7;
     public static final int PSD_SUCCESS = -8;
     public static final int PSD_FAIL = -9;
-
     public static final int SEARCH_SUCCESS = 6;
 }
