@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--反馈的主页面-->
+<?xml version="1.0" encoding="utf-8"?><!--反馈的主页面-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -56,13 +55,15 @@
         <io.github.rockerhieu.emojicon.EmojiconEditText
             android:id="@+id/et_feedback"
             android:layout_width="match_parent"
-            android:layout_height="132px"
+            android:layout_height="wrap_content"
             android:background="#fff"
             android:hint="说说你的问题"
-            android:lineSpacingExtra="9dp"
+            android:lineSpacingExtra="5dp"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
-            android:textCursorDrawable="@null" />
+            android:textColor="#282828"
+            android:textCursorDrawable="@null"
+            android:textSize="40px" />
 
     </LinearLayout>
 
