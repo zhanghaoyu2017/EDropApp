@@ -83,6 +83,8 @@
         <activity android:name=".activity.ChatViewActivity" />
         <activity android:name=".activity.LoadingActivity" />
         <activity android:name=".activity.TestPhoneNumActivity" />
+        <activity android:name=".activity.FeedBackActivity" />
+        <activity android:name=".activity.FeedBackOption" />
         <!-- QQ登录配置 start -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"

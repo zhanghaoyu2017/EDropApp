@@ -26,6 +26,7 @@ public class MainMenuLeftFragment extends Fragment {
     private TextView setting;
     private TextView feedback;
     private MyListener myListener;
+    private Intent intent;
 
     //重写
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -97,7 +98,7 @@ public class MainMenuLeftFragment extends Fragment {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.tv_userName:
-                    Intent intent = new Intent(getContext(), PersonalCenterManagerActivity.class);
+                    intent = new Intent(getContext(), PersonalCenterManagerActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     break;
@@ -118,15 +119,19 @@ public class MainMenuLeftFragment extends Fragment {
                     break;
                 case R.id.aboutEDrop:
                     //跳转到详细介绍页面
-                    Intent intent1 = new Intent(getContext(), AboutEDropActivity.class);
-                    intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent1);
+                    intent = new Intent(getContext(), AboutEDropActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                     break;
                 case R.id.setting:
                     Toast.makeText(getActivity(), setting.getText().toString(), Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.feedback:
-                    Toast.makeText(getActivity(), feedback.getText().toString(), Toast.LENGTH_SHORT).show();
+                    //跳转到反馈详细页面
+                    Toast.makeText(getActivity(), "反馈页面", Toast.LENGTH_SHORT).show();
+                    intent = new Intent(getContext(), FeedBackActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                     break;
             }
         }

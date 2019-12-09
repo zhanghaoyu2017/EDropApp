@@ -40,6 +40,8 @@ MobSDK {
     SMSSDK {}
 }
 dependencies {
+    /*添加emoji表情包的依赖*/
+    compile 'io.github.rockerhieu:emojicon:1.4.1'
     //TextInputLayout的依赖
     implementation 'com.android.support:design:27.1.1'
     //DrawerLayout侧边栏中动画效果用到的
