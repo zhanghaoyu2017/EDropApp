@@ -23,6 +23,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -72,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button btnRegister;
     private EditText edUserName;
     private EditText edPwd;
+    private TextView tvForgetPsd;
     public boolean isSelected = false;
     private ImageView qqLogin;
     //qq
@@ -119,6 +121,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         listener = new BaseUiListener();
         mTencent = Tencent.createInstance(QQConfig.QQ_LOGIN_APP_ID, this.getApplicationContext());
         initView();
+        setListener();
         okHttpClient = new OkHttpClient();
     }
 
@@ -142,6 +145,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initView() {
+        tvForgetPsd = findViewById(R.id.tv_forget_psd);
         usernameWrapper = findViewById(R.id.usernameWrapper);
         passwordWrapper = findViewById(R.id.passwordWrapper);
         edPwd = findViewById(R.id.password);
@@ -176,10 +180,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
-        setListener();
     }
 
     private void setListener() {
+        tvForgetPsd.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
         qqLogin.setOnClickListener(this);
         usernameWrapper.setOnClickListener(this);
@@ -244,6 +248,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     //注销登录 mTencent.logout(this);
                     mTencent.login(LoginActivity.this, "all", listener);
                 }
+                break;
+            case R.id.tv_forget_psd:
+                Intent intent = new Intent(LoginActivity.this, ForgetPsdActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
         }
     }

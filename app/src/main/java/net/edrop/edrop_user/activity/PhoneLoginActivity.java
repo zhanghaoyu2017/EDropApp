@@ -155,9 +155,7 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
 
             case R.id.btn_request_login:
                 //将收到的验证码和手机号提交再次核对
-                Log.e("test", "zcxhaha1");
-                SMSSDK.submitVerificationCode("86", phoneNums, inputCodeEt
-                        .getText().toString());
+                SMSSDK.submitVerificationCode("86", phoneNums, inputCodeEt.getText().toString());
                 break;
         }
     }
