@@ -142,7 +142,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".activity.ChangeViewActivity" />
+        <activity android:name=".activity.ForgetPsdActivity" />
         <activity
             android:name=".activity.ShowOrders"
             android:label="@string/title_activity_show_orders"></activity>
