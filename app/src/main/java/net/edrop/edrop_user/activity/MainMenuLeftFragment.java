@@ -156,7 +156,7 @@ public class MainMenuLeftFragment extends Fragment {
                 }
                 Message message = new Message();
                 message.what = 888;
-                message.obj = imgPath + imgName;
+                message.obj = BASE_URL.substring(0,BASE_URL.length()-1)+imgPath +"/"+ imgName;
                 handler.sendMessage(message);
             }
         });
