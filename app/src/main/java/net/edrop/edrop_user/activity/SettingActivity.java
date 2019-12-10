@@ -15,6 +15,8 @@ import net.edrop.edrop_user.R;
 import java.io.File;
 import java.io.RandomAccessFile;
 
+import static com.mob.MobSDK.getContext;
+
 /**
  * Created by 李诗凡.
  * User: sifannnn
@@ -77,10 +79,12 @@ public class SettingActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.iv_setting_back://返回
-                    Toast.makeText(SettingActivity.this, "返回", Toast.LENGTH_SHORT).show();
+                    finish();
                     break;
                 case R.id.rl_setting_about://关于
-                    Toast.makeText(SettingActivity.this, "关于", Toast.LENGTH_SHORT).show();
+                    intent = new Intent(SettingActivity.this, AboutEDropActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                     break;
                 case R.id.rl_setting_update://更新信息
                     intent = new Intent(SettingActivity.this, VersionActivity.class);
@@ -88,7 +92,9 @@ public class SettingActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.rl_setting_feedback://反馈消息
-                    Toast.makeText(SettingActivity.this, "反馈消息", Toast.LENGTH_SHORT).show();
+                    intent = new Intent(SettingActivity.this, FeedBackActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                     break;
                 case R.id.rl_setting_cache://清除缓存
                     intent = new Intent(SettingActivity.this, ClearCacheActivity.class);
@@ -98,7 +104,6 @@ public class SettingActivity extends AppCompatActivity {
                 case R.id.btn_setting_quit://退出账号
                     Toast.makeText(SettingActivity.this, "退出账号", Toast.LENGTH_SHORT).show();
                     break;
-
             }
         }
     }
