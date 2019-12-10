@@ -58,7 +58,6 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             if (msg.what == 888) {
                 RequestOptions options = new RequestOptions().centerCrop();
-                Toast.makeText(PersonalCenterManagerActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
                 Glide.with(PersonalCenterManagerActivity.this)
                         .load(msg.obj)
                         .apply(options)
@@ -117,7 +116,6 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
                 String str = response.body().string();
                 String imgPath = "";
                 String imgName = "";
-                Log.e("response", str);
                 try {
                     JSONObject jsonObject = new JSONObject(str);
                     imgName = jsonObject.getString("imgname");

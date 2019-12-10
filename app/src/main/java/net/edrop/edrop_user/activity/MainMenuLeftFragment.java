@@ -56,7 +56,6 @@ public class MainMenuLeftFragment extends Fragment {
         public void handleMessage(Message msg) {
             if (msg.what == 888) {
                 RequestOptions options = new RequestOptions().centerCrop();
-                Toast.makeText(myView.getContext(), (String) msg.obj, Toast.LENGTH_SHORT).show();
                 Glide.with(myView.getContext())
                         .load(msg.obj)
                         .apply(options)
@@ -147,7 +146,6 @@ public class MainMenuLeftFragment extends Fragment {
                 String str = response.body().string();
                 String imgPath = "";
                 String imgName = "";
-                Log.e("response", str);
                 try {
                     JSONObject jsonObject = new JSONObject(str);
                     imgPath = jsonObject.getString("imgpath");
@@ -155,7 +153,6 @@ public class MainMenuLeftFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Log.e("ddd", imgPath + imgName);
                 Message message = new Message();
                 message.what = 888;
                 message.obj = imgPath + imgName;

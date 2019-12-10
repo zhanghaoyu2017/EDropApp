@@ -99,8 +99,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     //三级联动
     private CityPickerView mPicker = new CityPickerView();
     private TextView tvSelect;
-    private TextView tvChangeName;
-    private TextView tvChangePhone;
+    private EditText etChangePhone;
     private TextView tvDetailAddress;
     private Button btnUpdata;
     private String strSex;
@@ -139,9 +138,9 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
             } else if (msg.what == BASE_SUCCESS) {
                 SharedPreferencesUtils sp = new SharedPreferencesUtils(FillPersonalInforActivity.this, "loginInfo");
                 SharedPreferences.Editor editor = sp.getEditor();
-                editor.putString("username", tvChangeName.getText().toString().trim());
-                editor.putString("sex", strSex);
-                editor.putString("phone", tvChangePhone.getText().toString().trim());
+                editor.putString("username", tvUserName.getText().toString().trim());
+                editor.putString("gender", strSex);
+                editor.putString("phone", etChangePhone.getText().toString().trim());
                 editor.putString("address", tvSelect.getText().toString());
                 editor.putString("detailAddress", tvDetailAddress.getText().toString().trim());
                 editor.commit();
@@ -165,14 +164,16 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         //1.创建OkHttpClient对象
         okHttpClient = new OkHttpClient();
         initView();
+        hideKeyboard();
 
         view1 = mInflater.inflate(R.layout.item_fill_base_info, null);
-        tvChangePhone = view1.findViewById(R.id.tv_phone_select);
+        etChangePhone = view1.findViewById(R.id.et_phone_select);
+        etChangePhone.setCursorVisible(false);//设置光标不可见
         tvUserName = view1.findViewById(R.id.tv_base_name);
-        tvSelect = (TextView) view1.findViewById(R.id.tv_select);
-        tvChangeName = (TextView) view1.findViewById(R.id.tv_change_name);
-        tvDetailAddress = (TextView) view1.findViewById(R.id.tv_detail_address);
-        btnUpdata = (Button) view1.findViewById(R.id.btn_update);
+        tvSelect = view1.findViewById(R.id.tv_select);
+        tvDetailAddress = view1.findViewById(R.id.tv_detail_address);
+        tvDetailAddress.setCursorVisible(false);//设置光标不可见
+        btnUpdata = view1.findViewById(R.id.btn_update);
         rgSex = view1.findViewById(R.id.rg_sex);
         rbBoy = view1.findViewById(R.id.rb_boy);
         rbGirl = view1.findViewById(R.id.rb_girl);
@@ -184,7 +185,6 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         btnSave = view2.findViewById(R.id.btnSave);
         cameraSavePath = new File(Environment.getExternalStorageDirectory().getPath() + "/" + System.currentTimeMillis() + ".jpg");
         getPermission();
-        GridLayout grid_view = view2.findViewById(R.id.grid_view);
         view3 = mInflater.inflate(R.layout.item_fill_psd_info, null);
         etNewPsd = view3.findViewById(R.id.et_newPsd);
         etNewPsd2 = view3.findViewById(R.id.et_newPsd2);
@@ -229,14 +229,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
             tvSelect.setText(address);
         }
         tvUserName.setText(username);
-        String str = "****";
-        if (!phone.equals("")) {
-            StringBuffer sb = new StringBuffer(phone);
-            sb.replace(3, 7, str);
-            tvChangePhone.setText(sb.toString());
-        } else {
-            tvChangePhone.setText("请输入手机号");
-        }
+        etChangePhone.setText(phone);
         switch (gender) {
             case "boy":
                 rbBoy.setChecked(true);
@@ -323,31 +316,16 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
             photoPath = getPhotoFromPhotoAlbum.getRealPathFromUri(this, data.getData());
             RequestOptions options = new RequestOptions().centerCrop();
             Glide.with(FillPersonalInforActivity.this).load(photoPath).apply(options).into(ivHeadImg);
-        } else if (requestCode == 88 && resultCode == 90) {//用户名
-            String nameInfo = "zs";
-            nameInfo = data.getStringExtra("nameInfo");
-            tvUserName.setText(nameInfo);
-        } else if (requestCode == 77 && resultCode == 90) {//手机号
-            String nameInfo = "";
-            nameInfo = data.getStringExtra("nameInfo");
-            String str = "****";
-            if (!nameInfo.equals("")) {
-                StringBuffer sb = new StringBuffer(nameInfo);
-                sb.replace(3, 7, str);
-                tvChangePhone.setText(sb.toString());
-            }
-            tvChangePhone.setText(nameInfo);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void setLinstener() {
-        tvChangePhone.setOnClickListener(new MyLinsener());
+        etChangePhone.setOnClickListener(new MyLinsener());
         btnSave.setOnClickListener(new MyLinsener());
         btnOk.setOnClickListener(new MyLinsener());
         btnSelectImg.setOnClickListener(new MyLinsener());
         tvSelect.setOnClickListener(new MyLinsener());
-        tvChangeName.setOnClickListener(new MyLinsener());
         tvDetailAddress.setOnClickListener(new MyLinsener());
         btnUpdata.setOnClickListener(new MyLinsener());
     }
@@ -356,6 +334,9 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
+                case R.id.et_phone_select:
+                    etChangePhone.setCursorVisible(true);//设置光标可见
+                    break;
                 case R.id.tv_select:
                     hideKeyboard();
                     CityConfig cityConfig = new CityConfig.Builder()
@@ -401,24 +382,9 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                     //显示
                     mPicker.showCityPicker();
                     break;
-                case R.id.tv_change_name://用户名
-                    Intent intent = new Intent();
-                    intent.setClass(FillPersonalInforActivity.this, ChangeViewActivity.class);
-                    intent.putExtra("name", tvUserName.getText().toString());
-                    intent.putExtra("state", "name");
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivityForResult(intent, 88);
-                    break;
-                case R.id.tv_phone_select://手机号
-                    Intent intent1 = new Intent();
-                    intent1.setClass(FillPersonalInforActivity.this, ChangeViewActivity.class);
-                    intent1.putExtra("name", tvChangePhone.getText().toString());
-                    intent1.putExtra("state", "phone");
-                    intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivityForResult(intent1, 77);
-                    break;
                 case R.id.tv_detail_address:
                     tvDetailAddress.getText().toString();
+                    tvDetailAddress.setCursorVisible(true);//设置光标可见
                     break;
                 case R.id.btn_update:
                     switch (rgSex.getCheckedRadioButtonId()) {
@@ -547,7 +513,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         FormBody formBody = new FormBody.Builder()
                 .add("id", userId + "")
                 .add("username", tvUserName.getText().toString())
-                .add("phone", tvChangePhone.getText().toString())
+                .add("phone", etChangePhone.getText().toString())
                 .add("gender", strSex)
                 .add("address", tvSelect.getText().toString())
                 .add("detailAddress", tvDetailAddress.getText().toString())
@@ -698,12 +664,4 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
 
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            startActivity(new Intent(FillPersonalInforActivity.this, PersonalCenterManagerActivity.class));
-            finish();
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 }
