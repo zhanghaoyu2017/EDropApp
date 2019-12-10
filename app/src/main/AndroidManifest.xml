@@ -51,6 +51,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.Answer2Activity"/>
+        <activity android:name=".activity.Answer3Activity"/>
         <activity android:name=".activity.AboutEDropActivity" />
         <activity android:name=".activity.FillPersonalInforActivity" />
         <activity android:name=".activity.SearchRubblishActivity" />

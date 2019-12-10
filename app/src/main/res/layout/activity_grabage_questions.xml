@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:layout_marginTop="@dimen/size_20"
     android:orientation="vertical">
-    <TextView
-        android:text="答题"
-        android:textSize="@dimen/size_20"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+
+    <Button
+        android:background="@drawable/btn_login_green_background"
+        android:layout_width="@dimen/size_200"
+        android:layout_height="wrap_content"
+        android:onClick="buttonOnclicked"
+        android:text="开始答题" />
 </LinearLayout>

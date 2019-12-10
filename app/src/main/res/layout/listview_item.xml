@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="10dp"
+    android:layout_marginTop="10dp"
+    android:orientation="horizontal"
+    >
+    <TextView
+        android:id="@+id/tv_quesId"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="12" />
+
+    <TextView
+        android:id="@+id/tv_question"
+        android:layout_weight="5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="我是题目" />
+    <TextView
+        android:layout_weight="3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="你的答案：" />
+
+    <TextView
+        android:id="@+id/tv_yourAnswer"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="B" />
+    <TextView
+        android:layout_weight="3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="正确答案：" />
+    <TextView
+        android:id="@+id/tv_correctAnswer"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="A" />
+</LinearLayout>
