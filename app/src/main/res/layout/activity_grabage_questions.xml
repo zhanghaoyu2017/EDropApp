@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <Button
+        android:id="@+id/btn_problems"
         android:background="@drawable/btn_login_green_background"
         android:layout_width="@dimen/size_200"
         android:layout_height="wrap_content"

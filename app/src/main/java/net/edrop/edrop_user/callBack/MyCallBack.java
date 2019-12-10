@@ -2,14 +2,14 @@ package net.edrop.edrop_user.callBack;
 
 import android.support.v7.util.DiffUtil;
 
-import net.edrop.edrop_user.entity.Problems;
+import net.edrop.edrop_user.entity.Competition;
 
 import java.util.List;
 
 public class MyCallBack extends DiffUtil.Callback {
-    private List<Problems> old_data, new_data;
+    private List<Competition> old_data, new_data;
 
-    public MyCallBack(List<Problems> old_data, List<Problems> new_data) {
+    public MyCallBack(List<Competition> old_data, List<Competition> new_data) {
         this.old_data = old_data;
         this.new_data = new_data;
     }

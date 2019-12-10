@@ -9,23 +9,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import net.edrop.edrop_user.R;
-import net.edrop.edrop_user.entity.Problems;
+import net.edrop.edrop_user.entity.Competition;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter {
-    private List<Problems> datasource;
+    private List<Competition> datasource;
     private Context context;
 
     public MyAdapter(Context mContext) {
         this.context = mContext;
     }
 
-    public List<Problems> getData() {
+    public List<Competition> getData() {
         return datasource;
     }
-    public void setData(List<Problems> datasource) {
+    public void setData(List<Competition> datasource) {
         this.datasource = new ArrayList<>(datasource);
     }
 
@@ -39,7 +39,7 @@ public class MyAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         MyViewHolder myViewHolder = (MyViewHolder) viewHolder;
-        Problems bean = datasource.get(i);
+        Competition bean = datasource.get(i);
         myViewHolder.tv.setText(bean.getQuestion());
     }
 

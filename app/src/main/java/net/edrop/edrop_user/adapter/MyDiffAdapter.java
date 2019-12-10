@@ -13,14 +13,14 @@ import android.widget.TextView;
 
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.callBack.MyItemCallback;
-import net.edrop.edrop_user.entity.Problems;
+import net.edrop.edrop_user.entity.Competition;
 
 import java.util.List;
 
 public class MyDiffAdapter extends RecyclerView.Adapter {
     private Context mContext;
-    private AsyncListDiffer<Problems> mTextDiffl;
-    private DiffUtil.ItemCallback<Problems> diffCallback = new MyItemCallback();
+    private AsyncListDiffer<Competition> mTextDiffl;
+    private DiffUtil.ItemCallback<Competition> diffCallback = new MyItemCallback();
 
     public MyDiffAdapter(Context mContext) {
         this.mContext = mContext;
@@ -36,9 +36,9 @@ public class MyDiffAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        Log.e("ref", "position: "+position );
+        Log.e("ref", "position: " + position);
         MyViewHolder myViewHolder = (MyViewHolder) viewHolder;
-        Problems bean  = getItem(position);
+        Competition bean = getItem(position);
         myViewHolder.tv.setText(bean.getQuestion() + "." + bean.getId());
     }
 
@@ -47,13 +47,15 @@ public class MyDiffAdapter extends RecyclerView.Adapter {
         return 0;
     }
 
-    public void submitList(List<Problems> data) {
-        Log.e("ljc ",data.toString());
+    public void submitList(List<Competition> data) {
+        Log.e("ljc ", data.toString());
         mTextDiffl.submitList(data);
     }
-    public Problems getItem(int position) {
+
+    public Competition getItem(int position) {
         return mTextDiffl.getCurrentList().get(position);
     }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tv;
 

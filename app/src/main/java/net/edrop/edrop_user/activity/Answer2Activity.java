@@ -13,7 +13,7 @@ import android.widget.TextView;
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.adapter.MyAdapter;
 import net.edrop.edrop_user.callBack.MyCallBack;
-import net.edrop.edrop_user.entity.Problems;
+import net.edrop.edrop_user.entity.Competition;
 import net.edrop.edrop_user.utils.SystemTransUtil;
 
 import java.io.Serializable;
@@ -23,8 +23,8 @@ import java.util.List;
 import okhttp3.MediaType;
 
 public class Answer2Activity extends AppCompatActivity {
-    private List<Problems> lists = new ArrayList<>();
-    private List<Problems> list2 = new ArrayList<>();
+    private List<Competition> lists = new ArrayList<>();
+    private List<Competition> list2 = new ArrayList<>();
     private List listHisAnswer = new ArrayList<>();
     private int a;
     private RecyclerView text_rv;
@@ -44,8 +44,8 @@ public class Answer2Activity extends AppCompatActivity {
     public void init() {
         a = 0;
         currentNum.setText(a + 1 + "");
-        list2 = (ArrayList<Problems>) getIntent().getSerializableExtra("lists");
-        Problems bean1 = list2.get(a);
+        list2 = (ArrayList<Competition>) getIntent().getSerializableExtra("lists");
+        Competition bean1 = list2.get(a);
         lists.add(bean1);
     }
 
@@ -70,7 +70,7 @@ public class Answer2Activity extends AppCompatActivity {
         a++;
         Log.e("a", a + "");
         judge();
-        List<Problems> oldList = myAdapter.getData();
+        List<Competition> oldList = myAdapter.getData();
         DiffUtil.DiffResult result = DiffUtil.calculateDiff(new MyCallBack(oldList, lists), true);
         myAdapter.setData(lists);
         result.dispatchUpdatesTo(myAdapter);
@@ -85,7 +85,7 @@ public class Answer2Activity extends AppCompatActivity {
             overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
         } else {
             lists.clear();
-            Problems bean1 = list2.get(a);
+            Competition bean1 = list2.get(a);
             lists.add(bean1);
         }
     }

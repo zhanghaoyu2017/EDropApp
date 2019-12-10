@@ -9,18 +9,18 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import net.edrop.edrop_user.R;
-import net.edrop.edrop_user.entity.Problems;
+import net.edrop.edrop_user.entity.Competition;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomAdapter extends BaseAdapter {
-    private List<Problems> dataSource = null;
+    private List<Competition> dataSource = null;
     private List hisAnswerLists=null;
     private Context context = null;
     private int item_layout_id;
 
-    public CustomAdapter(List<Problems> dataSource, List hisAnswerLists, Context context, int item_layout_id) {
+    public CustomAdapter(List<Competition> dataSource, List hisAnswerLists, Context context, int item_layout_id) {
         this.dataSource = dataSource;
         this.hisAnswerLists = hisAnswerLists;
         this.context = context;
@@ -70,7 +70,7 @@ public class CustomAdapter extends BaseAdapter {
         }
         viewHolder.quesId.setText(i+1+"");
         viewHolder.question.setText(dataSource.get(i).getQuestion());
-        viewHolder.corrAnswer.setText(dataSource.get(i).getType_id()+"");
+        viewHolder.corrAnswer.setText(dataSource.get(i).getTypeId()+"");
         viewHolder.youAnswer.setText(hisAnswerLists.get(i).toString());
         return view;
     }
