@@ -51,12 +51,12 @@ public class MainMenuLeftFragment extends Fragment {
     private TextView feedback;
     private OkHttpClient okHttpClient;
     private SharedPreferencesUtils sharedPreferences;
-    private Handler handler=new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 888) {
                 RequestOptions options = new RequestOptions().centerCrop();
-                Toast.makeText(myView.getContext(),(String)msg.obj,Toast.LENGTH_SHORT).show();
+                Toast.makeText(myView.getContext(), (String) msg.obj, Toast.LENGTH_SHORT).show();
                 Glide.with(myView.getContext())
                         .load(msg.obj)
                         .apply(options)
@@ -112,7 +112,7 @@ public class MainMenuLeftFragment extends Fragment {
         String username = sharedPreferences.getString("username", "");
         String gender = sharedPreferences.getString("gender", "");
         userName.setText(username);
-        switch (gender){
+        switch (gender) {
             case "boy":
                 userSex.setImageDrawable(getResources().getDrawable(R.drawable.gender_boy));
                 break;
@@ -124,7 +124,7 @@ public class MainMenuLeftFragment extends Fragment {
             default:
                 break;
         }
-        okHttpClient=new OkHttpClient();
+        okHttpClient = new OkHttpClient();
         getImg();
     }
 
@@ -140,25 +140,25 @@ public class MainMenuLeftFragment extends Fragment {
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();//打印异常信息
             }
+
             //请求成功时回调
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String str = response.body().string();
-                String imgPath="";
-                String imgName="";
+                String imgPath = "";
+                String imgName = "";
                 Log.e("response", str);
                 try {
                     JSONObject jsonObject = new JSONObject(str);
-                    imgPath=jsonObject.getString("imgpath");
-                    imgName=jsonObject.getString("imgname");
+                    imgPath = jsonObject.getString("imgpath");
+                    imgName = jsonObject.getString("imgname");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                String substring = BASE_URL.substring(0, BASE_URL.length() - 1);
-
-                Message message =new Message();
-                message.what=888;
-                message.obj=substring+imgPath+"/"+imgName;
+                Log.e("ddd", imgPath + imgName);
+                Message message = new Message();
+                message.what = 888;
+                message.obj = imgPath + imgName;
                 handler.sendMessage(message);
             }
         });

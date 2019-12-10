@@ -53,12 +53,12 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
     private TextView tvEditInfo;
     private OkHttpClient okHttpClient;
     private SharedPreferencesUtils sharedPreferences;
-    private Handler handler=new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 888) {
                 RequestOptions options = new RequestOptions().centerCrop();
-                Toast.makeText(PersonalCenterManagerActivity.this,(String)msg.obj,Toast.LENGTH_SHORT).show();
+                Toast.makeText(PersonalCenterManagerActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
                 Glide.with(PersonalCenterManagerActivity.this)
                         .load(msg.obj)
                         .apply(options)
@@ -71,18 +71,18 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
         new SystemTransUtil().trans(PersonalCenterManagerActivity.this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_center);
-        sharedPreferences = new SharedPreferencesUtils(PersonalCenterManagerActivity.this,"loginInfo");
+        sharedPreferences = new SharedPreferencesUtils(PersonalCenterManagerActivity.this, "loginInfo");
         initView();
         setListener();
         initData();
     }
 
     private void initData() {
-        tvUsername.setText(sharedPreferences.getString("username",""));
-        tvPhone.setText(sharedPreferences.getString("phone",""));
-        tvAddress.setText(sharedPreferences.getString("address",""));
+        tvUsername.setText(sharedPreferences.getString("username", ""));
+        tvPhone.setText(sharedPreferences.getString("phone", ""));
+        tvAddress.setText(sharedPreferences.getString("address", ""));
         String gender = sharedPreferences.getString("gender", "");
-        switch (gender){
+        switch (gender) {
             case "boy":
                 ivGender.setImageDrawable(getResources().getDrawable(R.drawable.gender_boy));
                 break;
@@ -94,7 +94,7 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
             default:
                 break;
         }
-        okHttpClient=new OkHttpClient();
+        okHttpClient = new OkHttpClient();
         getImg();
     }
 
@@ -110,12 +110,13 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();//打印异常信息
             }
+
             //请求成功时回调
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String str = response.body().string();
-                String imgPath="";
-                String imgName="";
+                String imgPath = "";
+                String imgName = "";
                 Log.e("response", str);
                 try {
                     JSONObject jsonObject = new JSONObject(str);
@@ -124,10 +125,9 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                String substring = BASE_URL.substring(0, BASE_URL.length() - 1);
-                Message message =new Message();
-                message.what=888;
-                message.obj=substring+imgPath+"/"+imgName;
+                Message message = new Message();
+                message.what = 888;
+                message.obj = imgPath + imgName;
                 handler.sendMessage(message);
             }
         });
@@ -140,26 +140,26 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        ivGender=findViewById(R.id.change_gender);
-        tvAddress=findViewById(R.id.change_address);
-        tvPhone=findViewById(R.id.change_phone);
-        tvUsername=findViewById(R.id.change_username);
-        tvEditInfo=findViewById(R.id.tv_edit_info);
-        cancelLogin=findViewById(R.id.btn_cancel_login);
-        personalBack=findViewById(R.id.personal_back);
-        userImg=findViewById(R.id.change_head_img);
+        ivGender = findViewById(R.id.change_gender);
+        tvAddress = findViewById(R.id.change_address);
+        tvPhone = findViewById(R.id.change_phone);
+        tvUsername = findViewById(R.id.change_username);
+        tvEditInfo = findViewById(R.id.tv_edit_info);
+        cancelLogin = findViewById(R.id.btn_cancel_login);
+        personalBack = findViewById(R.id.personal_back);
+        userImg = findViewById(R.id.change_head_img);
     }
 
-    private class MyListener implements View.OnClickListener{
+    private class MyListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.btn_cancel_login:
-                    SharedPreferencesUtils sharedPreferences = new SharedPreferencesUtils(PersonalCenterManagerActivity.this,"loginInfo");
+                    SharedPreferencesUtils sharedPreferences = new SharedPreferencesUtils(PersonalCenterManagerActivity.this, "loginInfo");
                     sharedPreferences.removeValues("username");
                     sharedPreferences.removeValues("password");
                     SharedPreferences.Editor editor2 = sharedPreferences.getEditor();
-                    editor2.putBoolean("isAuto",false);
+                    editor2.putBoolean("isAuto", false);
                     editor2.commit();
                     getLoginExit();
                     Intent intent2 = new Intent(PersonalCenterManagerActivity.this, LoginActivity.class);
@@ -176,10 +176,11 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
                     break;
             }
         }
+
         /**
          * 退出环信登录
          */
-        private void getLoginExit(){
+        private void getLoginExit() {
             EMClient.getInstance().logout(true, new EMCallBack() {
 
                 @Override

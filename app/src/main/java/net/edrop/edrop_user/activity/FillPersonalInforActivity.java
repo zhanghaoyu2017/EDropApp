@@ -131,7 +131,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
             if (msg.what == PSD_SUCCESS) {
                 SharedPreferencesUtils sp = new SharedPreferencesUtils(FillPersonalInforActivity.this, "loginInfo");
                 SharedPreferences.Editor editor = sp.getEditor();
-                editor.putString("password",etNewPsd.getText().toString().trim());
+                editor.putString("password", etNewPsd.getText().toString().trim());
                 editor.commit();
                 Toast.makeText(FillPersonalInforActivity.this, msg.obj + "", Toast.LENGTH_SHORT).show();
             } else if (msg.what == PSD_FAIL) {
@@ -139,11 +139,11 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
             } else if (msg.what == BASE_SUCCESS) {
                 SharedPreferencesUtils sp = new SharedPreferencesUtils(FillPersonalInforActivity.this, "loginInfo");
                 SharedPreferences.Editor editor = sp.getEditor();
-                editor.putString("username",tvChangeName.getText().toString().trim());
-                editor.putString("sex",strSex);
-                editor.putString("phone",tvChangePhone.getText().toString().trim());
-                editor.putString("address",tvSelect.getText().toString());
-                editor.putString("detailAddress",tvDetailAddress.getText().toString().trim());
+                editor.putString("username", tvChangeName.getText().toString().trim());
+                editor.putString("sex", strSex);
+                editor.putString("phone", tvChangePhone.getText().toString().trim());
+                editor.putString("address", tvSelect.getText().toString());
+                editor.putString("detailAddress", tvDetailAddress.getText().toString().trim());
                 editor.commit();
                 Toast.makeText(FillPersonalInforActivity.this, msg.obj + "", Toast.LENGTH_SHORT).show();
             } else if (msg.what == BASE_FAIL) {
@@ -184,7 +184,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         btnSave = view2.findViewById(R.id.btnSave);
         cameraSavePath = new File(Environment.getExternalStorageDirectory().getPath() + "/" + System.currentTimeMillis() + ".jpg");
         getPermission();
-        GridLayout grid_view= view2.findViewById(R.id.grid_view);
+        GridLayout grid_view = view2.findViewById(R.id.grid_view);
         view3 = mInflater.inflate(R.layout.item_fill_psd_info, null);
         etNewPsd = view3.findViewById(R.id.et_newPsd);
         etNewPsd2 = view3.findViewById(R.id.et_newPsd2);
@@ -223,18 +223,18 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         String detailAddress = loginInfo.getString("detailAddress", "");
         tvDetailAddress.setText(detailAddress);
         userId = loginInfo.getInt("userId");
-        if (address.equals("")){
+        if (address.equals("")) {
             tvSelect.setText("请选择城市");
-        }else {
+        } else {
             tvSelect.setText(address);
         }
         tvUserName.setText(username);
-        String str="****";
+        String str = "****";
         if (!phone.equals("")) {
             StringBuffer sb = new StringBuffer(phone);
             sb.replace(3, 7, str);
             tvChangePhone.setText(sb.toString());
-        }else {
+        } else {
             tvChangePhone.setText("请输入手机号");
         }
         switch (gender) {
@@ -327,10 +327,10 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
             String nameInfo = "zs";
             nameInfo = data.getStringExtra("nameInfo");
             tvUserName.setText(nameInfo);
-        }else if (requestCode == 77 && resultCode == 90) {//手机号
+        } else if (requestCode == 77 && resultCode == 90) {//手机号
             String nameInfo = "";
             nameInfo = data.getStringExtra("nameInfo");
-            String str="****";
+            String str = "****";
             if (!nameInfo.equals("")) {
                 StringBuffer sb = new StringBuffer(nameInfo);
                 sb.replace(3, 7, str);
@@ -405,7 +405,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                     Intent intent = new Intent();
                     intent.setClass(FillPersonalInforActivity.this, ChangeViewActivity.class);
                     intent.putExtra("name", tvUserName.getText().toString());
-                    intent.putExtra("state","name");
+                    intent.putExtra("state", "name");
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivityForResult(intent, 88);
                     break;
@@ -413,7 +413,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                     Intent intent1 = new Intent();
                     intent1.setClass(FillPersonalInforActivity.this, ChangeViewActivity.class);
                     intent1.putExtra("name", tvChangePhone.getText().toString());
-                    intent1.putExtra("state","phone");
+                    intent1.putExtra("state", "phone");
                     intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivityForResult(intent1, 77);
                     break;
@@ -464,7 +464,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         if (file.exists()) {
             MultipartBody requestBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
-                    .addFormDataPart("id",userId + "")
+                    .addFormDataPart("id", userId + "")
                     .addFormDataPart("imgFile", file.getName(), RequestBody.create(MediaType.parse("image/jpg"), file))
                     .build();
             Request request = new Request.Builder()
@@ -488,11 +488,11 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    if (state==UPDATE_USER_SUCCESS) {
+                    if (state == UPDATE_USER_SUCCESS) {
                         msg.obj = "头像更新完成";
                         msg.what = IMG_SUCCESS;
                         mHandler.sendMessage(msg);
-                    } else if (state==UPDATE_USER_FAIL) {
+                    } else if (state == UPDATE_USER_FAIL) {
                         msg.obj = "头像更新失败";
                         msg.what = IMG_FAIL;
                         mHandler.sendMessage(msg);
@@ -533,7 +533,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                     msg.obj = "密码更新完成";
                     msg.what = PSD_SUCCESS;
                     mHandler.sendMessage(msg);
-                } else if (state==UPDATE_USER_FAIL) {
+                } else if (state == UPDATE_USER_FAIL) {
                     msg.obj = "服务器错误";
                     msg.what = PSD_FAIL;
                     mHandler.sendMessage(msg);
@@ -577,7 +577,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                     msg.obj = "基本信息更新完成";
                     msg.what = BASE_SUCCESS;
                     mHandler.sendMessage(msg);
-                } else if (state==UPDATE_USER_FAIL) {
+                } else if (state == UPDATE_USER_FAIL) {
                     msg.obj = "服务器错误";
                     msg.what = BASE_FAIL;
                     mHandler.sendMessage(msg);
@@ -701,7 +701,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            startActivity(new Intent(FillPersonalInforActivity.this,PersonalCenterManagerActivity.class));
+            startActivity(new Intent(FillPersonalInforActivity.this, PersonalCenterManagerActivity.class));
             finish();
         }
         return super.onKeyDown(keyCode, event);
