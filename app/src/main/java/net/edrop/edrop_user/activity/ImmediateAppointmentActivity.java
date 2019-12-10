@@ -58,6 +58,13 @@ public class ImmediateAppointmentActivity extends Activity {
     private OkHttpClient okHttpClient;
     Calendar calendar = Calendar.getInstance(Locale.CHINA);
 
+    //
+    private int userId;
+    private String realname;
+    private String address;
+    private String phone;
+    private String reserveTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         new SystemTransUtil().trans(ImmediateAppointmentActivity.this);
@@ -70,11 +77,11 @@ public class ImmediateAppointmentActivity extends Activity {
 
     private void initData() {
         SharedPreferencesUtils loginInfo = new SharedPreferencesUtils(ImmediateAppointmentActivity.this, "loginInfo");
-        int userId = loginInfo.getInt("userId");
-        String realname = etRealName.getText().toString();
-        String phone = etPhoneNum.getText().toString();
-        String address = tvSelect.getText().toString() + etAddressDetail.getText().toString();
-        String reserveTime = tvDateSelect.getText().toString() + " " + tvTimeSelect.getText().toString();
+        userId = loginInfo.getInt("userId");
+        realname = etRealName.getText().toString();
+        phone = etPhoneNum.getText().toString();
+        address = tvSelect.getText().toString() + etAddressDetail.getText().toString();
+        reserveTime = tvDateSelect.getText().toString() + " " + tvTimeSelect.getText().toString();
 
         Log.e("qqqqqqqqqq", userId + "===" + realname + "===" + phone + "===" + address + "===" + reserveTime);
 
@@ -160,6 +167,7 @@ public class ImmediateAppointmentActivity extends Activity {
                     break;
                 case R.id.btn_order:
                     initData();
+                    sendOrderByOkHttp(userId,realname,phone,address,reserveTime);
                     break;
             }
         }
@@ -235,7 +243,7 @@ public class ImmediateAppointmentActivity extends Activity {
      * @param address
      * @param reserveTime
      */
-    private void sendOrderByOkHttp(String userId, String realName, String phone, String address, String reserveTime) {
+    private void sendOrderByOkHttp(int userId, String realName, String phone, String address, String reserveTime) {
         FormBody formBody = new FormBody.Builder()
                 .add("userId", userId + "")
                 .add("realName", realName)
@@ -256,7 +264,8 @@ public class ImmediateAppointmentActivity extends Activity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-
+                String string = response.body().string();
+                Log.e("test", string);
             }
         });
 
