@@ -86,6 +86,7 @@
         <activity android:name=".activity.FeedBackActivity" />
         <activity android:name=".activity.FeedBackOption" />
         <activity android:name=".activity.ImmediateAppointmentActivity" />
+        <activity android:name=".activity.ShowOrders"   />
         <!-- QQ登录配置 start -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -143,9 +144,6 @@
         </provider>
 
         <activity android:name=".activity.ForgetPsdActivity" />
-        <activity
-            android:name=".activity.ShowOrders"
-            android:label="@string/title_activity_show_orders"></activity>
     </application>
 
 </manifest>

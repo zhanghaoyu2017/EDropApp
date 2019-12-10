@@ -82,8 +82,8 @@ public class RecognitionAdapter extends BaseAdapter {
 
         ViewHolder viewHolder = null;
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(item_layout_id, null);
             viewHolder = new ViewHolder();
+            convertView = LayoutInflater.from(context).inflate(item_layout_id, null);
             viewHolder.text = convertView.findViewById(R.id.tv_recognition);
             convertView.setTag(viewHolder);
         } else {

@@ -2,8 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="230dp"
-    android:layout_marginLeft="@dimen/size_30"
-    android:layout_marginRight="30dp"
     android:layout_marginTop="@dimen/size_20"
     android:background="@drawable/showorders_background"
     android:orientation="vertical">
@@ -34,6 +32,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_showorder_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_10"
@@ -43,6 +42,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_showorder_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_5"
@@ -51,6 +51,7 @@
                 android:textSize="@dimen/size_18" />
 
             <TextView
+                android:id="@+id/tv_showorder_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="河北省石家庄市裕华区河北师范大学新校区"
@@ -66,6 +67,7 @@
                     android:layout_height="26dp"
                     android:src="@drawable/servicetime"/>
                 <TextView
+                    android:id="@+id/tv_showorder_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="2019-12-9 9:15"
@@ -79,7 +81,7 @@
 
     </LinearLayout>
 
-    <view
+    <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_1"
         android:background="#9c9c9c" />
@@ -98,6 +100,7 @@
             android:textSize="@dimen/size_16" />
 
         <TextView
+            android:id="@+id/tv_showorder_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="2e8477e0fc0a-4eaf-9194-82e8c9f5016"
@@ -153,6 +156,7 @@
                 android:layout_height="@dimen/size_25"
                 android:src="@drawable/gohome"/>
             <TextView
+                android:id="@+id/tv_showorder_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="已完成"
@@ -160,7 +164,8 @@
         </LinearLayout>
 
         <ImageView
-            android:layout_marginLeft="@dimen/size_40"
+            android:id="@+id/iv_status"
+            android:layout_marginLeft="@dimen/size_20"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:src="@drawable/orderok"/>

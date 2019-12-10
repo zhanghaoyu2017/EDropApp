@@ -3,9 +3,12 @@ package net.edrop.edrop_user.activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -64,6 +67,20 @@ public class ImmediateAppointmentActivity extends Activity {
     private String address;
     private String phone;
     private String reserveTime;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+                Intent intent = new Intent(ImmediateAppointmentActivity.this, ShowOrders.class);
+                String str = (String) msg.obj;
+                intent.putExtra("orderjson", str);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,7 +184,7 @@ public class ImmediateAppointmentActivity extends Activity {
                     break;
                 case R.id.btn_order:
                     initData();
-                    sendOrderByOkHttp(userId,realname,phone,address,reserveTime);
+                    sendOrderByOkHttp(userId, realname, phone, address, reserveTime);
                     break;
             }
         }
@@ -265,6 +282,10 @@ public class ImmediateAppointmentActivity extends Activity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
+                Message message = new Message();
+                message.what = 1;
+                message.obj = string;
+                handler.sendMessage(message);
                 Log.e("test", string);
             }
         });

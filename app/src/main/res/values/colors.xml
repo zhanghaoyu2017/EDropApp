@@ -7,7 +7,8 @@
     <color name="black">#000000</color>
     <color name="gray">#B4B4B4</color>
     <color name="color_green">#32BA88</color>
-
+    <color name="color_blue">#0F96DC</color>
+    <color name="color_yellow">#FFD700</color>
     <color name="common_color_transparent">#aa000001</color>//完全透明颜色值
 
     <color name="color_white_ffffff">#ffffff</color>

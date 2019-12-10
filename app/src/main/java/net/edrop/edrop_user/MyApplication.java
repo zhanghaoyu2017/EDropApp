@@ -2,12 +2,19 @@ package net.edrop.edrop_user;
 
 import android.app.ActivityManager;
 import android.app.Application;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Process;
+import android.support.annotation.NonNull;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 import java.util.Iterator;
 import java.util.List;
