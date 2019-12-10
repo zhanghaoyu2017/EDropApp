@@ -31,4 +31,16 @@ public class Constant {
     public static final int PSD_SUCCESS = -8;
     public static final int PSD_FAIL = -9;
     public static final int SEARCH_SUCCESS = 6;
+
+    //订单相关
+    public static final int ORDER_STATE_NO_RECEIVE = -1;    //未接单
+    public static final int ORDER_STATE_NO_FINISH = 0;    //未完成
+    public static final int ORDER_STATE_FINISH = 1;    //已完成
+    public static final int ORDER_STATE_USER_DELETED = 1;    //删除
+    public static final int ORDER_STATE_USER_NO_DELETE = 0;    //未删除
+    public static final int ORDER_STATE_EMPLOYEE_DELETED = 1;    //删除
+    public static final int ORDER_STATE_EMPLOYEE_NO_DELETE = 0;    //未删除
+
+    //图片路径
+    public static final String path = "http://122.51.69.212:8080/img/";
 }
