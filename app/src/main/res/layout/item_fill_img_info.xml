@@ -67,7 +67,6 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/head_img1"
-                    android:background="@drawable/shape_img_cart"
                     android:src="@drawable/default_head_img1"
                     android:layout_width="@dimen/size_40"
                     android:layout_height="@dimen/size_40"/>
