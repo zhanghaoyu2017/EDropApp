@@ -244,7 +244,7 @@ public class ImmediateAppointmentActivity extends Activity {
                 .add("reserveTime", reserveTime.toString())
                 .build();
         Request request = new Request.Builder()
-                .url(Constant.BASE_URL + "addUserInfo")
+                .url(Constant.BASE_URL + "generateOrder")
                 .post(formBody)
                 .build();
         Call call = okHttpClient.newCall(request);
