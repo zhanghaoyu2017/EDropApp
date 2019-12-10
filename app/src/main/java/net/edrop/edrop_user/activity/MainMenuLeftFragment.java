@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.entity.User;
+import net.edrop.edrop_user.utils.Constant;
 import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 
 import org.json.JSONException;
@@ -30,6 +31,7 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -61,6 +63,12 @@ public class MainMenuLeftFragment extends Fragment {
                         .load(msg.obj)
                         .apply(options)
                         .into(userImg);
+            }else if (msg.what==1){
+                Intent intent = new Intent(myView.getContext(), ShowOrders.class);
+                String str = (String) msg.obj;
+                intent.putExtra("orderjson", str);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         }
     };
@@ -195,7 +203,31 @@ public class MainMenuLeftFragment extends Fragment {
                     Toast.makeText(getActivity(), myAddress.getText().toString(), Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.myOrder:
-                    Toast.makeText(getActivity(), myOrder.getText().toString(), Toast.LENGTH_SHORT).show();
+                    SharedPreferencesUtils loginInfo = new SharedPreferencesUtils(myView.getContext(), "loginInfo");
+                    int userId = loginInfo.getInt("userId");
+                    FormBody formBody = new FormBody.Builder()
+                            .add("userId", userId + "").build();
+                    Request request = new Request.Builder()
+                            .url(Constant.BASE_URL + "getOrderById")
+                            .post(formBody)
+                            .build();
+                    Call call = okHttpClient.newCall(request);
+                    call.enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            String string = response.body().string();
+                            Message message = new Message();
+                            message.what = 1;
+                            message.obj = string;
+                            handler.sendMessage(message);
+                        }
+                    });
+
                     break;
                 case R.id.inviteFriends:
                     Toast.makeText(getActivity(), inviteFriends.getText().toString(), Toast.LENGTH_SHORT).show();
