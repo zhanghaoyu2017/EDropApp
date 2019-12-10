@@ -63,7 +63,7 @@ public class MainMenuLeftFragment extends Fragment {
                         .load(msg.obj)
                         .apply(options)
                         .into(userImg);
-            }else if (msg.what==1){
+            } else if (msg.what == 1) {
                 Intent intent = new Intent(myView.getContext(), ShowOrders.class);
                 String str = (String) msg.obj;
                 intent.putExtra("orderjson", str);
@@ -164,7 +164,7 @@ public class MainMenuLeftFragment extends Fragment {
                 }
                 Message message = new Message();
                 message.what = 888;
-                message.obj = BASE_URL.substring(0,BASE_URL.length()-1)+imgPath +"/"+ imgName;
+                message.obj = BASE_URL.substring(0, BASE_URL.length() - 1) + imgPath + "/" + imgName;
                 handler.sendMessage(message);
             }
         });
@@ -242,10 +242,11 @@ public class MainMenuLeftFragment extends Fragment {
                     startActivity(intent);
                     break;
                 case R.id.setting:
-                    Toast.makeText(getActivity(), setting.getText().toString(), Toast.LENGTH_SHORT).show();
+                    intent = new Intent(getContext(), SettingActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                     break;
                 case R.id.feedback:
-                    Toast.makeText(getActivity(), feedback.getText().toString(), Toast.LENGTH_SHORT).show();
                     intent = new Intent(getContext(), FeedBackActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);

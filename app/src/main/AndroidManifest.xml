@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="net.edrop.edrop_user">
 
+    <!--手机存储-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -51,8 +53,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.Answer2Activity"/>
-        <activity android:name=".activity.Answer3Activity"/>
+        <activity android:name=".activity.Answer2Activity" />
+        <activity android:name=".activity.Answer3Activity" />
         <activity android:name=".activity.AboutEDropActivity" />
         <activity android:name=".activity.FillPersonalInforActivity" />
         <activity android:name=".activity.SearchRubblishActivity" />
@@ -88,7 +90,10 @@
         <activity android:name=".activity.FeedBackActivity" />
         <activity android:name=".activity.FeedBackOption" />
         <activity android:name=".activity.ImmediateAppointmentActivity" />
-        <activity android:name=".activity.ShowOrders"   />
+        <activity android:name=".activity.ShowOrders" />
+        <activity android:name=".activity.SettingActivity" />
+        <activity android:name=".activity.VersionActivity" />
+        <activity android:name=".activity.ClearCacheActivity" />
         <!-- QQ登录配置 start -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
