@@ -82,7 +82,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:hint="验证码"
-                    android:inputType="textPassword"
                     android:maxLength="6" />
                 <Button
                     android:id="@+id/login_request_code_btn"

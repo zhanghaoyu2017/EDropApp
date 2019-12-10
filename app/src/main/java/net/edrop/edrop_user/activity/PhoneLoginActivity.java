@@ -114,7 +114,7 @@ public class PhoneLoginActivity extends Activity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        String phoneNums = inputPhoneEt.getText().toString();  //取出咱们输入的手机号
+        String phoneNums = inputPhoneEt.getText().toString();  //取出输入的手机号
         switch (v.getId()) {
             case R.id.qq:
                 Log.e("qq","开始QQ登录..");
