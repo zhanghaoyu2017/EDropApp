@@ -85,7 +85,7 @@
         <activity android:name=".activity.TestPhoneNumActivity" />
         <activity android:name=".activity.FeedBackActivity" />
         <activity android:name=".activity.FeedBackOption" />
-        <activity android:name=".activity.ImmediateAppointmentActivity"/>
+        <activity android:name=".activity.ImmediateAppointmentActivity" />
         <!-- QQ登录配置 start -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -142,7 +142,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".activity.ChangeViewActivity"></activity>
+        <activity android:name=".activity.ForgetPsdActivity"/>
     </application>
 
 </manifest>
