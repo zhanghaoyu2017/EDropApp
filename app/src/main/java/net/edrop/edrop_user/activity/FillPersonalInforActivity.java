@@ -2,15 +2,18 @@ package net.edrop.edrop_user.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.FileProvider;
@@ -112,6 +115,23 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     private File cameraSavePath;//拍照照片路径
     private Uri uri;
     private String photoPath;
+    private ImageView headDeafultImg1;//默认头像16个
+    private ImageView headDeafultImg2;
+    private ImageView headDeafultImg3;
+    private ImageView headDeafultImg4;
+    private ImageView headDeafultImg5;
+    private ImageView headDeafultImg6;
+    private ImageView headDeafultImg7;
+    private ImageView headDeafultImg8;
+    private ImageView headDeafultImg9;
+    private ImageView headDeafultImg10;
+    private ImageView headDeafultImg11;
+    private ImageView headDeafultImg12;
+    private ImageView headDeafultImg13;
+    private ImageView headDeafultImg14;
+    private ImageView headDeafultImg15;
+    private ImageView headDeafultImg16;
+
     //popupWindow
     private PopupWindow popupWindow = null;
     private View popupView = null;
@@ -183,8 +203,25 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         btnSelectImg = view2.findViewById(R.id.btn_select_img);
         ivHeadImg = view2.findViewById(R.id.iv_head_img);
         btnSave = view2.findViewById(R.id.btnSave);
+        headDeafultImg1 = view2.findViewById(R.id.head_img1);
+        headDeafultImg2 = view2.findViewById(R.id.head_img2);
+        headDeafultImg3 = view2.findViewById(R.id.head_img3);
+        headDeafultImg4 = view2.findViewById(R.id.head_img4);
+        headDeafultImg5 = view2.findViewById(R.id.head_img5);
+        headDeafultImg6 = view2.findViewById(R.id.head_img6);
+        headDeafultImg7 = view2.findViewById(R.id.head_img7);
+        headDeafultImg8 = view2.findViewById(R.id.head_img8);
+        headDeafultImg9 = view2.findViewById(R.id.head_img9);
+        headDeafultImg10 = view2.findViewById(R.id.head_img10);
+        headDeafultImg11 = view2.findViewById(R.id.head_img11);
+        headDeafultImg12 = view2.findViewById(R.id.head_img12);
+        headDeafultImg13 = view2.findViewById(R.id.head_img13);
+        headDeafultImg14 = view2.findViewById(R.id.head_img14);
+        headDeafultImg15 = view2.findViewById(R.id.head_img15);
+        headDeafultImg16 = view2.findViewById(R.id.head_img16);
         cameraSavePath = new File(Environment.getExternalStorageDirectory().getPath() + "/" + System.currentTimeMillis() + ".jpg");
         getPermission();
+
         view3 = mInflater.inflate(R.layout.item_fill_psd_info, null);
         etNewPsd = view3.findViewById(R.id.et_newPsd);
         etNewPsd2 = view3.findViewById(R.id.et_newPsd2);
@@ -328,9 +365,28 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
         tvSelect.setOnClickListener(new MyLinsener());
         tvDetailAddress.setOnClickListener(new MyLinsener());
         btnUpdata.setOnClickListener(new MyLinsener());
+        headDeafultImg1.setOnClickListener(new MyLinsener());
+        headDeafultImg2.setOnClickListener(new MyLinsener());
+        headDeafultImg3.setOnClickListener(new MyLinsener());
+        headDeafultImg4.setOnClickListener(new MyLinsener());
+        headDeafultImg5.setOnClickListener(new MyLinsener());
+        headDeafultImg6.setOnClickListener(new MyLinsener());
+        headDeafultImg7.setOnClickListener(new MyLinsener());
+        headDeafultImg8.setOnClickListener(new MyLinsener());
+        headDeafultImg9.setOnClickListener(new MyLinsener());
+        headDeafultImg10.setOnClickListener(new MyLinsener());
+        headDeafultImg11.setOnClickListener(new MyLinsener());
+        headDeafultImg12.setOnClickListener(new MyLinsener());
+        headDeafultImg13.setOnClickListener(new MyLinsener());
+        headDeafultImg14.setOnClickListener(new MyLinsener());
+        headDeafultImg15.setOnClickListener(new MyLinsener());
+        headDeafultImg16.setOnClickListener(new MyLinsener());
     }
 
     private class MyLinsener implements View.OnClickListener {
+        private RequestOptions options;
+        private String resourcesUri;
+
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
@@ -421,8 +477,113 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
                 case R.id.btnSave:
                     postFormImg();
                     break;
+                case R.id.head_img1:
+                    options = new RequestOptions().centerCrop();
+                    resourcesUri = getResourcesUri(R.drawable.default_head_img1);
+                    photoPath = resourcesUri;
+                    Glide.with(FillPersonalInforActivity.this).load(resourcesUri).apply(options).into(ivHeadImg);
+                    break;
+                case R.id.head_img2:
+                    options = new RequestOptions().centerCrop();
+                    resourcesUri = getResourcesUri(R.drawable.default_head_img2);
+                    photoPath = resourcesUri;
+                    Glide.with(FillPersonalInforActivity.this).load(resourcesUri).apply(options).into(ivHeadImg);
+                    break;
+                case R.id.head_img3:
+                    options = new RequestOptions().centerCrop();
+                    resourcesUri = getResourcesUri(R.drawable.default_head_img3);
+                    photoPath = resourcesUri;
+                    Glide.with(FillPersonalInforActivity.this).load(resourcesUri).apply(options).into(ivHeadImg);
+                    break;
+                case R.id.head_img4:
+                    options = new RequestOptions().centerCrop();
+                    resourcesUri = getResourcesUri(R.drawable.default_head_img4);
+                    photoPath = resourcesUri;
+                    Glide.with(FillPersonalInforActivity.this).load(resourcesUri).apply(options).into(ivHeadImg);
+                    break;
+                case R.id.head_img5:
+                    options = new RequestOptions().centerCrop();
+                    resourcesUri = getResourcesUri(R.drawable.default_head_img5);
+                    photoPath = resourcesUri;
+                    Glide.with(FillPersonalInforActivity.this).load(resourcesUri).apply(options).into(ivHeadImg);
+                    break;
+                case R.id.head_img6:
+                    options = new RequestOptions().centerCrop();
+                    resourcesUri = getResourcesUri(R.drawable.default_head_img6);
+                    photoPath = resourcesUri;
+                    Glide.with(FillPersonalInforActivity.this).load(resourcesUri).apply(options).into(ivHeadImg);
+                    break;
+                case R.id.head_img7:
+                    options = new RequestOptions().centerCrop();
+                    resourcesUri = getResourcesUri(R.drawable.default_head_img7);
+                    photoPath = resourcesUri;
+                    Glide.with(FillPersonalInforActivity.this).load(resourcesUri).apply(options).into(ivHeadImg);
+                    break;
+                case R.id.head_img8:
+                    options = new RequestOptions().centerCrop();
+                    resourcesUri = getResourcesUri(R.drawable.default_head_img8);
+                    photoPath = resourcesUri;
+                    Glide.with(FillPersonalInforActivity.this).load(resourcesUri).apply(options).into(ivHeadImg);
+                    break;
+                case R.id.head_img9:
+                    options = new RequestOptions().centerCrop();
+                    resourcesUri = getResourcesUri(R.drawable.default_head_img9);
+                    photoPath = resourcesUri;
+                    Glide.with(FillPersonalInforActivity.this).load(resourcesUri).apply(options).into(ivHeadImg);
+                    break;
+                case R.id.head_img10:
+                    options = new RequestOptions().centerCrop();
+                    resourcesUri = getResourcesUri(R.drawable.default_head_img10);
+                    photoPath = resourcesUri;
+                    Glide.with(FillPersonalInforActivity.this).load(resourcesUri).apply(options).into(ivHeadImg);
+                    break;
+                case R.id.head_img11:
+                    options = new RequestOptions().centerCrop();
+                    resourcesUri = getResourcesUri(R.drawable.default_head_img11);
+                    photoPath = resourcesUri;
+                    Glide.with(FillPersonalInforActivity.this).load(resourcesUri).apply(options).into(ivHeadImg);
+                    break;
+                case R.id.head_img12:
+                    options = new RequestOptions().centerCrop();
+                    resourcesUri = getResourcesUri(R.drawable.default_head_img12);
+                    photoPath = resourcesUri;
+                    Glide.with(FillPersonalInforActivity.this).load(resourcesUri).apply(options).into(ivHeadImg);
+                    break;
+                case R.id.head_img13:
+                    options = new RequestOptions().centerCrop();
+                    resourcesUri = getResourcesUri(R.drawable.default_head_img13);
+                    photoPath = resourcesUri;
+                    Glide.with(FillPersonalInforActivity.this).load(resourcesUri).apply(options).into(ivHeadImg);
+                    break;
+                case R.id.head_img14:
+                    options = new RequestOptions().centerCrop();
+                    resourcesUri = getResourcesUri(R.drawable.default_head_img14);
+                    photoPath = resourcesUri;
+                    Glide.with(FillPersonalInforActivity.this).load(resourcesUri).apply(options).into(ivHeadImg);
+                    break;
+                case R.id.head_img15:
+                    options = new RequestOptions().centerCrop();
+                    resourcesUri = getResourcesUri(R.drawable.default_head_img15);
+                    photoPath = resourcesUri;
+                    Glide.with(FillPersonalInforActivity.this).load(resourcesUri).apply(options).into(ivHeadImg);
+                    break;
+                case R.id.head_img16:
+                    options = new RequestOptions().centerCrop();
+                    resourcesUri = getResourcesUri(R.drawable.default_head_img16);
+                    photoPath = resourcesUri;
+                    Glide.with(FillPersonalInforActivity.this).load(resourcesUri).apply(options).into(ivHeadImg);
+                    break;
             }
         }
+    }
+
+    private String getResourcesUri(@DrawableRes int id) {
+        Resources resources = getResources();
+        String uriPath = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+                resources.getResourcePackageName(id) + "/" +
+                resources.getResourceTypeName(id) + "/" +
+                resources.getResourceEntryName(id);
+        return uriPath;
     }
 
     private void postFormImg() {
