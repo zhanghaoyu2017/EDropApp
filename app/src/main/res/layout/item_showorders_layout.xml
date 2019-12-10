@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="230dp"
+    android:layout_marginLeft="@dimen/size_30"
+    android:layout_marginRight="30dp"
+    android:layout_marginTop="@dimen/size_20"
+    android:background="@drawable/showorders_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="142dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/size_60"
+                android:layout_height="@dimen/size_60"
+                android:layout_marginTop="@dimen/size_20"
+                android:src="@drawable/orderlogo" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/size_10"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_10"
+                android:text="张浩宇"
+                android:textColor="#000"
+                android:textSize="@dimen/size_18"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_5"
+                android:text="17603373652"
+                android:textColor="#9c9c9c"
+                android:textSize="@dimen/size_18" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="河北省石家庄市裕华区河北师范大学新校区"
+                android:textColor="#9c9c9c"
+                android:textSize="@dimen/size_16" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:src="@drawable/servicetime"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="2019-12-9 9:15"
+                    android:textColor="#9c9c9c"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:textSize="@dimen/size_16" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <view
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="#9c9c9c" />
+
+    <LinearLayout
+        android:layout_marginLeft="@dimen/size_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单编号:"
+            android:textColor="#9c9c9c"
+            android:textSize="@dimen/size_16" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2e8477e0fc0a-4eaf-9194-82e8c9f5016"
+            android:textColor="#9c9c9c"
+            android:textSize="@dimen/size_13" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/size_10"
+        android:layout_marginRight="@dimen/size_10"
+        android:layout_marginBottom="@dimen/size_10"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="@dimen/size_75"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="@dimen/size_25"
+                android:layout_height="@dimen/size_25"
+                android:src="@drawable/kefu"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联系客服"
+                android:textSize="@dimen/size_15"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="@dimen/size_75"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="@dimen/size_25"
+                android:layout_height="@dimen/size_25"
+                android:src="@drawable/money"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5.00"
+                android:textSize="@dimen/size_15"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/size_75"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="@dimen/size_25"
+                android:layout_height="@dimen/size_25"
+                android:src="@drawable/gohome"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已完成"
+                android:textSize="@dimen/size_15"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_marginLeft="@dimen/size_40"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:src="@drawable/orderok"/>
+
+    </LinearLayout>
+
+</LinearLayout>
