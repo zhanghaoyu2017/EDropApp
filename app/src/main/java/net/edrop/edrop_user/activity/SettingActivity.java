@@ -83,9 +83,11 @@ public class SettingActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.rl_setting_update://更新信息
-                    intent = new Intent(SettingActivity.this, VersionActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+//                    intent = new Intent(SettingActivity.this, VersionActivity.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(intent);
+                    
+                    Toast.makeText(SettingActivity.this, "已是最新版本", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.rl_setting_feedback://反馈消息
                     intent = new Intent(SettingActivity.this, FeedBackActivity.class);
