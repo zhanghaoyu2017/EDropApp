@@ -84,7 +84,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <RadioGroup
-            android:id="@+id/rg_go_get_money"
+            android:id="@+id/rg_go_save_money"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -156,7 +156,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <RadioGroup
-            android:id="@+id/rg_go_save_money"
+            android:id="@+id/rg_go_get_money"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -188,10 +188,17 @@
         android:layout_height="wrap_content">
         <Button
             android:id="@+id/btn_go_get_money"
-            android:text="去充值"
+            android:text="提现"
             android:textColor="@color/white"
             android:background="@drawable/btn_login_green_background"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/size_30" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_kongbai"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     </LinearLayout>
 </LinearLayout>
