@@ -1,6 +1,7 @@
 package net.edrop.edrop_user.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
@@ -39,6 +40,7 @@ import net.edrop.edrop_user.adapter.HotSearchAdapter;
 import net.edrop.edrop_user.adapter.SearchAdapter;
 import net.edrop.edrop_user.entity.HotItem;
 import net.edrop.edrop_user.entity.Rubbish;
+import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 import net.edrop.edrop_user.utils.SystemTransUtil;
 
 import org.json.JSONException;
@@ -120,8 +122,8 @@ public class SearchRubblishActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        hotItems.add(new HotItem("1", "康师傅矿泉水"));
-        hotItems.add(new HotItem("2", "康师傅矿泉水"));
+        hotItems.add(new HotItem("1", "便签纸"));
+        hotItems.add(new HotItem("2", "报纸"));
 
         searchView.setIconifiedByDefault(false);//设置搜索图标是否显示在搜索框内
         //1:回车2:前往3:搜索4:发送5:下一項6:完成
@@ -160,24 +162,6 @@ public class SearchRubblishActivity extends AppCompatActivity {
             //当点击搜索按钮时触发该方法
             @Override
             public boolean onQueryTextSubmit(String query) {
-//                if (TextUtils.isEmpty(query)) {
-//                    findList.clear();
-//                    searchRes.setAdapter(searchAdapter);
-//                } else {
-//                    findList.clear();
-//                    OkHttpQuery(query);
-//                    if (findList.size() == 0) {
-//                        Toast.makeText(SearchRubblishActivity.this, "查找失败，推荐使用模糊查询", Toast.LENGTH_SHORT).show();
-//                    } else {
-//
-//                        Toast.makeText(SearchRubblishActivity.this, "查找成功", Toast.LENGTH_SHORT).show();
-//                        searchAdapter = new SearchAdapter(findList,SearchRubblishActivity.this,SearchRubblishActivity.this,rubbishList);
-//                        searchRes.setAdapter(searchAdapter);
-//                    }
-//                    searchView.setQuery("", false);//设置初始值
-//                    searchView.clearFocus();//收起键盘
-////                searchView.onActionViewCollapsed();//收起SearchView视图
-//                }
                 return true;
             }
 
@@ -199,13 +183,25 @@ public class SearchRubblishActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 history.clear();
-                Toast.makeText(SearchRubblishActivity.this, "删除按钮点击了", Toast.LENGTH_SHORT).show();
+                SharedPreferencesUtils sharedPreferences = new SharedPreferencesUtils(SearchRubblishActivity.this,"searchHistory");
+                sharedPreferences.removeValues("history");
+                Toast.makeText(SearchRubblishActivity.this, "历史记录已清空", Toast.LENGTH_SHORT).show();
             }
         });
         hotItemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(SearchRubblishActivity.this, id + "", Toast.LENGTH_SHORT).show();
+                SharedPreferencesUtils sharedPreferences = new SharedPreferencesUtils(SearchRubblishActivity.this,"searchHistory");
+                SharedPreferences.Editor editor = sharedPreferences.getEditor();
+                String history = sharedPreferences.getString("history", "");
+                if (history.equals("")){
+                    editor.putString("history",String.valueOf(parent.getItemAtPosition(position)));
+                }else {
+                    editor.putString("history",history+","+parent.getItemAtPosition(position)+"");
+                }
+                editor.commit();
+                Toast.makeText(SearchRubblishActivity.this, String.valueOf(hotItemListView.getItemAtPosition(position)), Toast.LENGTH_SHORT).show();
+                OkHttpQuery(parent.getItemAtPosition(position).toString());
             }
         });
     }
@@ -226,9 +222,11 @@ public class SearchRubblishActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-//                Log.e("test", response.body().string());
                 String jsonStr = response.body().string();
                 Log.e("test", jsonStr);
+                if (jsonStr.length()==0){
+                    Toast.makeText(SearchRubblishActivity.this,"系统正在升级，该垃圾不能识别",Toast.LENGTH_SHORT).show();
+                }
                 rubbishList = new Gson().fromJson(jsonStr, new TypeToken<List<Rubbish>>() {
                 }.getType());
                 Log.e("test", rubbishList.toString());
@@ -242,7 +240,6 @@ public class SearchRubblishActivity extends AppCompatActivity {
                         break;
                     }
                 }
-
                 Message msg = new Message();
                 msg.obj = response;
                 msg.what = SEARCH_SUCCESS;
@@ -261,7 +258,12 @@ public class SearchRubblishActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams.WRAP_CONTENT, 100);
         layoutParams.gravity = Gravity.CENTER;
         layoutParams.setMargins(20, 10, 20, 10);
-        history.add("尿不湿");
+        SharedPreferencesUtils sharedPreferences = new SharedPreferencesUtils(SearchRubblishActivity.this,"searchHistory");
+        String h = sharedPreferences.getString("history", "");
+        String[] historys = h.split(",");
+        for (int i = 0; i < historys.length; i++) {
+            history.add(historys[i]);
+        }
         for (int i = 0; i < history.size(); i++) {
             final Button button = new Button(this);
             button.setText(history.get(i));
@@ -271,7 +273,17 @@ public class SearchRubblishActivity extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(SearchRubblishActivity.this, button.getText().toString(), Toast.LENGTH_SHORT).show();
+                    OkHttpQuery(button.getText().toString());
+                    SharedPreferencesUtils sharedPreferences = new SharedPreferencesUtils(SearchRubblishActivity.this,"searchHistory");
+                    SharedPreferences.Editor editor = sharedPreferences.getEditor();
+                    String history = sharedPreferences.getString("history", "");
+                    if (history.equals("")){
+                        editor.putString("history",button.getText().toString());
+                    }else {
+                        editor.putString("history",history+","+button.getText().toString());
+                    }
+                    editor.commit();
+                    OkHttpQuery(button.getText().toString());
 //                    performItemClick(view);
                 }
             });
@@ -296,7 +308,6 @@ public class SearchRubblishActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            //启动一个意图,回到桌面
             Intent intent = new Intent(SearchRubblishActivity.this,Main2Activity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);

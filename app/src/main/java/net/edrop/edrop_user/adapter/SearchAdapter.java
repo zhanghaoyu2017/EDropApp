@@ -2,6 +2,7 @@ package net.edrop.edrop_user.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.entity.Rubbish;
+import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +75,15 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             public void onClick(View view) {
                 hideKeyboard();
                 if (popupWindow == null || !popupWindow.isShowing()) {
+                    SharedPreferencesUtils sharedPreferences = new SharedPreferencesUtils(context,"searchHistory");
+                    SharedPreferences.Editor editor = sharedPreferences.getEditor();
+                    String history = sharedPreferences.getString("history", "");
+                    if (history.equals("")){
+                        editor.putString("history",list.get(position));
+                    }else {
+                        editor.putString("history",history+","+list.get(position));
+                    }
+                    editor.commit();
                     //显示PopupWindow
                     showPopupWindow(position);
                     Log.e("test", dataSource.get(position).toString());

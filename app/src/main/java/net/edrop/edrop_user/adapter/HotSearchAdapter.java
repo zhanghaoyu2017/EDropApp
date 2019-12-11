@@ -30,6 +30,7 @@ public class HotSearchAdapter extends BaseAdapter {
         this.list = list;
     }
 
+
     @Override
     public int getCount() {
         if (list != null) {
