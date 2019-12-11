@@ -44,6 +44,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
     private EditText etPhone;
     private TextView textView;
     private ImageView imageView;
+    private ImageView imageViewback;
     private Button button;
     private boolean hasClick;
     private String string;
@@ -73,7 +74,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
         imageView.setOnClickListener(this);
         button.setOnClickListener(this);
         mEditEmojicon.setOnClickListener(this);
-
+        imageViewback.setOnClickListener(this);
     }
 
     private void findViews() {
@@ -84,6 +85,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
         button = findViewById(R.id.btn_feedback);
         imageView = findViewById(R.id.im_feedback_smile);
         linearLayout = findViewById(R.id.ll_feedback);
+        imageViewback = findViewById(R.id.iv_feedback_back);
     }
 
 
@@ -115,6 +117,9 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.im_feedback_index:
                 Toast.makeText(this, "图片功能待完善！！", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.iv_feedback_back:
+                finish();
                 break;
         }
     }
