@@ -1,5 +1,6 @@
 package net.edrop.edrop_user.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,11 +13,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +53,9 @@ import okhttp3.Response;
 import static net.edrop.edrop_user.utils.Constant.BASE_URL;
 
 public class MainMenuLeftFragment extends Fragment {
+    //popupWindow
+    private PopupWindow popupWindow = null;
+    private View popupView = null;
     private View myView;
     private ImageView userSex;
     private ImageView userImg;
@@ -100,6 +108,13 @@ public class MainMenuLeftFragment extends Fragment {
         super.onResume();
         //初始化监听事件
         initEvent();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (popupWindow.isShowing()) {
+            popupWindow.dismiss();
+        }
     }
 
     /**
@@ -211,7 +226,9 @@ public class MainMenuLeftFragment extends Fragment {
                     startActivity(intent);
                     break;
                 case R.id.myMoney:
-                    Toast.makeText(getActivity(),"我的钱包", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(myView.getContext(), MyMoneyActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                     break;
                 case R.id.myAddress:
                     Toast.makeText(getActivity(), "我的地址", Toast.LENGTH_SHORT).show();
@@ -244,27 +261,29 @@ public class MainMenuLeftFragment extends Fragment {
 
                     break;
                 case R.id.inviteFriends:
-                    shareQQ(myView);
-//                    shareWechat(myView);
+                    // 显示PopupWindow
+                    if (popupWindow == null || !popupWindow.isShowing()) {
+                        showPopupWindow();
+                    }
                     break;
                 case R.id.businessCooperation:
                     Toast.makeText(getActivity(), "生意合作", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.aboutEDrop:
                     //跳转到详细介绍页面
-                    intent = new Intent(getContext(), AboutEDropActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    MainMenuLeftFragment.this.intent = new Intent(getContext(), AboutEDropActivity.class);
+                    MainMenuLeftFragment.this.intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(MainMenuLeftFragment.this.intent);
                     break;
                 case R.id.setting:
-                    intent = new Intent(getContext(), SettingActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    MainMenuLeftFragment.this.intent = new Intent(getContext(), SettingActivity.class);
+                    MainMenuLeftFragment.this.intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(MainMenuLeftFragment.this.intent);
                     break;
                 case R.id.feedback:
-                    intent = new Intent(getContext(), FeedBackActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    MainMenuLeftFragment.this.intent = new Intent(getContext(), FeedBackActivity.class);
+                    MainMenuLeftFragment.this.intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(MainMenuLeftFragment.this.intent);
                     break;
             }
         }
@@ -278,6 +297,12 @@ public class MainMenuLeftFragment extends Fragment {
         ShareAppToOther shareAppToOther = new ShareAppToOther(myView.getContext());
         shareAppToOther.shareWeChatFriend("EDrop", "EDrop邀请您的参与", ShareAppToOther.TEXT, drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
     }
+
+    public void shareWechatQzene(View view) {
+        ShareAppToOther shareAppToOther = new ShareAppToOther(myView.getContext());
+        shareAppToOther.shareWeChatFriendCircle("EDrop", "EDrop邀请您的参与", drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
+    }
+
     /**
      * Drawable转换成一个Bitmap
      *
@@ -291,6 +316,64 @@ public class MainMenuLeftFragment extends Fragment {
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
         drawable.draw(canvas);
         return bitmap;
+    }
+
+    private void showPopupWindow() {
+        // 创建popupWindow对象
+        setBackgroundAlpha(0.5f, myView.getContext());
+        popupWindow = new PopupWindow();
+        popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        // 通过布局填充器创建View
+        popupView = getLayoutInflater().inflate(R.layout.item_shared_app, null);
+        // 设置PopupWindow显示的内容视图
+        popupWindow.setContentView(popupView);
+        // 设置PopupWindow是否能响应外部点击事件
+        popupWindow.setOutsideTouchable(true);
+        // 设置PopupWindow是否相应点击事件
+        popupWindow.setTouchable(true);
+        popupView.setFocusable(true);
+        View view_list = View.inflate(myView.getContext(), R.layout.item_shared_app, null);
+        popupWindow.setOnDismissListener(new popupDismissListener());
+        popupWindow.showAtLocation(view_list.findViewById(R.id.share_app), Gravity.CENTER, 0, 0);
+
+        // 获取按钮并添加监听器
+        Button btnQQFriend = popupView.findViewById(R.id.share_qq_friend);
+        Button btnWeChat = popupView.findViewById(R.id.share_wechat);
+        Button btnWeChatQzene = popupView.findViewById(R.id.share_wechat_qzene);
+        btnQQFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareQQ(view);
+            }
+        });
+        btnWeChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareWechat(view);
+            }
+        });
+        btnWeChatQzene.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareWechatQzene(view);
+            }
+        });
+    }
+
+    private class popupDismissListener implements PopupWindow.OnDismissListener {
+        @Override
+        public void onDismiss() {
+            setBackgroundAlpha(1f, myView.getContext());
+        }
+    }
+
+    public static void setBackgroundAlpha(float bgAlpha, Context mContext) {
+        WindowManager.LayoutParams lp = ((Activity) mContext).getWindow()
+                .getAttributes();
+        lp.alpha = bgAlpha;
+        ((Activity) mContext).getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        ((Activity) mContext).getWindow().setAttributes(lp);
     }
 
 }

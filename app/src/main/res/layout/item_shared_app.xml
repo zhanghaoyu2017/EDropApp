@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_gravity="center"
+    android:layout_height="wrap_content"
+    android:id="@+id/share_app"
+    android:layout_marginLeft="@dimen/size_30"
+    android:layout_marginRight="@dimen/size_30"
+    android:orientation="vertical">
+    <Button
+        android:id="@+id/share_qq_friend"
+        android:text="分享给QQ好友"
+        android:gravity="center"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/share_wechat"
+        android:text="分享给微信好友"
+        android:gravity="center"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/share_wechat_qzene"
+        android:text="分享到微信朋友圈"
+        android:gravity="center"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

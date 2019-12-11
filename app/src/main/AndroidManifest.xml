@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="net.edrop.edrop_user">
 
-    <!--手机存储-->
+    <!-- 手机存储 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -151,6 +151,7 @@
         </provider>
 
         <activity android:name=".activity.ForgetPsdActivity" />
+        <activity android:name=".activity.MyMoneyActivity"></activity>
     </application>
 
 </manifest>

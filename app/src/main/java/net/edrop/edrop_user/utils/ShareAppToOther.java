@@ -28,62 +28,54 @@ public class ShareAppToOther {
     public static int TEXT = 0;
     //图片类型
     public static int DRAWABLE = 1;
+
     public ShareAppToOther(Context context) {
         this.context = context;
     }
+
     public void shareQQFriend(String msgTitle, String msgText, int type,
                               Bitmap drawable) {
         shareMsg("com.tencent.mobileqq",
                 "com.tencent.mobileqq.activity.JumpActivity", "QQ", msgTitle,
                 msgText, type, drawable);
     }
+
     /**
      * 分享到微信好友
      *
-     * @param msgTitle
-     *      (分享标题)
-     * @param msgText
-     *      (分享内容)
-     * @param type
-     *      (分享类型)
-     * @param drawable
-     *      (分享图片，若分享类型为AndroidShare.TEXT，则可以为null)
+     * @param msgTitle (分享标题)
+     * @param msgText  (分享内容)
+     * @param type     (分享类型)
+     * @param drawable (分享图片，若分享类型为AndroidShare.TEXT，则可以为null)
      */
     public void shareWeChatFriend(String msgTitle, String msgText, int type,
                                   Bitmap drawable) {
         shareMsg("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI", "微信",
                 msgTitle, msgText, type, drawable);
     }
+
     /**
      * 分享到微信朋友圈(分享朋友圈一定需要图片)
      *
-     * @param msgTitle
-     *      (分享标题)
-     * @param msgText
-     *      (分享内容)
-     * @param drawable
-     *      (分享图片)
+     * @param msgTitle (分享标题)
+     * @param msgText  (分享内容)
+     * @param drawable (分享图片)
      */
     public void shareWeChatFriendCircle(String msgTitle, String msgText,
                                         Bitmap drawable) {
         shareMsg("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI",
                 "微信", msgTitle, msgText, ShareAppToOther.DRAWABLE, drawable);
     }
+
     /**
      * 点击分享的代码
      *
-     * @param packageName
-     *      (包名,跳转的应用的包名)
-     * @param activityName
-     *      (类名,跳转的页面名称)
-     * @param appname
-     *      (应用名,跳转到的应用名称)
-     * @param msgTitle
-     *      (标题)
-     * @param msgText
-     *      (内容)
-     * @param type
-     *      (发送类型：text or pic 微信朋友圈只支持pic)
+     * @param packageName  (包名,跳转的应用的包名)
+     * @param activityName (类名,跳转的页面名称)
+     * @param appname      (应用名,跳转到的应用名称)
+     * @param msgTitle     (标题)
+     * @param msgText      (内容)
+     * @param type         (发送类型：text or pic 微信朋友圈只支持pic)
      */
     @SuppressLint("NewApi")
     private void shareMsg(String packageName, String activityName,
@@ -115,6 +107,7 @@ public class ShareAppToOther {
             context.startActivity(Intent.createChooser(intent, msgTitle));
         }
     }
+
     /**
      * 判断相对应的APP是否存在
      *
@@ -132,20 +125,22 @@ public class ShareAppToOther {
         }
         return false;
     }
+
     /**
      * 指定分享到qq
+     *
      * @param context
      * @param bitmap
      */
-    public void sharedQQ(Activity context, Bitmap bitmap){
+    public void sharedQQ(Activity context, Bitmap bitmap) {
         Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(
                 context.getContentResolver(), BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher), null, null));
         Intent imageIntent = new Intent(Intent.ACTION_SEND);
         imageIntent.setPackage("com.tencent.mobileqq");
         imageIntent.setType("image/*");
         imageIntent.putExtra(Intent.EXTRA_STREAM, uri);
-        imageIntent.putExtra(Intent.EXTRA_TEXT,"您的好友邀请您进入EDrop");
-        imageIntent.putExtra(Intent.EXTRA_TITLE,"EDrop");
+        imageIntent.putExtra(Intent.EXTRA_TEXT, "您的好友邀请您进入EDrop");
+        imageIntent.putExtra(Intent.EXTRA_TITLE, "EDrop");
         context.startActivity(imageIntent);
     }
 }
