@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import net.edrop.edrop_user.R;
+import net.edrop.edrop_user.utils.SystemTransUtil;
 
 import java.io.File;
 import java.io.RandomAccessFile;
@@ -35,6 +36,7 @@ public class SettingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        new SystemTransUtil().transform(SettingActivity.this);
         super.onCreate(savedInstanceState);
         //去掉顶部标题
         setContentView(R.layout.setting_main);

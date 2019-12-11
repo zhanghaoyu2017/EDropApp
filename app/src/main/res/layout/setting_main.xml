@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/size_10"
     android:background="#F1F0F5"
     android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="#32BA88" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -157,8 +161,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="80dp"
         android:layout_marginRight="25dp"
+        android:layout_marginTop="80dp"
         android:background="@drawable/setting_radius"
         android:text="退出账号"
         android:textColor="#fff"

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.edrop.edrop_user.R;
+import net.edrop.edrop_user.utils.SystemTransUtil;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -54,6 +55,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        new SystemTransUtil().transform(FeedBackActivity.this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.feedback_main);
         findViews();
