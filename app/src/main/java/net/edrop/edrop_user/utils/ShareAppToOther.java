@@ -31,18 +31,6 @@ public class ShareAppToOther {
     public ShareAppToOther(Context context) {
         this.context = context;
     }
-    /**
-     * 分享到QQ好友
-     *
-     * @param msgTitle
-     *      (分享标题)
-     * @param msgText
-     *      (分享内容)
-     * @param type
-     *      (分享类型)
-     * @param drawable
-     *      (分享图片，若分享类型为AndroidShare.TEXT，则可以为null)
-     */
     public void shareQQFriend(String msgTitle, String msgText, int type,
                               Bitmap drawable) {
         shareMsg("com.tencent.mobileqq",

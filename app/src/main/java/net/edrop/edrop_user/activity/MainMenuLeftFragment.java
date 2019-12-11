@@ -270,13 +270,13 @@ public class MainMenuLeftFragment extends Fragment {
         }
     }
     public void shareQQ(View view) {
-        ShareAppToOther androidShare = new ShareAppToOther(myView.getContext());
-        androidShare.shareQQFriend("EDrop", "EDrop邀请您的参与", ShareAppToOther.TEXT, drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
+        ShareAppToOther shareAppToOther = new ShareAppToOther(myView.getContext());
+        shareAppToOther.shareQQFriend("EDrop", "EDrop邀请您的参与,下载地址为：--------", ShareAppToOther.TEXT, drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
     }
 
     public void shareWechat(View view) {
-        ShareAppToOther androidShare = new ShareAppToOther(myView.getContext());
-        androidShare.shareWeChatFriend("这是标题", "这是内容", ShareAppToOther.TEXT, null);
+        ShareAppToOther shareAppToOther = new ShareAppToOther(myView.getContext());
+        shareAppToOther.shareWeChatFriend("EDrop", "EDrop邀请您的参与", ShareAppToOther.TEXT, drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
     }
     /**
      * Drawable转换成一个Bitmap
