@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?><!--标签项对应的页面布局文件-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="#fff"
+    android:background="#f7f7f7"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff"
+        android:background="#f7f7f7"
         android:orientation="vertical">
 
         <LinearLayout
@@ -122,6 +122,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_100"
                 android:layout_marginTop="@dimen/size_50"
+                android:layout_marginBottom="@dimen/size_20"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -199,6 +200,7 @@
 
 
     </LinearLayout>
+
 </ScrollView>
 
 
