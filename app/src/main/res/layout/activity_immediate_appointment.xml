@@ -7,9 +7,8 @@
     <!--头部-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_60"
+        android:layout_height="@dimen/size_70"
         android:background="#fff"
-
         android:orientation="horizontal">
 
         <ImageView
@@ -18,33 +17,36 @@
             android:layout_height="@dimen/size_30"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/size_10"
-            android:layout_marginTop="@dimen/size_20"
-            android:src="@drawable/left" />
+            android:layout_marginTop="@dimen/size_10"
+            android:src="@drawable/left_order" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/size_30"
             android:layout_gravity="center_vertical"
-            android:layout_marginTop="@dimen/size_22"
+            android:layout_marginTop="@dimen/size_12"
             android:text="订单提交"
-            android:textColor="#000"
+            android:textColor="#282828"
             android:textSize="@dimen/size_20" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="@dimen/size_10" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="@dimen/size_70"
         android:background="#fff"
-
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginLeft="@dimen/size_20"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="@dimen/size_20"
-            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
@@ -52,10 +54,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="姓名"
-                android:textColor="#000"
-                android:textSize="@dimen/size_18" />
+                android:textColor="#373737"
+                android:textSize="60px" />
 
             <EditText
+                android:textColor="#939393"
                 android:id="@+id/et_realName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,7 +66,9 @@
                 android:layout_marginLeft="@dimen/size_20"
                 android:background="@null"
                 android:hint="填写姓名"
-                android:textSize="@dimen/size_18" />
+                android:lineSpacingExtra="50px"
+                android:textCursorDrawable="@null"
+                android:textSize="50px" />
 
         </LinearLayout>
 
@@ -77,9 +82,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_60"
+        android:layout_height="@dimen/size_50"
         android:background="#fff"
-
         android:orientation="vertical">
 
         <LinearLayout
@@ -94,10 +98,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="电话"
-                android:textColor="#000"
-                android:textSize="@dimen/size_18" />
+                android:textColor="#373737"
+                android:textSize="60px" />
 
             <EditText
+                android:textColor="#939393"
                 android:id="@+id/et_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,7 +110,9 @@
                 android:layout_marginLeft="@dimen/size_20"
                 android:background="@null"
                 android:hint="填写手机号"
-                android:textSize="@dimen/size_18" />
+                android:lineSpacingExtra="20dp"
+                android:textCursorDrawable="@null"
+                android:textSize="50px" />
 
         </LinearLayout>
 
@@ -119,7 +126,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_60"
+        android:layout_height="@dimen/size_50"
         android:background="#fff"
         android:orientation="vertical">
 
@@ -136,19 +143,21 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="地址"
-                android:textColor="#000"
-                android:textSize="@dimen/size_18" />
+                android:textColor="#373737"
+                android:textSize="60px" />
 
             <TextView
+                android:textColor="#939393"
                 android:id="@+id/tv_immediate_select"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/size_20"
                 android:layout_weight="5"
+                android:lineSpacingExtra="20dp"
                 android:text="请选择城市"
-                android:textColor="#9c9c9c"
-                android:textSize="@dimen/size_18" />
+                android:textCursorDrawable="@null"
+                android:textSize="50px" />
 
             <ImageView
                 android:layout_width="@dimen/size_30"
@@ -170,9 +179,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_60"
+        android:layout_height="@dimen/size_50"
         android:background="#fff"
-
         android:orientation="vertical">
 
         <LinearLayout
@@ -187,10 +195,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="详细地址"
-                android:textColor="#000"
-                android:textSize="@dimen/size_18" />
+                android:textColor="#373737"
+                android:textSize="60px" />
 
             <EditText
+                android:textColor="#939393"
                 android:id="@+id/et_detail_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -198,7 +207,9 @@
                 android:layout_marginLeft="@dimen/size_20"
                 android:background="@null"
                 android:hint="填写详细地址()"
-                android:textSize="@dimen/size_18" />
+                android:lineSpacingExtra="20dp"
+                android:textCursorDrawable="@null"
+                android:textSize="50px" />
 
         </LinearLayout>
 
@@ -212,7 +223,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_60"
+        android:layout_height="@dimen/size_50"
         android:background="#fff"
         android:orientation="vertical">
 
@@ -229,8 +240,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="日期"
-                android:textColor="#000"
-                android:textSize="@dimen/size_18" />
+                android:textColor="#373737"
+                android:textSize="60px" />
 
             <TextView
                 android:id="@+id/tv_date_select"
@@ -239,9 +250,11 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/size_20"
                 android:layout_weight="5"
+                android:lineSpacingExtra="20dp"
                 android:text="请选择服务日期"
-                android:textColor="#9c9c9c"
-                android:textSize="@dimen/size_18" />
+                android:textColor="#939393"
+                android:textCursorDrawable="@null"
+                android:textSize="50px" />
 
             <ImageView
                 android:layout_width="@dimen/size_25"
@@ -263,7 +276,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_60"
+        android:layout_height="@dimen/size_50"
         android:background="#fff"
         android:orientation="vertical">
 
@@ -280,8 +293,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="时间"
-                android:textColor="#000"
-                android:textSize="@dimen/size_18" />
+                android:textColor="#373737"
+                android:textSize="60px" />
 
             <TextView
                 android:id="@+id/tv_time_select"
@@ -290,9 +303,11 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/size_20"
                 android:layout_weight="5"
+                android:lineSpacingExtra="20dp"
                 android:text="请选择上门时间"
-                android:textColor="#9c9c9c"
-                android:textSize="@dimen/size_18" />
+                android:textColor="#939393"
+                android:textCursorDrawable="@null"
+                android:textSize="50px" />
 
             <ImageView
                 android:layout_width="33dp"
@@ -320,10 +335,10 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_marginTop="@dimen/size_5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/size_20"
+            android:layout_marginTop="@dimen/size_20"
             android:layout_marginRight="@dimen/size_20"
             android:orientation="horizontal">
 
@@ -331,7 +346,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="订单优惠"
-                android:textColor="#000"
+                android:textColor="#373737"
                 android:textSize="20dp" />
 
 
@@ -340,31 +355,32 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_10"
             android:layout_marginLeft="@dimen/size_20"
+            android:layout_marginTop="@dimen/size_10"
             android:layout_marginRight="@dimen/size_20"
             android:layout_marginBottom="@dimen/size_10"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="16"
                 android:layout_height="wrap_content"
+                android:layout_weight="16"
                 android:text="优惠券使用"
-                android:textColor="#000"
+                android:textColor="#373737"
                 android:textSize="15dp" />
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="5"
                 android:layout_height="wrap_content"
+                android:layout_weight="5"
                 android:text="暂无可用"
-                android:textColor="#9c9c9c"
+                android:textColor="#939393"
                 android:textSize="15dp" />
+
             <ImageView
                 android:layout_width="@dimen/size_25"
                 android:layout_height="@dimen/size_25"
-                android:src="@drawable/right"/>
+                android:src="@drawable/right" />
 
         </LinearLayout>
 
@@ -372,13 +388,13 @@
 
     <Button
         android:id="@+id/btn_order"
-        android:layout_marginTop="@dimen/size_30"
         android:layout_width="300dp"
         android:layout_height="@dimen/size_40"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/size_30"
+        android:background="@drawable/btn_register_background"
         android:text="预约订单"
-        android:textSize="@dimen/size_22"
         android:textColor="#fff"
-        android:background="@drawable/btn_register_background"/>
+        android:textSize="@dimen/size_22" />
 
 </LinearLayout>
