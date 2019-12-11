@@ -33,6 +33,7 @@ import com.google.gson.Gson;
 
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.entity.User;
+import net.edrop.edrop_user.entity.Wallet;
 import net.edrop.edrop_user.utils.Constant;
 import net.edrop.edrop_user.utils.ShareAppToOther;
 import net.edrop.edrop_user.utils.SharedPreferencesUtils;
@@ -60,6 +61,7 @@ public class MainMenuLeftFragment extends Fragment {
     private ImageView userSex;
     private ImageView userImg;
     private TextView userName;
+    private TextView tvMoney;
     private LinearLayout myMoney;
     private LinearLayout myAddress;
     private LinearLayout myOrder;
@@ -86,6 +88,11 @@ public class MainMenuLeftFragment extends Fragment {
                 intent.putExtra("orderjson", str);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+            }else if (msg.what == 666){
+                String json = (String) msg.obj;
+                Wallet wallet = new Gson().fromJson(json,Wallet.class);
+                tvMoney.setText("￥"+wallet.getMoney()+"");
+
             }
         }
     };
@@ -132,6 +139,7 @@ public class MainMenuLeftFragment extends Fragment {
         setting = myView.findViewById(R.id.setting);
         feedback = myView.findViewById(R.id.feedback);
         userSex = myView.findViewById(R.id.iv_head_img_main);
+        tvMoney = myView.findViewById(R.id.tv_myMoney);
     }
 
     /**
@@ -158,6 +166,34 @@ public class MainMenuLeftFragment extends Fragment {
         }
         okHttpClient = new OkHttpClient();
         getImg();
+        getMoney();
+    }
+
+    private void getMoney() {
+        //2.创建Request对象
+        Request request = new Request.Builder().url(BASE_URL + "getSurplus?uid=" + sharedPreferences.getInt("userId")).build();
+        //3.创建Call对象
+        final Call call = okHttpClient.newCall(request);
+
+        //4.发送请求 获得响应数据
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();//打印异常信息
+            }
+
+            //请求成功时回调
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String str = response.body().string();
+                Message message = new Message();
+                message.what = 666;
+                message.obj = str;
+                handler.sendMessage(message);
+            }
+        });
+
+
     }
 
     private void getImg() {
@@ -288,6 +324,7 @@ public class MainMenuLeftFragment extends Fragment {
             }
         }
     }
+
     public void shareQQ(View view) {
         ShareAppToOther shareAppToOther = new ShareAppToOther(myView.getContext());
         shareAppToOther.shareQQFriend("EDrop", "EDrop邀请您的参与,下载地址为：--------", ShareAppToOther.TEXT, drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
@@ -310,7 +347,7 @@ public class MainMenuLeftFragment extends Fragment {
      * @return
      */
     public static final Bitmap drawableToBitmap(Drawable drawable) {
-        Bitmap bitmap = Bitmap.createBitmap( drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
                 drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());

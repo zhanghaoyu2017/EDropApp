@@ -1,6 +1,10 @@
 package net.edrop.edrop_user.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,6 +26,7 @@ import com.bumptech.glide.request.RequestOptions;
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.adapter.ServiceAdapter;
 import net.edrop.edrop_user.utils.Constant;
+import net.edrop.edrop_user.utils.ShareAppToOther;
 import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 
 import java.io.IOException;
@@ -158,17 +163,20 @@ public class ServicePageFragment extends Fragment {
                     });
                     break;
                 case R.id.ll_service_wallet:
-
+                    Intent intent3 = new Intent(view.getContext(), MyMoneyActivity.class);
+                    intent3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent3);
                     break;
                 case R.id.ll_service_ticket:
-                    Toast.makeText(view.getContext(),"暂无可用优惠券",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "暂无可用优惠券", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.ll_service_kefu:
-                    Toast.makeText(view.getContext(),"联系客服",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "联系客服", Toast.LENGTH_SHORT).show();
 
                     break;
                 case R.id.ll_service_share:
-
+                    ShareAppToOther shareAppToOther = new ShareAppToOther(view.getContext());
+                    shareAppToOther.shareWeChatFriend("EDrop", "EDrop邀请您参与", ShareAppToOther.TEXT, drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
                     break;
                 case R.id.ll_service_info:
                     Intent intent2 = new Intent(getActivity(), IntroductionEDropActivity.class);
@@ -179,5 +187,18 @@ public class ServicePageFragment extends Fragment {
         }
     }
 
-
+    /**
+     * Drawable转换成一个Bitmap
+     *
+     * @param drawable drawable对象
+     * @return
+     */
+    public static final Bitmap drawableToBitmap(Drawable drawable) {
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
+                drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        drawable.draw(canvas);
+        return bitmap;
+    }
 }

@@ -13,6 +13,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/iv_appointment_back"
             android:layout_width="@dimen/size_30"
             android:layout_height="@dimen/size_30"
             android:layout_gravity="center_vertical"

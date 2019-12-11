@@ -72,11 +72,11 @@
                 android:textSize="18dp" />
 
             <TextView
+                android:id="@+id/tv_myMoney"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:text="￥30.0"
                 android:textColor="#000"
                 android:textSize="13dp" />
 
