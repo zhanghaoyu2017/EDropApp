@@ -4,6 +4,10 @@
     android:layout_height="match_parent"
     android:background="#F1F0F5"
     android:orientation="vertical">
+    <View
+        android:background="#32BA88"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"/>
 
     <LinearLayout
         android:id="@+id/ll_feedback"

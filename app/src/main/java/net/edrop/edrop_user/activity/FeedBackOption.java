@@ -7,6 +7,7 @@ import android.widget.ListView;
 
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.adapter.FeedBackOptionAdapter;
+import net.edrop.edrop_user.utils.SystemTransUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class FeedBackOption extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        new SystemTransUtil().transform(FeedBackOption.this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.feedbackoption_main);
         initData();

@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="120dp"
-            android:textSize="32dp" />
+            android:textSize="@dimen/size_20" />
 
         <ImageView
             android:id="@+id/iv_head_img_main"
