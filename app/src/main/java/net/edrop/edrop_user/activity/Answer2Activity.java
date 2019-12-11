@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import net.edrop.edrop_user.R;
-import net.edrop.edrop_user.adapter.MyAdapter;
+import net.edrop.edrop_user.adapter.AnswerAdapter;
 import net.edrop.edrop_user.callBack.MyCallBack;
 import net.edrop.edrop_user.entity.Competition;
 import net.edrop.edrop_user.utils.SystemTransUtil;
@@ -29,7 +29,7 @@ public class Answer2Activity extends AppCompatActivity {
     private int a;
     private RecyclerView text_rv;
     private TextView currentNum;
-    private MyAdapter myAdapter;
+    private AnswerAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,21 +37,22 @@ public class Answer2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer2);
         findViews();
-        init();
+        initData();
         initRv();
     }
 
-    public void init() {
+    public void initData() {
         a = 0;
         currentNum.setText(a + 1 + "");
         list2 = (ArrayList<Competition>) getIntent().getSerializableExtra("lists");
-        Competition bean1 = list2.get(a);
-        lists.add(bean1);
+        Competition competition = new Competition(list2.get(a).getId(),list2.get(a).getQuestion(),
+                list2.get(a).getTypeId(),list2.get(a).getType());
+        lists.add(competition);
     }
 
     private void initRv() {
         text_rv.setLayoutManager(new LinearLayoutManager(this));
-        myAdapter = new MyAdapter(Answer2Activity.this);
+        myAdapter = new AnswerAdapter(Answer2Activity.this);
         myAdapter.setData(lists);
         text_rv.setAdapter(myAdapter);
     }

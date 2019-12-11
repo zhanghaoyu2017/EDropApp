@@ -14,17 +14,18 @@ import net.edrop.edrop_user.entity.Competition;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter {
+public class AnswerAdapter extends RecyclerView.Adapter {
     private List<Competition> datasource;
     private Context context;
 
-    public MyAdapter(Context mContext) {
+    public AnswerAdapter(Context mContext) {
         this.context = mContext;
     }
 
     public List<Competition> getData() {
         return datasource;
     }
+
     public void setData(List<Competition> datasource) {
         this.datasource = new ArrayList<>(datasource);
     }
@@ -32,7 +33,7 @@ public class MyAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.item_view,null);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.item_view, null);
         return new MyViewHolder(itemView);
     }
 
@@ -47,6 +48,7 @@ public class MyAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return datasource.size();
     }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tv;
 
