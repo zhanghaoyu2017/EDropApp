@@ -57,7 +57,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         new SystemTransUtil().transform(FeedBackActivity.this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.feedback_main);
+        setContentView(R.layout.activity_feedback_main);
         findViews();
         setLisner();
         setEmojiconFragment(false);

@@ -28,7 +28,7 @@ public class FeedBackOption extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         new SystemTransUtil().transform(FeedBackOption.this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.feedbackoption_main);
+        setContentView(R.layout.activity_feedback_option);
         initData();
         findView();
         setAdapter();
@@ -47,7 +47,7 @@ public class FeedBackOption extends AppCompatActivity {
         adapter = new FeedBackOptionAdapter(
                 this,
                 data,
-                R.layout.feedbackoption_item
+                R.layout.item_feedback_option
         );
         listView.setAdapter(adapter);
     }
