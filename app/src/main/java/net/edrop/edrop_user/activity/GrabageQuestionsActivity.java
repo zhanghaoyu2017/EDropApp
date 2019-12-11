@@ -3,6 +3,8 @@ package net.edrop.edrop_user.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,12 +35,33 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class GrabageQuestionsActivity extends AppCompatActivity {
-    private ArrayList<Competition> lists = new ArrayList<>();
+    private List<Competition> lists = new ArrayList<>();
     private OkHttpClient okHttpClient;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 10) {
+                List<Competition> competitions = new Gson().fromJson((String) msg.obj, new TypeToken<List<Competition>>() {
+                }.getType());
+                Log.e("obj", (String) msg.obj);
+                for (int i = 0; i < competitions.size(); i++) {
+                    Competition competition = competitions.get(i);
+                    lists.add(competition);
+                    Log.e("添加：", i + "" + competition.toString());
+                }
+                Intent intent = new Intent(GrabageQuestionsActivity.this, Answer2Activity.class);
+                intent.putExtra("lists", (Serializable) lists);
+                Log.e("===================", lists.toString());
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
+            }
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        new SystemTransUtil().transform(GrabageQuestionsActivity.this);
+        new SystemTransUtil().trans(GrabageQuestionsActivity.this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grabage_questions);
         okHttpClient = new OkHttpClient();
@@ -62,27 +85,17 @@ public class GrabageQuestionsActivity extends AppCompatActivity {
                     public void onFailure(Call call, IOException e) {
                         e.printStackTrace();
                     }
+
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         String responseJson = response.body().string();
                         Log.e("response", responseJson);
-                        try {
-                            List<Competition> competitions = new Gson().fromJson(responseJson, new TypeToken<List<Competition>>() {}.getType());
-                            for (int i = 0; i < competitions.size(); i++) {
-                                Competition competition = new Competition(competitions.get(i).getId(),competitions.get(i).getQuestion(),competitions.get(i).getTypeId(),competitions.get(i).getType());
-                                lists.add(competition);
-                            }
-                            Log.e("ddd", lists.toString());
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        Message message = new Message();
+                        message.what = 10;
+                        message.obj = responseJson;
+                        handler.sendMessage(message);
                     }
                 });
-                Intent intent = new Intent(GrabageQuestionsActivity.this, Answer2Activity.class);
-                intent.putExtra("lists", (Serializable) lists);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
                 break;
         }
     }

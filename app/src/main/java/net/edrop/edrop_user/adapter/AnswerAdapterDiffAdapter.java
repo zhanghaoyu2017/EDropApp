@@ -17,12 +17,12 @@ import net.edrop.edrop_user.entity.Competition;
 
 import java.util.List;
 
-public class MyDiffAdapter extends RecyclerView.Adapter {
+public class AnswerAdapterDiffAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private AsyncListDiffer<Competition> mTextDiffl;
     private DiffUtil.ItemCallback<Competition> diffCallback = new MyItemCallback();
 
-    public MyDiffAdapter(Context mContext) {
+    public AnswerAdapterDiffAdapter(Context mContext) {
         this.mContext = mContext;
         mTextDiffl = new AsyncListDiffer<>(this, diffCallback);
     }
