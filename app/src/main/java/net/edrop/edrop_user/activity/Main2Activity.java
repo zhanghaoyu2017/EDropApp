@@ -64,8 +64,8 @@ public class Main2Activity extends AppCompatActivity {
         //初始化控件
         initViews();
         SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils(Main2Activity.this,"loginInfo");
-        String userType = sharedPreferencesUtils.getString("userType","");
-        Toast.makeText(Main2Activity.this,userType,Toast.LENGTH_SHORT).show();
+//        String userType = sharedPreferencesUtils.getString("userType","");
+
         //初始化数据
         initData();
         //初始化控件的点击事件

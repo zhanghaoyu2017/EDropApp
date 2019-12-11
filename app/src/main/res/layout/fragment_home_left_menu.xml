@@ -7,10 +7,10 @@
 
     <!--顶部-->
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:background="@drawable/top">
+        android:background="@drawable/bg">
 
         <net.edrop.edrop_user.utils.RoundImageView
             android:id="@+id/iv_userImg"
@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="120dp"
+            android:textColor="#fff "
             android:textSize="@dimen/size_20" />
 
         <ImageView
@@ -48,6 +49,7 @@
         android:orientation="vertical">
         <!--我的钱包-->
         <LinearLayout
+            android:id="@+id/myMoney"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_40"
             android:orientation="horizontal">
@@ -60,7 +62,6 @@
                 android:src="@drawable/wallet" />
 
             <TextView
-                android:id="@+id/myMoney"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/size_10"
@@ -90,6 +91,7 @@
 
         <!--我的订单-->
         <LinearLayout
+            android:id="@+id/myOrder"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_40"
             android:layout_marginTop="@dimen/size_5"
@@ -103,7 +105,6 @@
                 android:src="@drawable/order" />
 
             <TextView
-                android:id="@+id/myOrder"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/size_10"
@@ -131,6 +132,7 @@
 
         <!--我的地址-->
         <LinearLayout
+            android:id="@+id/myAddress"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_40"
 
@@ -145,7 +147,6 @@
                 android:src="@drawable/address" />
 
             <TextView
-                android:id="@+id/myAddress"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/size_10"
@@ -173,6 +174,7 @@
 
         <!--邀请好友-->
         <LinearLayout
+            android:id="@+id/inviteFriends"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_40"
 
@@ -187,7 +189,6 @@
                 android:src="@drawable/friend" />
 
             <TextView
-                android:id="@+id/inviteFriends"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/size_10"
@@ -214,6 +215,7 @@
         </LinearLayout>
         <!--商务合作-->
         <LinearLayout
+            android:id="@+id/businessCooperation"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_40"
 
@@ -228,7 +230,6 @@
                 android:src="@drawable/hand" />
 
             <TextView
-                android:id="@+id/businessCooperation"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/size_10"
@@ -255,9 +256,9 @@
         </LinearLayout>
         <!--关于易扔-->
         <LinearLayout
+            android:id="@+id/aboutEDrop"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_40"
-
             android:layout_marginTop="@dimen/size_5"
             android:orientation="horizontal">
 
@@ -269,7 +270,6 @@
                 android:src="@drawable/about" />
 
             <TextView
-                android:id="@+id/aboutEDrop"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/size_10"
@@ -305,6 +305,7 @@
 
 
         <LinearLayout
+            android:id="@+id/setting"
             android:layout_width="50dp"
             android:layout_height="@dimen/size_50"
             android:layout_gravity="center_horizontal"
@@ -318,7 +319,6 @@
                 android:src="@drawable/setting" />
 
             <TextView
-                android:id="@+id/setting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -329,6 +329,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/feedback"
             android:layout_width="@dimen/size_50"
             android:layout_height="@dimen/size_50"
             android:layout_marginLeft="@dimen/size_25"
@@ -341,10 +342,9 @@
                 android:src="@drawable/feedback" />
 
             <TextView
-                android:id="@+id/feedback"
-                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
                 android:text="反馈"
                 android:textColor="#000"
                 android:textSize="15dp" />

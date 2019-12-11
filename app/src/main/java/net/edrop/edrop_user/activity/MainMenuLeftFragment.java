@@ -1,6 +1,12 @@
 package net.edrop.edrop_user.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,11 +29,13 @@ import com.google.gson.Gson;
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.entity.User;
 import net.edrop.edrop_user.utils.Constant;
+import net.edrop.edrop_user.utils.ShareAppToOther;
 import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -43,14 +52,14 @@ public class MainMenuLeftFragment extends Fragment {
     private ImageView userSex;
     private ImageView userImg;
     private TextView userName;
-    private TextView myMoney;
-    private TextView myAddress;
-    private TextView myOrder;
-    private TextView inviteFriends;
-    private TextView businessCooperation;
-    private TextView aboutEDrop;
-    private TextView setting;
-    private TextView feedback;
+    private LinearLayout myMoney;
+    private LinearLayout myAddress;
+    private LinearLayout myOrder;
+    private LinearLayout inviteFriends;
+    private LinearLayout businessCooperation;
+    private LinearLayout aboutEDrop;
+    private LinearLayout setting;
+    private LinearLayout feedback;
     private OkHttpClient okHttpClient;
     private SharedPreferencesUtils sharedPreferences;
     private Intent intent;
@@ -202,10 +211,10 @@ public class MainMenuLeftFragment extends Fragment {
                     startActivity(intent);
                     break;
                 case R.id.myMoney:
-                    Toast.makeText(getActivity(), myMoney.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"我的钱包", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.myAddress:
-                    Toast.makeText(getActivity(), myAddress.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "我的地址", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.myOrder:
                     SharedPreferencesUtils loginInfo = new SharedPreferencesUtils(myView.getContext(), "loginInfo");
@@ -235,10 +244,11 @@ public class MainMenuLeftFragment extends Fragment {
 
                     break;
                 case R.id.inviteFriends:
-                    Toast.makeText(getActivity(), inviteFriends.getText().toString(), Toast.LENGTH_SHORT).show();
+                    shareQQ(myView);
+//                    shareWechat(myView);
                     break;
                 case R.id.businessCooperation:
-                    Toast.makeText(getActivity(), businessCooperation.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "生意合作", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.aboutEDrop:
                     //跳转到详细介绍页面
@@ -259,4 +269,28 @@ public class MainMenuLeftFragment extends Fragment {
             }
         }
     }
+    public void shareQQ(View view) {
+        ShareAppToOther shareAppToOther = new ShareAppToOther(myView.getContext());
+        shareAppToOther.shareQQFriend("EDrop", "EDrop邀请您的参与,下载地址为：--------", ShareAppToOther.TEXT, drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
+    }
+
+    public void shareWechat(View view) {
+        ShareAppToOther shareAppToOther = new ShareAppToOther(myView.getContext());
+        shareAppToOther.shareWeChatFriend("EDrop", "EDrop邀请您的参与", ShareAppToOther.TEXT, drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
+    }
+    /**
+     * Drawable转换成一个Bitmap
+     *
+     * @param drawable drawable对象
+     * @return
+     */
+    public static final Bitmap drawableToBitmap(Drawable drawable) {
+        Bitmap bitmap = Bitmap.createBitmap( drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
+                drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        drawable.draw(canvas);
+        return bitmap;
+    }
+
 }

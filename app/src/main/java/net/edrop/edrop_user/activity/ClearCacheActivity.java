@@ -15,6 +15,7 @@ import android.widget.Toast;
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.entity.CacheClear;
 import net.edrop.edrop_user.entity.MyDialog;
+import net.edrop.edrop_user.utils.SystemTransUtil;
 
 import java.io.File;
 
@@ -40,8 +41,9 @@ public class ClearCacheActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        new SystemTransUtil().transform(ClearCacheActivity.this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cleancache_main);
+        setContentView(R.layout.activity_clean_cache);
         findViews();
         initData();
         initEvent();
