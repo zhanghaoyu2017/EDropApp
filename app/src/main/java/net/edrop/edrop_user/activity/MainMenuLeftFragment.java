@@ -196,6 +196,11 @@ public class MainMenuLeftFragment extends Fragment {
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     break;
+                case R.id.iv_userImg:
+                    intent = new Intent(getContext(), PersonalCenterManagerActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    break;
                 case R.id.myMoney:
                     Toast.makeText(getActivity(), myMoney.getText().toString(), Toast.LENGTH_SHORT).show();
                     break;
