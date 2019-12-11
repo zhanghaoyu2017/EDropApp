@@ -19,7 +19,7 @@ public class MyMoneyActivity extends AppCompatActivity {
     private LinearLayout Four;
     private TextView tvMoney;
     private ImageView ivBack;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         new SystemTransUtil().transform(MyMoneyActivity.this);
