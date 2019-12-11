@@ -130,7 +130,7 @@
 
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/ll_service_community"
+                android:id="@+id/ll_service_share"
                 android:layout_width="@dimen/size_0"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -139,11 +139,11 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_width="@dimen/size_45"
                     android:layout_height="@dimen/size_45"
-                    android:src="@drawable/shequ"/>
+                    android:src="@drawable/share"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="社区"
+                    android:text="分享"
                     android:layout_gravity="center_horizontal"
                     android:textSize="@dimen/size_18"
                     android:layout_marginTop="@dimen/size_5"/>

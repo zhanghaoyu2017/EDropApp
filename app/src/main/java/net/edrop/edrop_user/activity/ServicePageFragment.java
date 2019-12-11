@@ -52,7 +52,7 @@ public class ServicePageFragment extends Fragment {
     private LinearLayout myWallet;
     private LinearLayout myTicket;
     private LinearLayout myKefu;
-    private LinearLayout myCommunity;
+    private LinearLayout myShare;
     private LinearLayout myInfo;
     private OkHttpClient okHttpClient;
     private Handler handler = new Handler() {
@@ -108,7 +108,7 @@ public class ServicePageFragment extends Fragment {
         myWallet.setOnClickListener(new MyListener());
         myTicket.setOnClickListener(new MyListener());
         myKefu.setOnClickListener(new MyListener());
-        myCommunity.setOnClickListener(new MyListener());
+        myShare.setOnClickListener(new MyListener());
         myInfo.setOnClickListener(new MyListener());
     }
 
@@ -121,7 +121,7 @@ public class ServicePageFragment extends Fragment {
         myWallet = view.findViewById(R.id.ll_service_wallet);
         myTicket = view.findViewById(R.id.ll_service_ticket);
         myKefu = view.findViewById(R.id.ll_service_kefu);
-        myCommunity = view.findViewById(R.id.ll_service_community);
+        myShare = view.findViewById(R.id.ll_service_share);
         myInfo = view.findViewById(R.id.ll_service_info);
 
     }
@@ -167,10 +167,8 @@ public class ServicePageFragment extends Fragment {
                     Toast.makeText(view.getContext(),"联系客服",Toast.LENGTH_SHORT).show();
 
                     break;
-                case R.id.ll_service_community:
-                    Intent intent = new Intent(view.getContext(),CommunityPageFragment.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                case R.id.ll_service_share:
+                 
                     break;
                 case R.id.ll_service_info:
                     Intent intent2 = new Intent(getActivity(), IntroductionEDropActivity.class);
