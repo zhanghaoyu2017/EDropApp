@@ -1,6 +1,12 @@
 package net.edrop.edrop_user.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,11 +29,13 @@ import com.google.gson.Gson;
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.entity.User;
 import net.edrop.edrop_user.utils.Constant;
+import net.edrop.edrop_user.utils.ShareAppToOther;
 import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -236,7 +244,8 @@ public class MainMenuLeftFragment extends Fragment {
 
                     break;
                 case R.id.inviteFriends:
-                    Toast.makeText(getActivity(), "邀请好友", Toast.LENGTH_SHORT).show();
+                    shareQQ(myView);
+//                    shareWechat(myView);
                     break;
                 case R.id.businessCooperation:
                     Toast.makeText(getActivity(), "生意合作", Toast.LENGTH_SHORT).show();
@@ -260,4 +269,28 @@ public class MainMenuLeftFragment extends Fragment {
             }
         }
     }
+    public void shareQQ(View view) {
+        ShareAppToOther androidShare = new ShareAppToOther(myView.getContext());
+        androidShare.shareQQFriend("EDrop", "EDrop邀请您的参与", ShareAppToOther.TEXT, drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
+    }
+
+    public void shareWechat(View view) {
+        ShareAppToOther androidShare = new ShareAppToOther(myView.getContext());
+        androidShare.shareWeChatFriend("这是标题", "这是内容", ShareAppToOther.TEXT, null);
+    }
+    /**
+     * Drawable转换成一个Bitmap
+     *
+     * @param drawable drawable对象
+     * @return
+     */
+    public static final Bitmap drawableToBitmap(Drawable drawable) {
+        Bitmap bitmap = Bitmap.createBitmap( drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
+                drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        drawable.draw(canvas);
+        return bitmap;
+    }
+
 }
