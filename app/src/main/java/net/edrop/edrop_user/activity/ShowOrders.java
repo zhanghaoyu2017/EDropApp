@@ -8,6 +8,8 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -41,6 +43,7 @@ public class ShowOrders extends Activity {
     private ListView listView;
     private int userId;
     private OkHttpClient okHttpClient;
+    private ImageView imvBack;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -69,7 +72,7 @@ public class ShowOrders extends Activity {
     }
 
     private void findView() {
-
+        imvBack = findViewById(R.id.iv_showorders_back);
         refreshLayout = findViewById(R.id.smart_layout);
         refreshLayout.setRefreshHeader(new ClassicsHeader(this));
         listView = findViewById(R.id.lv_showOrders);
@@ -119,6 +122,14 @@ public class ShowOrders extends Activity {
 
                     }
                 });
+            }
+        });
+        imvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ShowOrders.this,Main2Activity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
     }

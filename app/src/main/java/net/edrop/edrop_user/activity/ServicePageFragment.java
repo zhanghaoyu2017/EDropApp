@@ -2,6 +2,8 @@ package net.edrop.edrop_user.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,16 +11,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.adapter.ServiceAdapter;
+import net.edrop.edrop_user.utils.Constant;
+import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by mysterious
@@ -29,10 +46,27 @@ import java.util.Map;
 public class ServicePageFragment extends Fragment {
     private static final String SECTION_STRING = "fragment_string";
     private TextView textView;
-    private List<Map<String, Object>> dataSource = null;
-    private ListView listView;
     private View view;
     private Button btnService;
+    private LinearLayout myOrders;
+    private LinearLayout myWallet;
+    private LinearLayout myTicket;
+    private LinearLayout myKefu;
+    private LinearLayout myShare;
+    private LinearLayout myInfo;
+    private OkHttpClient okHttpClient;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+                Intent intent = new Intent(view.getContext(), ShowOrders.class);
+                String str = (String) msg.obj;
+                intent.putExtra("orderjson", str);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        }
+    };
 
     public static ServicePageFragment newInstance(String sectionNumber) {
         ServicePageFragment fragment = new ServicePageFragment();
@@ -47,9 +81,7 @@ public class ServicePageFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_service_page, container, false);
 
-        InitData();
         findView();
-        setAdapter();
         setListener();
         return view;
     }
@@ -68,40 +100,84 @@ public class ServicePageFragment extends Fragment {
         btnService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),ImmediateAppointmentActivity.class);
+                Intent intent = new Intent(getActivity(), ImmediateAppointmentActivity.class);
                 startActivity(intent);
             }
         });
+        myOrders.setOnClickListener(new MyListener());
+        myWallet.setOnClickListener(new MyListener());
+        myTicket.setOnClickListener(new MyListener());
+        myKefu.setOnClickListener(new MyListener());
+        myShare.setOnClickListener(new MyListener());
+        myInfo.setOnClickListener(new MyListener());
     }
 
     //找到控件对象
     private void findView() {
-        listView = view.findViewById(R.id.lv_service);
+        okHttpClient = new OkHttpClient();
         textView = view.findViewById(R.id.tv_service_what);
         btnService = view.findViewById(R.id.btn_service_reservation);
+        myOrders = view.findViewById(R.id.ll_service_myorders);
+        myWallet = view.findViewById(R.id.ll_service_wallet);
+        myTicket = view.findViewById(R.id.ll_service_ticket);
+        myKefu = view.findViewById(R.id.ll_service_kefu);
+        myShare = view.findViewById(R.id.ll_service_share);
+        myInfo = view.findViewById(R.id.ll_service_info);
+
     }
 
-    //将数据传入adapter
-    private void setAdapter() {
-        ServiceAdapter adapter = new ServiceAdapter(
-                getActivity(),
-                dataSource,
-                R.layout.fragment_service_page_item
-        );
-        listView.setAdapter(adapter);
-    }
+    private class MyListener implements View.OnClickListener {
 
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.ll_service_myorders:
+                    SharedPreferencesUtils loginInfo = new SharedPreferencesUtils(view.getContext(), "loginInfo");
+                    int userId = loginInfo.getInt("userId");
+                    FormBody formBody = new FormBody.Builder()
+                            .add("userId", userId + "").build();
+                    Request request = new Request.Builder()
+                            .url(Constant.BASE_URL + "getOrderById")
+                            .post(formBody)
+                            .build();
+                    Call call = okHttpClient.newCall(request);
+                    call.enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
 
-    //初始化数据
-    private void InitData() {
-        String[] arr = {"今日预约", "我的预约", "社区", "我的钱包"};
-        dataSource = new ArrayList<>();
-        for (int i = 0; i < arr.length; i++) {
-            Map map = new HashMap<String, Object>();
-            map.put("text", arr[i]);
-            map.put("img", R.drawable.right);
-            dataSource.add(map);
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            String string = response.body().string();
+                            Message message = new Message();
+                            message.what = 1;
+                            message.obj = string;
+                            handler.sendMessage(message);
+                        }
+                    });
+                    break;
+                case R.id.ll_service_wallet:
+
+                    break;
+                case R.id.ll_service_ticket:
+                    Toast.makeText(view.getContext(),"暂无可用优惠券",Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.ll_service_kefu:
+                    Toast.makeText(view.getContext(),"联系客服",Toast.LENGTH_SHORT).show();
+
+                    break;
+                case R.id.ll_service_share:
+                 
+                    break;
+                case R.id.ll_service_info:
+                    Intent intent2 = new Intent(getActivity(), IntroductionEDropActivity.class);
+                    intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent2);
+                    break;
+            }
         }
-
     }
+
+
 }

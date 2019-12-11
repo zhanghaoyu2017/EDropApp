@@ -98,7 +98,7 @@ public class ShowOrderAdapter extends BaseAdapter {
         }else if (order.getState()==ORDER_STATE_FINISH){
             //订单已完成
             viewHolder.tvStatus.setText("已完成");
-            viewHolder.ivStatus.setImageResource(R.drawable.orderok);
+            viewHolder.ivStatus.setImageResource(R.drawable.complete);
             viewHolder.tvStatus.setTextColor(context.getResources().getColor(R.color.color_green));
         }
         return convertView;
