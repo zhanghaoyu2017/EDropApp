@@ -3,7 +3,6 @@ package net.edrop.edrop_user.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,11 +11,6 @@ import android.widget.Toast;
 
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.utils.SystemTransUtil;
-
-import java.io.File;
-import java.io.RandomAccessFile;
-
-import static com.mob.MobSDK.getContext;
 
 /**
  * Created by 李诗凡.
@@ -39,7 +33,7 @@ public class SettingActivity extends AppCompatActivity {
         new SystemTransUtil().transform(SettingActivity.this);
         super.onCreate(savedInstanceState);
         //去掉顶部标题
-        setContentView(R.layout.setting_main);
+        setContentView(R.layout.activity_setting_main);
         findViews();
         initEvent();
     }

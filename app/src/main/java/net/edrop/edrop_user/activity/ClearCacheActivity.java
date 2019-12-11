@@ -132,7 +132,7 @@ public class ClearCacheActivity extends AppCompatActivity {
      * TODO：自定义Dialog并绑定监听事件
      */
     private void show() {
-        View view = getLayoutInflater().inflate(R.layout.setting_dialog, null);
+        View view = getLayoutInflater().inflate(R.layout.item_setting_dialog, null);
         mMyDialog = new MyDialog(this, 0, 0, view, R.style.DialogTheme);
         mMyDialog.setCancelable(true);
         mMyDialog.show();
