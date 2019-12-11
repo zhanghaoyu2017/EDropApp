@@ -194,7 +194,7 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
     //初始化事件
     private void initEvent() {
         imageInfoList = new ArrayList<>();
-        imageInfoList.add(new ImageInfo(1, "图片1，啦啦啦啦", "", getResourcesUri(R.drawable.slideshow1), "https://www.baidu.com/"));
+        imageInfoList.add(new ImageInfo(1, "垃圾分类，保护环境", "", getResourcesUri(R.drawable.lunbo1), "https://www.baidu.com/"));
         imageInfoList.add(new ImageInfo(2, "图片2，啦啦啦啦", "", getResourcesUri(R.drawable.slideshow2), "https://www.baidu.com/"));
         imageInfoList.add(new ImageInfo(3, "图片3，啦啦啦啦", "", getResourcesUri(R.drawable.slideshow3), "https://www.baidu.com/"));
         imageInfoList.add(new ImageInfo(4, "图片4，啦啦啦啦", "仅展示", getResourcesUri(R.drawable.slideshow4), "https://www.baidu.com/"));
