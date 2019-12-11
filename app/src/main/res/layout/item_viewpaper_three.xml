@@ -1,10 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <ImageView
-        android:src="@drawable/start3"
-        android:scaleType="fitXY"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3">
+
+            <ImageView
+                android:layout_width="794px"
+                android:layout_height="802px"
+                android:layout_centerInParent="true"
+                android:src="@drawable/start33" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+
+            <TextView
+                android:id="@+id/tv_baohu_one"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/size_10"
+                android:gravity="center"
+                android:text="用  心"
+                android:textColor="#000"
+                android:textSize="60px" />
+
+            <Button
+                android:layout_width="351px"
+                android:layout_height="141px"
+                android:layout_below="@+id/tv_baohu_one"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/size_10"
+                android:background="@drawable/into_radius"
+                android:src="@drawable/edrop_into"
+                android:text="进入EDrop"
+                android:textAllCaps="false" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/size_50"
+                android:layout_below="@+id/tv_baohu_one"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/size_80"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="61px"
+                    android:layout_height="61px"
+                    android:layout_gravity="center"
+                    android:src="@drawable/circle" />
+
+                <ImageView
+                    android:layout_width="61px"
+                    android:layout_height="61px"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/size_15"
+                    android:layout_marginRight="@dimen/size_15"
+                    android:src="@drawable/circle" />
+
+                <ImageView
+                    android:layout_width="61px"
+                    android:layout_height="61px"
+                    android:layout_gravity="center"
+                    android:src="@drawable/dots" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 </FrameLayout>
