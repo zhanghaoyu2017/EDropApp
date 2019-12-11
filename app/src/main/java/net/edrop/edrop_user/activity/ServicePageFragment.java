@@ -168,7 +168,7 @@ public class ServicePageFragment extends Fragment {
 
                     break;
                 case R.id.ll_service_share:
-                 
+
                     break;
                 case R.id.ll_service_info:
                     Intent intent2 = new Intent(getActivity(), IntroductionEDropActivity.class);
