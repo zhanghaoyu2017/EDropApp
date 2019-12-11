@@ -195,10 +195,10 @@ public class HomePageFragment extends Fragment implements TabHost.TabContentFact
     private void initEvent() {
         imageInfoList = new ArrayList<>();
         imageInfoList.add(new ImageInfo(1, "垃圾分类，保护环境", "", getResourcesUri(R.drawable.lunbo1), "https://www.baidu.com/"));
-        imageInfoList.add(new ImageInfo(2, "图片2，啦啦啦啦", "", getResourcesUri(R.drawable.slideshow2), "https://www.baidu.com/"));
-        imageInfoList.add(new ImageInfo(3, "图片3，啦啦啦啦", "", getResourcesUri(R.drawable.slideshow3), "https://www.baidu.com/"));
-        imageInfoList.add(new ImageInfo(4, "图片4，啦啦啦啦", "仅展示", getResourcesUri(R.drawable.slideshow4), "https://www.baidu.com/"));
-        imageInfoList.add(new ImageInfo(5, "图片5，啦啦啦啦", "仅展示", getResourcesUri(R.drawable.slideshow5), "https://www.baidu.com/"));
+        imageInfoList.add(new ImageInfo(2, "绿色情人节", "", getResourcesUri(R.drawable.lunbo2), "https://www.baidu.com/"));
+        imageInfoList.add(new ImageInfo(3, "那不该是生命中的最后一棵树", "", getResourcesUri(R.drawable.lunbo3), "https://www.baidu.com/"));
+        imageInfoList.add(new ImageInfo(4, "节约能源，保护环境", "仅展示", getResourcesUri(R.drawable.lunbo4), "https://www.baidu.com/"));
+        imageInfoList.add(new ImageInfo(5, "绿色天然粮食", "仅展示", getResourcesUri(R.drawable.lunbo5), "https://www.baidu.com/"));
     }
 
     //获取图片资源的绝对路径

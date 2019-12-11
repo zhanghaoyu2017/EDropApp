@@ -166,8 +166,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="湿垃圾/厨余垃圾/易腐垃圾/餐厨垃圾"
-                android:textSize="11dp" />
+                android:text="湿垃圾/厨余垃圾"
+                 />
         </LinearLayout>
 
     </LinearLayout>
