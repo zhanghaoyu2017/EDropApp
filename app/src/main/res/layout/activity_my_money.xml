@@ -3,5 +3,195 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <View
+        android:background="#32BA88"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"/>
+    <LinearLayout
+        android:background="#32BA88"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_money_back"
+            android:src="@drawable/left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:gravity="center"
+            android:text="余额"
+            android:textSize="@dimen/size_18"
+            android:layout_marginLeft="@dimen/size_15"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:background="#32BA88"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="余额（元）"
+            android:textColor="@color/white"
+            android:layout_marginLeft="@dimen/size_20"
+            android:layout_marginTop="@dimen/size_5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/tv_money"
+            android:text="0.00"
+            android:textStyle="bold"
+            android:textSize="@dimen/size_50"
+            android:layout_marginTop="@dimen/size_20"
+            android:layout_marginLeft="@dimen/size_20"
+            android:layout_marginBottom="@dimen/size_20"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <!--充值-->
+    <LinearLayout
+        android:id="@+id/ll_saveMoney"
+        android:layout_marginLeft="@dimen/size_20"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_margin="@dimen/size_6"
+            android:layout_weight="1"
+            android:src="@drawable/savemoney"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_35" />
+        <TextView
+            android:gravity="center"
+            android:layout_weight="5"
+            android:text="充值"
+            android:textSize="@dimen/size_18"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:layout_weight="1"
+            android:src="@drawable/right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_money_one"
+        android:gravity="center"
+        android:layout_marginRight="@dimen/size_20"
+        android:layout_marginLeft="@dimen/size_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioGroup
+            android:id="@+id/rg_go_get_money"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+            <RadioButton
+                android:id="@+id/rb_1"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="10元" />
+
+            <RadioButton
+                android:id="@+id/rb_2"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="20元" />
+            <RadioButton
+                android:id="@+id/rb_3"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="30元" />
+        </RadioGroup>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_money_two"
+        android:gravity="right"
+        android:layout_marginRight="@dimen/size_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_go_save_money"
+            android:text="去充值"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_login_green_background"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_30" />
+    </LinearLayout>
+    <!--提现-->
+    <LinearLayout
+        android:id="@+id/ll_getMoney"
+        android:layout_marginLeft="@dimen/size_20"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_weight="1"
+            android:layout_margin="@dimen/size_6"
+            android:src="@drawable/getmoney"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_35" />
+        <TextView
+            android:gravity="center"
+            android:layout_weight="5"
+            android:text="提现"
+            android:textSize="@dimen/size_18"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:layout_weight="1"
+            android:src="@drawable/right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_money_three"
+        android:gravity="center"
+        android:layout_marginRight="@dimen/size_20"
+        android:layout_marginLeft="@dimen/size_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioGroup
+            android:id="@+id/rg_go_save_money"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_4"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="10元" />
+
+            <RadioButton
+                android:id="@+id/rb_5"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="20元" />
+            <RadioButton
+                android:id="@+id/rb_6"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="30元" />
+        </RadioGroup>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_money_four"
+        android:gravity="right"
+        android:layout_marginRight="@dimen/size_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_go_get_money"
+            android:text="去充值"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_login_green_background"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_30" />
+    </LinearLayout>
 </LinearLayout>
