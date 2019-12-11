@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,14 +44,14 @@ public class MainMenuLeftFragment extends Fragment {
     private ImageView userSex;
     private ImageView userImg;
     private TextView userName;
-    private TextView myMoney;
-    private TextView myAddress;
-    private TextView myOrder;
-    private TextView inviteFriends;
-    private TextView businessCooperation;
-    private TextView aboutEDrop;
-    private TextView setting;
-    private TextView feedback;
+    private LinearLayout myMoney;
+    private LinearLayout myAddress;
+    private LinearLayout myOrder;
+    private LinearLayout inviteFriends;
+    private LinearLayout businessCooperation;
+    private LinearLayout aboutEDrop;
+    private LinearLayout setting;
+    private LinearLayout feedback;
     private OkHttpClient okHttpClient;
     private SharedPreferencesUtils sharedPreferences;
     private Intent intent;
@@ -202,10 +203,10 @@ public class MainMenuLeftFragment extends Fragment {
                     startActivity(intent);
                     break;
                 case R.id.myMoney:
-                    Toast.makeText(getActivity(), myMoney.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"我的钱包", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.myAddress:
-                    Toast.makeText(getActivity(), myAddress.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "我的地址", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.myOrder:
                     SharedPreferencesUtils loginInfo = new SharedPreferencesUtils(myView.getContext(), "loginInfo");
@@ -235,10 +236,10 @@ public class MainMenuLeftFragment extends Fragment {
 
                     break;
                 case R.id.inviteFriends:
-                    Toast.makeText(getActivity(), inviteFriends.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "邀请好友", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.businessCooperation:
-                    Toast.makeText(getActivity(), businessCooperation.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "生意合作", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.aboutEDrop:
                     //跳转到详细介绍页面
