@@ -7,7 +7,10 @@ import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import net.edrop.edrop_user.R;
+import net.edrop.edrop_user.entity.User;
 import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 
 import org.json.JSONException;
@@ -71,6 +74,10 @@ public class TestPhoneNumActivity extends Activity {
                 try {
                     jsonObject = new JSONObject(responseJson);
                     String state = jsonObject.getString("state");
+                    String userjson = jsonObject.getString("user");
+
+                    User user = new Gson().fromJson(userjson, User.class);
+                    int userId = user.getId();
                     if (Integer.valueOf(state) == LOGIN_FAIL) {
                         Toast.makeText(TestPhoneNumActivity.this, "软件运行异常，请退出重试", Toast.LENGTH_SHORT).show();
 
@@ -82,6 +89,8 @@ public class TestPhoneNumActivity extends Activity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils(TestPhoneNumActivity.this, "loginInfo");
                         SharedPreferences.Editor editor = sharedPreferencesUtils.getEditor();
+
+                        editor.putInt("userId",userId);
                         editor.putString("userType", "new");
                         editor.commit();
                         overridePendingTransition(0, 0);
@@ -95,6 +104,9 @@ public class TestPhoneNumActivity extends Activity {
                         SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils(TestPhoneNumActivity.this, "loginInfo");
                         SharedPreferences.Editor editor = sharedPreferencesUtils.getEditor();
                         editor.putString("userType", "old");
+                        editor.putInt("userId",userId);
+                        editor.putString("username",user.getUsername() );
+                        editor.putString("password", user.getPassword());
                         editor.commit();
                         overridePendingTransition(0, 0);
                         startActivity(intent);

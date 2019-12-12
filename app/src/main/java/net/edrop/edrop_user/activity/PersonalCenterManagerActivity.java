@@ -156,6 +156,7 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
                     SharedPreferencesUtils sharedPreferences = new SharedPreferencesUtils(PersonalCenterManagerActivity.this, "loginInfo");
                     sharedPreferences.removeValues("username");
                     sharedPreferences.removeValues("password");
+                    sharedPreferences.removeValues("userId");
                     SharedPreferences.Editor editor2 = sharedPreferences.getEditor();
                     editor2.putBoolean("isAuto", false);
                     editor2.commit();

@@ -16,10 +16,10 @@
             android:textSize="@dimen/size_20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <TextView
+        <EditText
             android:id="@+id/tv_base_name"
-            android:text="zs"
-            android:textSize="@dimen/size_22"
+            android:hint="请输入用户名"
+            android:textSize="@dimen/size_18"
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

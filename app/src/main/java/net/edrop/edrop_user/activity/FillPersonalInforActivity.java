@@ -106,7 +106,7 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     private TextView tvDetailAddress;
     private Button btnUpdata;
     private String strSex;
-    private TextView tvUserName;
+    private EditText tvUserName;
     //照片
     private String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private Button btnSelectImg;
