@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_60"
         android:background="#F5F4F9"
-
         android:orientation="horizontal">
 
         <ImageView
@@ -34,6 +33,7 @@
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smart_layout"
+        android:layout_marginTop="@dimen/size_10"
         android:layout_width="match_parent"
         android:background="#F5F4F9"
         android:layout_height="match_parent">
