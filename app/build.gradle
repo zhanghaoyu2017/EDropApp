@@ -89,4 +89,7 @@ dependencies {
     //glide 图片加载
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.6'
+    //极光推送
+    implementation files('libs/jcore-android-2.1.6.jar')
+    implementation files('libs/jpush-android-3.3.9.jar')
 }
