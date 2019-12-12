@@ -2,18 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F1F0F5"
     android:orientation="vertical">
+
     <View
-        android:background="#32BA88"
         android:layout_width="match_parent"
-        android:layout_height="25dp"/>
+        android:layout_height="25dp"
+        android:background="#32BA88" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#fff">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="场景"
+            android:textColor="#707070"
+            android:textSize="60px" />
+
+        <ImageView
+            android:id="@+id/iv_feedback_option_back"
+            android:layout_width="70px"
+            android:layout_height="70px"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/setting_left" />
+
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/lv_feedbackoption"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_20"
+        android:background="#fff"
         android:divider="@drawable/listview_style"
-        android:dividerHeight="1dp" />
+        android:dividerHeight="1dp"
+        android:paddingLeft="@dimen/size_15" />
+
 
 </LinearLayout>
