@@ -19,12 +19,18 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import java.util.Iterator;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class MyApplication extends Application {
     private static Application instance2;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        //极光推送
+        JPushInterface.setDebugMode(true);//打开调试模式
+        JPushInterface.init(this);
+
         instance2 = this;
         Fresco.initialize(this);
         //环信

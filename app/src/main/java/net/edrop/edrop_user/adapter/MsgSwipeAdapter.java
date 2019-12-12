@@ -27,7 +27,6 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter implements View.OnClickLis
     private Context context;
     private List<MsgItemBean> list;
     private int item_swipe_msg;
-    private final String TAG = "MySwipeAdapter";
 
     public MsgSwipeAdapter(Context context, int item_swipe_msg ,List<MsgItemBean> list) {
         this.item_swipe_msg=item_swipe_msg;
