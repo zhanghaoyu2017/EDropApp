@@ -1,28 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:background="#32BA88" />
+        android:layout_height="match_parent"
+        android:background="#F0F0F0"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_marginTop="@dimen/size_20"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="成绩总结"
-        android:textSize="25dp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:background="#32BA88" />
 
-    <ListView
-        android:id="@+id/list_itemViewId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:paddingTop="10dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_20"
+            android:gravity="center"
+            android:text="成绩总结"
+            android:textSize="25dp" />
 
-    </ListView>
-</LinearLayout>
+        <ListView
+            android:id="@+id/list_itemViewId"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_margin="@dimen/size_20"
+            android:layout_marginTop="@dimen/size_10"
+            android:background="#F5F5F5" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:layout_marginTop="@dimen/size_10">
+
+            <TextView
+                android:id="@+id/tv_answer_text"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_50"
+                android:layout_centerInParent="true" />
+
+            <Button
+                android:id="@+id/btn_answer_back"
+                android:layout_width="@dimen/size_120"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/size_30"
+                android:layout_toLeftOf="@+id/tv_answer_text"
+                android:background="@drawable/answer_radius"
+                android:text="返回" />
+
+            <Button
+                android:id="@+id/btn_answer_again"
+                android:layout_width="@dimen/size_120"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/size_30"
+                android:layout_toRightOf="@+id/tv_answer_text"
+                android:background="@drawable/answer_radius"
+                android:text="再答一次" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#F0F0F0" />
+
+
+    </LinearLayout>
+
+</ScrollView>
