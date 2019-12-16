@@ -2,7 +2,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <!--提交按钮的radius样式设置-->
-    <!--样式备用4682B4-->
     <solid android:color="#4682B4" />
     <corners android:radius="10dip" />
     <padding
