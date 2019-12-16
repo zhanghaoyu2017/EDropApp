@@ -11,8 +11,8 @@
         android:background="#fff">
 
         <ImageView
-            android:layout_width="794px"
-            android:layout_height="802px"
+            android:layout_width="574px"
+            android:layout_height="520px"
             android:layout_centerInParent="true"
             android:src="@drawable/start33" />
 

@@ -14,9 +14,10 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/iv_money_back"
-            android:src="@drawable/left"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:src="@drawable/whiteleft"
+            android:layout_width="30dp"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_height="30dp" />
         <TextView
             android:gravity="center"
             android:text="余额"

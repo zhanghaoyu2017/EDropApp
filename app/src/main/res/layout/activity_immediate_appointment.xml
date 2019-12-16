@@ -155,7 +155,7 @@
                 android:layout_marginLeft="@dimen/size_20"
                 android:layout_weight="5"
                 android:lineSpacingExtra="20dp"
-                android:text="请选择城市"
+                android:hint="请选择城市"
                 android:textCursorDrawable="@null"
                 android:textSize="50px" />
 
@@ -251,7 +251,7 @@
                 android:layout_marginLeft="@dimen/size_20"
                 android:layout_weight="5"
                 android:lineSpacingExtra="20dp"
-                android:text="请选择服务日期"
+                android:hint="请选择服务日期"
                 android:textColor="#939393"
                 android:textCursorDrawable="@null"
                 android:textSize="50px" />
@@ -304,7 +304,7 @@
                 android:layout_marginLeft="@dimen/size_20"
                 android:layout_weight="5"
                 android:lineSpacingExtra="20dp"
-                android:text="请选择上门时间"
+                android:hint="请选择上门时间"
                 android:textColor="#939393"
                 android:textCursorDrawable="@null"
                 android:textSize="50px" />
@@ -393,7 +393,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/size_30"
         android:background="@drawable/btn_register_background"
-        android:text="预约订单"
+        android:text="支付并提交"
         android:textColor="#fff"
         android:textSize="@dimen/size_22" />
 

@@ -3,6 +3,8 @@ package net.edrop.edrop_user.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import net.edrop.edrop_user.R;
@@ -21,6 +23,7 @@ import java.util.List;
  */
 public class FeedBackOption extends AppCompatActivity {
     private ListView listView;
+    private ImageView imageView;
     private List data;
     private FeedBackOptionAdapter adapter;
 
@@ -32,6 +35,12 @@ public class FeedBackOption extends AppCompatActivity {
         initData();
         findView();
         setAdapter();
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void initData() {
@@ -54,5 +63,6 @@ public class FeedBackOption extends AppCompatActivity {
 
     private void findView() {
         listView = findViewById(R.id.lv_feedbackoption);
+        imageView = findViewById(R.id.iv_feedback_option_back);
     }
 }

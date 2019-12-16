@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.lljjcoder.Interface.OnCityItemClickListener;
 import com.lljjcoder.bean.CityBean;
@@ -119,7 +120,7 @@ public class ImmediateAppointmentActivity extends Activity {
         etAddressDetail = findViewById(R.id.et_detail_address);
         btnOrder = findViewById(R.id.btn_order);
         okHttpClient = new OkHttpClient();
-        imgBack =findViewById(R.id.iv_appointment_back);
+        imgBack = findViewById(R.id.iv_appointment_back);
     }
 
     private void setListener() {
@@ -187,8 +188,15 @@ public class ImmediateAppointmentActivity extends Activity {
                     showTimePickerDialog(ImmediateAppointmentActivity.this, R.style.MyDatePickerDialogTheme, tvTimeSelect, calendar);
                     break;
                 case R.id.btn_order:
-                    initData();
-                    sendOrderByOkHttp(userId, realname, phone, address, reserveTime);
+
+                    if (etRealName.getText().toString() == null || etPhoneNum.getText().toString() == null || etAddressDetail.getText().toString() == null || tvSelect.getText().toString() == null || tvDateSelect.getText().toString() == null || tvTimeSelect.getText().toString() == null
+                            || etRealName.getText().toString().length() == 0 || etPhoneNum.getText().toString().length() == 0 || etAddressDetail.getText().toString().length() == 0 || tvSelect.getText().toString().length() == 0 || tvDateSelect.getText().toString().length() == 0 || tvTimeSelect.getText().toString().length() == 0) {
+
+                        Toast.makeText(ImmediateAppointmentActivity.this, "请填写全部信息", Toast.LENGTH_SHORT).show();
+                    } else {
+                        initData();
+                        sendOrderByOkHttp(userId, realname, phone, address, reserveTime);
+                    }
                     break;
                 case R.id.iv_appointment_back:
                     finish();
@@ -248,7 +256,12 @@ public class ImmediateAppointmentActivity extends Activity {
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        tv.setText(hourOfDay + ":" + minute);
+
+                        if (minute < 10) {
+                            tv.setText(hourOfDay + ":" + "0" + minute);
+                        } else {
+                            tv.setText(hourOfDay + ":" + minute);
+                        }
                     }
                 }
                 // 设置初始时间

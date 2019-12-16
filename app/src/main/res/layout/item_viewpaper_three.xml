@@ -15,8 +15,8 @@
             android:layout_weight="3">
 
             <ImageView
-                android:layout_width="794px"
-                android:layout_height="802px"
+                android:layout_width="675px"
+                android:layout_height="682px"
                 android:layout_centerInParent="true"
                 android:src="@drawable/start33" />
 

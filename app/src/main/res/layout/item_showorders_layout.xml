@@ -123,11 +123,11 @@
             <ImageView
                 android:layout_width="@dimen/size_25"
                 android:layout_height="@dimen/size_25"
-                android:src="@drawable/kefu"/>
+                android:src="@drawable/employee"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="联系客服"
+                android:text="工作人员"
                 android:textSize="@dimen/size_15"/>
         </LinearLayout>
         <LinearLayout
