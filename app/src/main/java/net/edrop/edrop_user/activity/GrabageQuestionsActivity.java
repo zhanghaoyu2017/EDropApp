@@ -71,10 +71,6 @@ public class GrabageQuestionsActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.btn_problems:
                 lists.clear();
-//        for (int i = 0; i < 10; i++) {
-//            Problems bean = new Problems(i, 2, "我是第" + i);
-//            lists.add(bean);
-//        }
                 Request request = new Request.Builder()
                         .url(Constant.BASE_URL + "getRandData")
                         .method("GET", null)
