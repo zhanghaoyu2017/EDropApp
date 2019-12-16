@@ -52,6 +52,7 @@ public class GrabageQuestionsActivity extends AppCompatActivity {
                 Intent intent = new Intent(GrabageQuestionsActivity.this, Answer2Activity.class);
                 intent.putExtra("lists", (Serializable) lists);
                 Log.e("===================", lists.toString());
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
             }

@@ -82,6 +82,7 @@ public class Answer2Activity extends AppCompatActivity {
             Intent intent = new Intent(Answer2Activity.this, Answer3Activity.class);
             intent.putExtra("lists", (Serializable) list2);
             intent.putExtra("listHis", (Serializable) listHisAnswer);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
         } else {

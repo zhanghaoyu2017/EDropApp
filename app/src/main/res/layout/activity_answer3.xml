@@ -25,7 +25,7 @@
         <ListView
             android:id="@+id/list_itemViewId"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="650dp"
             android:layout_margin="@dimen/size_20"
             android:layout_marginTop="@dimen/size_10"
             android:background="#F5F5F5" />
@@ -48,7 +48,8 @@
                 android:layout_marginRight="@dimen/size_30"
                 android:layout_toLeftOf="@+id/tv_answer_text"
                 android:background="@drawable/answer_radius"
-                android:text="返回" />
+                android:text="返回"
+                android:textColor="#fff" />
 
             <Button
                 android:id="@+id/btn_answer_again"
@@ -57,7 +58,8 @@
                 android:layout_marginLeft="@dimen/size_30"
                 android:layout_toRightOf="@+id/tv_answer_text"
                 android:background="@drawable/answer_radius"
-                android:text="再答一次" />
+                android:text="再答一次"
+                android:textColor="#fff" />
 
         </RelativeLayout>
 
