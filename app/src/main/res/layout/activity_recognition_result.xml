@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="#F0F0F0"
     android:orientation="vertical">
 
     <ImageView
@@ -10,30 +10,35 @@
         android:layout_width="@dimen/size_120"
         android:layout_height="@dimen/size_150"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/size_45" />
+        android:layout_marginTop="@dimen/size_55" />
+
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="已找到相匹配的结果"
-        android:textColor="#000"
         android:layout_marginLeft="@dimen/size_20"
         android:layout_marginTop="@dimen/size_20"
-        android:textSize="18dp"/>
+        android:text="已找到相匹配的结果"
+        android:textColor="#393939"
+        android:textSize="50px" />
+
     <ListView
         android:id="@+id/lv_recognition"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_10" />
+        android:layout_margin="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_10"
+        android:background="#F5F5F5" />
 
     <TextView
         android:id="@+id/tv_nofind"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/size_20"
-        android:layout_marginRight="@dimen/size_10"
         android:layout_marginTop="@dimen/size_20"
+        android:layout_marginRight="@dimen/size_10"
         android:gravity="right"
         android:text="识别不准?直接搜索"
+
         android:textColor="#4169E1"
         android:textSize="15dp" />
 

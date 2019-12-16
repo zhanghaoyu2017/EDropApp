@@ -3,15 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <View
-        android:background="#32BA88"
         android:layout_width="match_parent"
-        android:layout_height="25dp"/>
+        android:layout_height="25dp"
+        android:background="#32BA88" />
+
     <TextView
+        android:layout_marginTop="@dimen/size_20"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="这是你的成绩总结"
+        android:text="成绩总结"
         android:textSize="25dp" />
 
     <ListView
