@@ -92,6 +92,7 @@
             android:orientation="horizontal">
 
             <RadioButton
+                android:checked="true"
                 android:id="@+id/rb_1"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
@@ -164,6 +165,7 @@
             android:orientation="horizontal">
 
             <RadioButton
+                android:checked="true"
                 android:id="@+id/rb_4"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"

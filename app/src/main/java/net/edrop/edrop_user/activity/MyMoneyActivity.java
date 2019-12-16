@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,13 @@ public class MyMoneyActivity extends AppCompatActivity {
     private LinearLayout Two;
     private LinearLayout Three;
     private LinearLayout Four;
+    //金额
+    private RadioButton rb1;
+    private RadioButton rb2;
+    private RadioButton rb3;
+    private RadioButton rb4;
+    private RadioButton rb5;
+    private RadioButton rb6;
     private TextView tvMoney;
     private ImageView ivBack;
     private Button btnGoSaveMoney;
@@ -160,6 +168,12 @@ public class MyMoneyActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        rb1=findViewById(R.id.rb_1);
+        rb2=findViewById(R.id.rb_2);
+        rb3=findViewById(R.id.rb_3);
+        rb4=findViewById(R.id.rb_4);
+        rb5=findViewById(R.id.rb_5);
+        rb6=findViewById(R.id.rb_6);
         rgGoGetMoney = findViewById(R.id.rg_go_get_money);
         rgGoSaveMoney = findViewById(R.id.rg_go_save_money);
         SaveMoney = findViewById(R.id.ll_saveMoney);
@@ -199,14 +213,17 @@ public class MyMoneyActivity extends AppCompatActivity {
                     int money = 0;
                     switch (rgGoGetMoney.getCheckedRadioButtonId()) {
                         case R.id.rb_4:
+                            rb4.setChecked(true);
                             money = 10;
                             delMoney(money);
                             break;
                         case R.id.rb_5:
+                            rb5.setChecked(true);
                             money = 20;
                             delMoney(money);
                             break;
                         case R.id.rb_6:
+                            rb6.setChecked(true);
                             money = 30;
                             delMoney(money);
                             break;
@@ -222,14 +239,17 @@ public class MyMoneyActivity extends AppCompatActivity {
                     int money1 = 0;
                     switch (rgGoSaveMoney.getCheckedRadioButtonId()) {
                         case R.id.rb_1:
+                            rb1.setChecked(true);
                             money1 = 10;
                             addMoney(money1);
                             break;
                         case R.id.rb_2:
+                            rb2.setChecked(true);
                             money1 = 20;
                             addMoney(money1);
                             break;
                         case R.id.rb_3:
+                            rb3.setChecked(true);
                             money1 = 30;
                             addMoney(money1);
                             break;
