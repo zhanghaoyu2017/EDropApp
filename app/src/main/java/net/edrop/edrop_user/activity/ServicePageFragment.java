@@ -98,7 +98,7 @@ public class ServicePageFragment extends Fragment {
             public void onClick(View v) {
                 //跳转新页面
                 Intent intent = new Intent(getActivity(), IntroductionEDropActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });

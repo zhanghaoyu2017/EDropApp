@@ -6,7 +6,7 @@
     android:orientation="vertical">
     <TextView
         android:gravity="center"
-        android:text="该功能暂未开放，请等待..."
+        android:text="该功能暂未开放，敬请期待..."
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

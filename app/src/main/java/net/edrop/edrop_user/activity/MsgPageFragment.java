@@ -95,6 +95,7 @@ public class MsgPageFragment extends Fragment {
         @Override
         protected void onPostExecute(Object o) {
             //更新视图
+
             swipeAdapter.notifyDataSetChanged();
             //结束加载更多的动画
             refeshLayout.finishRefresh();
