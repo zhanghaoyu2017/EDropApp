@@ -113,10 +113,10 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
                 hasClick = !hasClick;
                 break;
             case R.id.btn_feedback:
-                Toast.makeText(this, "发送请求！！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "反馈已提交，请耐心等待结果！！", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.im_feedback_index:
-                Toast.makeText(this, "图片功能待完善！！", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "图片功能待完善！！", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iv_feedback_back:
                 finish();
