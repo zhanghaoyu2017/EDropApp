@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/size_40"
     android:id="@+id/result_ll"
+    android:layout_width="match_parent"
+    android:layout_height="180px"
+    android:layout_marginTop="@dimen/size_10"
+    android:layout_marginBottom="@dimen/size_10"
+    android:minHeight="120px"
     android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/img_recognition"
+        android:layout_width="@dimen/size_30"
+        android:layout_height="@dimen/size_30"
+        android:layout_gravity="center"
         android:layout_marginLeft="@dimen/size_20"
-        android:layout_width="@dimen/size_40"
-        android:layout_height="@dimen/size_40"
         android:src="@drawable/magnifier" />
 
     <TextView
         android:id="@+id/tv_recognition"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-            android:textColor="#000"
-        android:paddingLeft="@dimen/size_20"
-        android:paddingTop="@dimen/size_8"
-        android:textSize="@dimen/size_20" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:text="鼠标"
+        android:textColor="#939393"
+        android:textSize="50px" />
 
 </LinearLayout>
