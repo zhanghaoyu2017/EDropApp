@@ -2,15 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F1F0F5"
     android:orientation="vertical">
+
     <View
-        android:background="#32BA88"
         android:layout_width="match_parent"
-        android:layout_height="25dp"/>
+        android:layout_height="25dp"
+        android:background="#32BA88" />
     <!--顶部导航栏-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_15"
         android:orientation="horizontal">
 
         <TextView
@@ -19,7 +22,7 @@
             android:layout_weight="3"
             android:gravity="center"
             android:text="环保知识答题"
-            android:textSize="20dp" />
+            android:textSize="@dimen/size_25" />
 
     </LinearLayout>
     <!--题目数-->
@@ -53,24 +56,24 @@
     <!--题目-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="140dp"
+        android:layout_marginTop="10dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/text_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="50dp"
+            android:layout_margin="@dimen/size_30"
             android:paddingLeft="15dp" />
 
     </LinearLayout>
+
     <!--选项-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:layout_marginTop="@dimen/size_20"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -166,8 +169,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="湿垃圾/厨余垃圾"
-                 />
+                android:text="湿垃圾/厨余垃圾" />
         </LinearLayout>
 
     </LinearLayout>
