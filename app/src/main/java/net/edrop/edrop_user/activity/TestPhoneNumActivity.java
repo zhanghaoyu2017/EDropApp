@@ -33,7 +33,7 @@ public class TestPhoneNumActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_testphonenum);
+        setContentView(R.layout.activity_test_phone_num);
         Intent intent = getIntent();
         String phone = intent.getStringExtra("phoneNum");
         initView();

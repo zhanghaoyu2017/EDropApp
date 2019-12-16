@@ -13,13 +13,13 @@
         android:id="@+id/lv_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="8"
         android:scrollbars="none"
         android:overScrollMode="never"/>
     <LinearLayout
-        android:layout_weight="1"
+        android:id="@+id/ll_kong"
         android:background="#fff"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="2dp"/>
+        android:layout_height="match_parent"/>
 
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

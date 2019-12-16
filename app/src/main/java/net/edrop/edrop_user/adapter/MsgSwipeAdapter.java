@@ -2,6 +2,8 @@ package net.edrop.edrop_user.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +25,11 @@ import java.util.List;
  * Date: 2019/11/28
  * Time: 8:43
  */
-public class MsgSwipeAdapter extends BaseSwipeAdapter implements View.OnClickListener  {
+public class MsgSwipeAdapter extends BaseSwipeAdapter{
     private Context context;
     private List<MsgItemBean> list;
     private int item_swipe_msg;
+    private SwipeLayout swipeLayout;
 
     public MsgSwipeAdapter(Context context, int item_swipe_msg ,List<MsgItemBean> list) {
         this.item_swipe_msg=item_swipe_msg;
@@ -35,7 +38,7 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter implements View.OnClickLis
     }
 
     /**
-     * 返回SwipeLayout的ID
+     * 返回SwipeLayout的ID，而不是布局的ID
      *
      * @param position
      * @return
@@ -47,7 +50,7 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter implements View.OnClickLis
 
     /**
      * 绑定布局
-     *
+     * 和item布局进行关联的，并在这里设置swipeLayout的相关属性。
      * @param position
      * @param parent
      * @return
@@ -55,7 +58,7 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter implements View.OnClickLis
     @Override
     public View generateView(final int position, ViewGroup parent) {
         View itemView = View.inflate(context, item_swipe_msg, null);
-        SwipeLayout swipeLayout = (SwipeLayout) itemView.findViewById(getSwipeLayoutResourceId(position));
+        swipeLayout = (SwipeLayout) itemView.findViewById(getSwipeLayoutResourceId(position));
 
         // 设置滑动是否可用,默认为true
         swipeLayout.setSwipeEnabled(true);
@@ -100,13 +103,14 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter implements View.OnClickLis
         swipeLayout.setClickToClose(true);
 
         // SwipeLayout单击事件,可替代ListView的OnItemClickListener事件.
-        swipeLayout.setOnClickListener(new View.OnClickListener() {
+        swipeLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onLongClick(View view) {
                 Intent intent = new Intent(context, ChatViewActivity.class);
                 intent.putExtra("userId","zs");
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(intent);
+                return false;
             }
         });
 
@@ -115,19 +119,19 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter implements View.OnClickLis
 
     /**
      * 绑定数据
-     *
+     * 给item中的控件绑定数据，并根据需要设置事件等操作。
      * @param position
      * @param convertView
      */
     @Override
-    public void fillValues(int position, View convertView) {
+    public void fillValues(final int position, View convertView) {
         ViewHolder viewHolder=null;
         if (viewHolder==null){
             viewHolder=new ViewHolder();
             viewHolder.nickName=(TextView) convertView.findViewById(R.id.tv_nickname);
             viewHolder.msg=(TextView) convertView.findViewById(R.id.tv_msg);
             viewHolder.talkDate=(TextView) convertView.findViewById(R.id.tv_talk_date);
-            viewHolder.swipeTop=(TextView) convertView.findViewById(R.id.swipe_top);
+            viewHolder.swipeOpen=(TextView) convertView.findViewById(R.id.swipe_open);
             viewHolder.swipeDelete=(TextView) convertView.findViewById(R.id.swipe_delete);
             convertView.setTag(viewHolder);
         }else {
@@ -137,8 +141,24 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter implements View.OnClickLis
         viewHolder.msg.setText(list.get(position).getMsg());
         viewHolder.talkDate.setText(list.get(position).getDate());
 
-        viewHolder.swipeDelete.setOnClickListener(this);
-        viewHolder.swipeTop.setOnClickListener(this);
+        viewHolder.swipeDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 关闭所有打开的Swipe的item
+                closeAllItems();
+                list.remove(position);
+                notifyDataSetChanged();
+            }
+        });
+        viewHolder.swipeOpen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ChatViewActivity.class);
+                intent.putExtra("userId","zs");
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -156,27 +176,12 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter implements View.OnClickLis
         return i;
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.swipe_top:
-                // 关闭所有打开的Swipe的item
-                this.closeAllItems();
-                Toast.makeText(context, "Swipe--Top", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.swipe_delete:
-                this.closeAllItems();
-                Toast.makeText(context, "Swipe--Delete", Toast.LENGTH_SHORT).show();
-                break;
-        }
-    }
-
     private class ViewHolder{
         private TextView nickName;
         private TextView msg;
         private TextView talkDate;
         private TextView swipeDelete;
-        private TextView swipeTop;
+        private TextView swipeOpen;
     }
 
 }

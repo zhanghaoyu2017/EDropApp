@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        new SystemTransUtil().transform(MainActivity.this);
+        new SystemTransUtil().trans(MainActivity.this);
         super.onCreate(savedInstanceState);
         //判断是不是第一次登陆
         SharedPreferences sharedPreferences=this.getSharedPreferences("share",MODE_PRIVATE);

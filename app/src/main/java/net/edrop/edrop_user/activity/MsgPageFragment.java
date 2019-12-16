@@ -8,7 +8,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TabHost;
+import android.widget.Toast;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -30,11 +34,12 @@ import java.util.List;
  * Time: 16:40
  */
 public class MsgPageFragment extends Fragment {
+    private LinearLayout llKong;
     private SmartRefreshLayout refeshLayout;
     private ListView listView;
     private List<MsgItemBean> datas = new ArrayList<>();
     private MsgSwipeAdapter swipeAdapter;
-    private View view;
+    private View myView;
     private static final String SECTION_STRING = "fragment_string";
 
     public static MsgPageFragment newInstance(String sectionNumber) {
@@ -48,14 +53,15 @@ public class MsgPageFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_msg_page, container, false);
+        myView = inflater.inflate(R.layout.fragment_msg_page, container, false);
         initView();
         initData();
         setListener();
-        return view;
+        return myView;
     }
 
     private void setListener() {
+        llKong.setOnClickListener(new MyLinstener());
         refeshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -65,6 +71,15 @@ public class MsgPageFragment extends Fragment {
             }
         });
     }
+
+    private void setListViewPos(int pos) {
+        if (android.os.Build.VERSION.SDK_INT >= 8) {
+            listView.smoothScrollToPosition(pos);
+        } else {
+            listView.setSelection(pos);
+        }
+    }
+
     private class RefreshMsgTask extends AsyncTask{
 
         @Override
@@ -86,6 +101,16 @@ public class MsgPageFragment extends Fragment {
         }
     }
 
+    private class MyLinstener implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.ll_kong:
+                    swipeAdapter.closeAllItems();
+                    break;
+            }
+        }
+    }
     private void initData() {
         for (int i = 0; i < 2; i++) {
             MsgItemBean itemBean = new MsgItemBean();
@@ -119,9 +144,12 @@ public class MsgPageFragment extends Fragment {
 
     private void initView() {
         //获取智能刷新布局
-        refeshLayout =view.findViewById(R.id.smart_refesh);
-        listView = view.findViewById(R.id.lv_main);
+        llKong=myView.findViewById(R.id.ll_kong);
+        refeshLayout =myView.findViewById(R.id.smart_refesh);
+        listView = myView.findViewById(R.id.lv_main);
         swipeAdapter = new MsgSwipeAdapter(getContext(), R.layout.item_swipe_msg ,datas);
         listView.setAdapter(swipeAdapter);
     }
+
+
 }
