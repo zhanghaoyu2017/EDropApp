@@ -55,7 +55,6 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="600px"
-                android:layout_marginTop="1dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/img_cooperation" />
 
@@ -281,7 +280,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_20"
                     android:layout_marginTop="580dp"
-                    android:background="#fff" />
+                    android:background="@drawable/cooperation_radius" />
 
             </RelativeLayout>
             <!--联系方式-->
