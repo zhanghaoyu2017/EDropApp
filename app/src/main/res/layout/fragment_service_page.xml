@@ -199,7 +199,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:background="@color/white"
+            android:background="#f7f7f7"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_30"/>
     </LinearLayout>

@@ -1,10 +1,14 @@
 package net.edrop.edrop_user.activity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +25,21 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.adapter.MsgSwipeAdapter;
 import net.edrop.edrop_user.entity.MsgItemBean;
+import net.edrop.edrop_user.utils.Constant;
+import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by mysterious
@@ -35,12 +49,26 @@ import java.util.List;
  */
 public class MsgPageFragment extends Fragment {
     private LinearLayout llKong;
+    private OkHttpClient okHttpClient;
     private SmartRefreshLayout refeshLayout;
     private ListView listView;
     private List<MsgItemBean> datas = new ArrayList<>();
     private MsgSwipeAdapter swipeAdapter;
     private View myView;
+    private int userId;
+    private int employeeId;
+    private String userName;
+    private String employeeName;
     private static final String SECTION_STRING = "fragment_string";
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what==1){
+                String json = (String) msg.obj;
+                Log.e("json",json);
+            }
+        }
+    };
 
     public static MsgPageFragment newInstance(String sectionNumber) {
         MsgPageFragment fragment = new MsgPageFragment();
@@ -64,10 +92,42 @@ public class MsgPageFragment extends Fragment {
         llKong.setOnClickListener(new MyLinstener());
         refeshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+            public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
                 //刷新信息栏
-                RefreshMsgTask refreshMsgTask = new RefreshMsgTask();
-                refreshMsgTask.execute();
+                FormBody formBody = new FormBody.Builder()
+                        .add("employeeId", "")
+                        .add("userId", userId + "")
+                        .build();
+                Request request = new Request.Builder()
+                        .url(Constant.BASE_URL + "getOrderById")
+                        .post(formBody)
+                        .build();
+                Call call = okHttpClient.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String string = response.body().string();
+                        refreshLayout.finishRefresh();//结束加载更多的动画
+                        Message message = new Message();
+                        message.what = 1;
+                        message.obj = string;
+                        handler.sendMessage(message);
+                    }
+                });
+            }
+        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(myView.getContext(), ChatViewActivity.class);
+                intent.putExtra("userId","ls");
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
     }
@@ -80,27 +140,6 @@ public class MsgPageFragment extends Fragment {
         }
     }
 
-    private class RefreshMsgTask extends AsyncTask{
-
-        @Override
-        protected Object doInBackground(Object[] objects) {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Object o) {
-            //更新视图
-
-            swipeAdapter.notifyDataSetChanged();
-            //结束加载更多的动画
-            refeshLayout.finishRefresh();
-        }
-    }
 
     private class MyLinstener implements View.OnClickListener{
         @Override
@@ -112,14 +151,17 @@ public class MsgPageFragment extends Fragment {
             }
         }
     }
+
     private void initData() {
-        for (int i = 0; i < 2; i++) {
-            MsgItemBean itemBean = new MsgItemBean();
-            itemBean.setNickName("昵称 " + (i + 1));
-            itemBean.setMsg("Message " + i);
-            itemBean.setDate(getDate());
-            datas.add(itemBean);
-        }
+        SharedPreferencesUtils loginInfo = new SharedPreferencesUtils(myView.getContext(), "loginInfo");
+        userId = loginInfo.getInt("userId");
+//        for (int i = 0; i < 2; i++) {
+//            MsgItemBean itemBean = new MsgItemBean();
+//            itemBean.setNickName("昵称 " + (i + 1));
+//            itemBean.setMsg("Message " + i);
+//            itemBean.setDate(getDate());
+//            datas.add(itemBean);
+//        }
     }
 
     private String getDate() {
@@ -150,7 +192,6 @@ public class MsgPageFragment extends Fragment {
         listView = myView.findViewById(R.id.lv_main);
         swipeAdapter = new MsgSwipeAdapter(getContext(), R.layout.item_swipe_msg ,datas);
         listView.setAdapter(swipeAdapter);
+        okHttpClient = new OkHttpClient();
     }
-
-
 }

@@ -3,12 +3,14 @@ package net.edrop.edrop_user.activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -102,9 +104,7 @@ public class ImmediateAppointmentActivity extends Activity {
         phone = etPhoneNum.getText().toString();
         address = tvSelect.getText().toString() + etAddressDetail.getText().toString();
         reserveTime = tvDateSelect.getText().toString() + " " + tvTimeSelect.getText().toString();
-
-        Log.e("qqqqqqqqqq", userId + "===" + realname + "===" + phone + "===" + address + "===" + reserveTime);
-
+//        Log.e("qqqqqqqqqq", userId + "===" + realname + "===" + phone + "===" + address + "===" + reserveTime);
     }
 
     private void initView() {
@@ -188,14 +188,37 @@ public class ImmediateAppointmentActivity extends Activity {
                     showTimePickerDialog(ImmediateAppointmentActivity.this, R.style.MyDatePickerDialogTheme, tvTimeSelect, calendar);
                     break;
                 case R.id.btn_order:
-
-                    if (etRealName.getText().toString() == null || etPhoneNum.getText().toString() == null || etAddressDetail.getText().toString() == null || tvSelect.getText().toString() == null || tvDateSelect.getText().toString() == null || tvTimeSelect.getText().toString() == null
-                            || etRealName.getText().toString().length() == 0 || etPhoneNum.getText().toString().length() == 0 || etAddressDetail.getText().toString().length() == 0 || tvSelect.getText().toString().length() == 0 || tvDateSelect.getText().toString().length() == 0 || tvTimeSelect.getText().toString().length() == 0) {
-
+                    if (etRealName.getText().toString() == null
+                            || etPhoneNum.getText().toString() == null
+                            || etAddressDetail.getText().toString() == null
+                            || tvSelect.getText().toString() == null
+                            || tvDateSelect.getText().toString() == null
+                            || tvTimeSelect.getText().toString() == null
+                            || etRealName.getText().toString().length() == 0
+                            || etPhoneNum.getText().toString().length() == 0
+                            || etAddressDetail.getText().toString().length() == 0
+                            || tvSelect.getText().toString().length() == 0
+                            || tvDateSelect.getText().toString().length() == 0
+                            || tvTimeSelect.getText().toString().length() == 0) {
                         Toast.makeText(ImmediateAppointmentActivity.this, "请填写全部信息", Toast.LENGTH_SHORT).show();
                     } else {
                         initData();
-                        sendOrderByOkHttp(userId, realname, phone, address, reserveTime);
+                        AlertDialog.Builder adBuilder = new AlertDialog.Builder(ImmediateAppointmentActivity.this);
+                        adBuilder.setTitle("温馨提示");
+                        adBuilder.setMessage("您确定提交订单并支付5元吗？");
+                        // 积极-Positive  消极-Negative   中立-Neutral
+                        adBuilder.setPositiveButton("确定",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog,int which) {
+                                        sendOrderByOkHttp(userId, realname, phone, address, reserveTime);
+                                    }
+                                });
+                        adBuilder.setNegativeButton("取消", null);
+                        AlertDialog alertDialog = adBuilder.create();// 通过构造器创建AlertDialog
+                        alertDialog.setCancelable(false);// 设置对话框不能被取消（点击界面其它地方，对话框自动关闭）
+                        alertDialog.show();
+
                     }
                     break;
                 case R.id.iv_appointment_back:

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -21,6 +23,7 @@ import net.edrop.edrop_user.entity.Employee;
 import net.edrop.edrop_user.entity.NewsList;
 import net.edrop.edrop_user.entity.Order;
 import net.edrop.edrop_user.utils.Constant;
+import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,7 +52,6 @@ import static net.edrop.edrop_user.utils.Constant.ORDER_STATE_NO_RECEIVE;
  */
 public class ShowOrderAdapter extends BaseAdapter {
     private int employeeId;
-    private String employeeName;
     private OkHttpClient okHttpClient;
     private List<Order> dataSource = null;
     private Context context;
@@ -58,7 +60,7 @@ public class ShowOrderAdapter extends BaseAdapter {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
-                employeeName = String.valueOf(msg.obj);
+                Toast.makeText(context, msg.obj+"请到消息列表查看", Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -133,14 +135,7 @@ public class ShowOrderAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 employeeId = order.getEmployeeId();
-                postFormData();//发送id获取工作人员名
-                //添加消息列表
-
-                //跳转到消息对话中
-                Intent intent = new Intent(context, ChatViewActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.putExtra("userId", employeeName);
-                context.startActivity(intent);
+                postFormData();//添加消息列表
             }
         });
         return convertView;
@@ -148,11 +143,14 @@ public class ShowOrderAdapter extends BaseAdapter {
 
     private void postFormData() {
         okHttpClient = new OkHttpClient();
+        SharedPreferencesUtils loginInfo = new SharedPreferencesUtils(context, "loginInfo");
+        int userId = loginInfo.getInt("userId");
         FormBody formBody = new FormBody.Builder()
-                .add("id", employeeId + "")
+                .add("employeeId", employeeId + "")
+                .add("userId", userId + "")
                 .build();
         Request request = new Request.Builder()
-                .url(Constant.BASE_URL + "")
+                .url(Constant.BASE_URL + "addContact")
                 .post(formBody)
                 .build();
         Call call = okHttpClient.newCall(request);
@@ -165,11 +163,9 @@ public class ShowOrderAdapter extends BaseAdapter {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
-                Employee employee = new Gson().fromJson(string, Employee.class);
-                String username = employee.getUsername();
                 Message message = new Message();
                 message.what = 1;
-                message.obj = username;
+                message.obj = string;
                 handler.sendMessage(message);
             }
         });

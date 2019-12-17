@@ -217,7 +217,7 @@ public class SearchRubblishActivity extends AppCompatActivity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                e.printStackTrace();
             }
 
             @Override
@@ -273,7 +273,6 @@ public class SearchRubblishActivity extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    OkHttpQuery(button.getText().toString());
                     SharedPreferencesUtils sharedPreferences = new SharedPreferencesUtils(SearchRubblishActivity.this,"searchHistory");
                     SharedPreferences.Editor editor = sharedPreferences.getEditor();
                     String history = sharedPreferences.getString("history", "");
@@ -283,8 +282,7 @@ public class SearchRubblishActivity extends AppCompatActivity {
                         editor.putString("history",history+","+button.getText().toString());
                     }
                     editor.commit();
-                    OkHttpQuery(button.getText().toString());
-//                    performItemClick(view);
+                    mAutoCompleteTextView.setText(button.getText().toString());
                 }
             });
             container.addView(button);
@@ -309,7 +307,7 @@ public class SearchRubblishActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             Intent intent = new Intent(SearchRubblishActivity.this,Main2Activity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
             return true;
         }

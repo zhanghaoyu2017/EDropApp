@@ -107,13 +107,12 @@ public class ShowOrders extends Activity {
                 call.enqueue(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
-
+                        e.printStackTrace();
                     }
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         String string = response.body().string();
-                        Log.e("aaaaaaaaaaa", string);
                         refreshLayout.finishRefresh();
                         Message message = new Message();
                         message.what = 1;
@@ -127,17 +126,16 @@ public class ShowOrders extends Activity {
         imvBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ShowOrders.this,Main2Activity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                finish();
             }
         });
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             //启动一个意图,回到桌面
-            Intent intent = new Intent(ShowOrders.this,Main2Activity.class);
+            Intent intent = new Intent(ShowOrders.this, Main2Activity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             return true;
