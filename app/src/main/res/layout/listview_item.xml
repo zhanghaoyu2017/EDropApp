@@ -53,8 +53,8 @@
                 android:id="@+id/tv_yourAnswer"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/size_5"
-                android:gravity="center" />
+                android:gravity="center"
+                android:textColor="#4682B4" />
 
         </LinearLayout>
 

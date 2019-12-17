@@ -92,7 +92,6 @@ public class Answer2Activity extends AppCompatActivity {
         }
     }
 
-
     public void buttonBack(View view) {
         switch (view.getId()) {
             case R.id.pic_recycle:

@@ -76,11 +76,11 @@ public class CustomAdapter extends BaseAdapter {
         }
         if (hisAnswerLists.get(i).toString().equals("1")) {
             youdata = "可回收垃圾";
-        } else if (hisAnswerLists.get(i).toString().equals("2")) {
-            youdata = "有害垃圾";
         } else if (hisAnswerLists.get(i).toString().equals("3")) {
-            youdata = "湿垃圾";
+            youdata = "有害垃圾";
         } else if (hisAnswerLists.get(i).toString().equals("4")) {
+            youdata = "湿垃圾";
+        } else if (hisAnswerLists.get(i).toString().equals("2")) {
             youdata = "干垃圾";
         }
         viewHolder.quesId.setText(i + 1 + "、");
