@@ -16,7 +16,7 @@ import java.util.List;
 
 public class CustomAdapter extends BaseAdapter {
     private List<Competition> dataSource = null;
-    private List hisAnswerLists=null;
+    private List hisAnswerLists = null;
     private Context context = null;
     private int item_layout_id;
 
@@ -26,11 +26,6 @@ public class CustomAdapter extends BaseAdapter {
         this.context = context;
         this.item_layout_id = item_layout_id;
     }
-//    public CustomAdapter(List<Bean> dataSource,Context context, int item_layout_id) {
-//        this.dataSource = dataSource;
-//        this.context = context;
-//        this.item_layout_id = item_layout_id;
-//    }
 
 
     @Override
@@ -55,8 +50,8 @@ public class CustomAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder = null;
-        Log.e("myanswer",""+hisAnswerLists.toString());
-        Log.e("datasorce",""+dataSource.toString());
+        Log.e("myanswer", "" + hisAnswerLists.toString());
+        Log.e("datasorce", "" + dataSource.toString());
         if (view == null) {
             view = LayoutInflater.from(context).inflate(item_layout_id, null);
             viewHolder = new ViewHolder();
@@ -68,10 +63,30 @@ public class CustomAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        viewHolder.quesId.setText(i+1+"");
+        String data = null;
+        String youdata = null;
+        if (dataSource.get(i).getTypeId() == 1) {
+            data = "可回收垃圾";
+        } else if (dataSource.get(i).getTypeId() == 2) {
+            data = "有害垃圾";
+        } else if (dataSource.get(i).getTypeId() == 3) {
+            data = "湿垃圾";
+        } else if (dataSource.get(i).getTypeId() == 4) {
+            data = "干垃圾";
+        }
+        if (hisAnswerLists.get(i).toString().equals("1")) {
+            youdata = "可回收垃圾";
+        } else if (hisAnswerLists.get(i).toString().equals("3")) {
+            youdata = "有害垃圾";
+        } else if (hisAnswerLists.get(i).toString().equals("4")) {
+            youdata = "湿垃圾";
+        } else if (hisAnswerLists.get(i).toString().equals("2")) {
+            youdata = "干垃圾";
+        }
+        viewHolder.quesId.setText(i + 1 + "、");
         viewHolder.question.setText(dataSource.get(i).getQuestion());
-        viewHolder.corrAnswer.setText(dataSource.get(i).getTypeId()+"");
-        viewHolder.youAnswer.setText(hisAnswerLists.get(i).toString());
+        viewHolder.corrAnswer.setText(data);
+        viewHolder.youAnswer.setText(youdata);
         return view;
     }
 

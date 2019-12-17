@@ -11,12 +11,14 @@
         android:background="#32BA88" />
     <!--顶部导航栏-->
     <LinearLayout
+        android:background="#32BA88"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_15"
+        android:paddingTop="@dimen/size_15"
         android:orientation="horizontal">
 
         <TextView
+            android:textColor="#fff"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
@@ -34,12 +36,14 @@
         android:orientation="horizontal">
 
         <TextView
+            android:textColor="#4682B4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="当前答题数:"
             android:textSize="15dp" />
 
         <TextView
+            android:textColor="#4682B4"
             android:id="@+id/cureentNum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,6 +51,7 @@
             android:textSize="15dp" />
 
         <TextView
+            android:textColor="#4682B4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="/10"
@@ -73,7 +78,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginTop="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_10"
         android:orientation="horizontal">
 
         <LinearLayout
