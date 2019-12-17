@@ -1,21 +1,41 @@
 package net.edrop.edrop_user.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import net.edrop.edrop_user.R;
+import net.edrop.edrop_user.activity.ChatViewActivity;
+import net.edrop.edrop_user.entity.Employee;
 import net.edrop.edrop_user.entity.NewsList;
 import net.edrop.edrop_user.entity.Order;
+import net.edrop.edrop_user.utils.Constant;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import static net.edrop.edrop_user.utils.Constant.ORDER_STATE_FINISH;
 import static net.edrop.edrop_user.utils.Constant.ORDER_STATE_NO_FINISH;
@@ -28,12 +48,20 @@ import static net.edrop.edrop_user.utils.Constant.ORDER_STATE_NO_RECEIVE;
  * Time: 15:05
  */
 public class ShowOrderAdapter extends BaseAdapter {
-    // 原始数据
+    private int employeeId;
+    private String employeeName;
+    private OkHttpClient okHttpClient;
     private List<Order> dataSource = null;
-    // 上下文环境
     private Context context;
-    // item对应的布局文件
     private int item_layout_id;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+                employeeName = String.valueOf(msg.obj);
+            }
+        }
+    };
 
     public ShowOrderAdapter(List<Order> dataSource, Context context, int item_layout_id) {
         this.dataSource = dataSource;
@@ -70,12 +98,12 @@ public class ShowOrderAdapter extends BaseAdapter {
             viewHolder.tvNumber = convertView.findViewById(R.id.tv_showorder_number);
             viewHolder.tvStatus = convertView.findViewById(R.id.tv_showorder_status);
             viewHolder.ivStatus = convertView.findViewById(R.id.iv_status);
+            viewHolder.worker = convertView.findViewById(R.id.ll_worker);
             convertView.setTag(viewHolder);
-        }else {
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
-        Order order = dataSource.get(position);
+        final Order order = dataSource.get(position);
         viewHolder.tvName.setText(order.getOuname());
 
         Timestamp timestamp = order.getReserveTime();
@@ -85,32 +113,77 @@ public class ShowOrderAdapter extends BaseAdapter {
         viewHolder.tvPhone.setText(order.getOutelephone());
         viewHolder.tvAddress.setText(order.getOrderAddress());
         viewHolder.tvNumber.setText(order.getNumber());
-        if (order.getState()==ORDER_STATE_NO_RECEIVE){
+        if (order.getState() == ORDER_STATE_NO_RECEIVE) {
             //订单待确认
             viewHolder.tvStatus.setText("待确认");
             viewHolder.ivStatus.setImageResource(R.drawable.waitlook);
             viewHolder.tvStatus.setTextColor(context.getResources().getColor(R.color.color_blue));
-        }else if (order.getState()==ORDER_STATE_NO_FINISH){
+        } else if (order.getState() == ORDER_STATE_NO_FINISH) {
             //订单待服务
             viewHolder.tvStatus.setText("待服务");
             viewHolder.ivStatus.setImageResource(R.drawable.waitservice);
             viewHolder.tvStatus.setTextColor(context.getResources().getColor(R.color.color_yellow));
-        }else if (order.getState()==ORDER_STATE_FINISH){
+        } else if (order.getState() == ORDER_STATE_FINISH) {
             //订单已完成
             viewHolder.tvStatus.setText("已完成");
             viewHolder.ivStatus.setImageResource(R.drawable.complete);
             viewHolder.tvStatus.setTextColor(context.getResources().getColor(R.color.color_green));
         }
+        viewHolder.worker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                employeeId = order.getEmployeeId();
+                postFormData();//发送id获取工作人员名
+                //添加消息列表
+                
+                //跳转到消息对话中
+                Intent intent = new Intent(context, ChatViewActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.putExtra("userId", employeeName);
+                context.startActivity(intent);
+            }
+        });
         return convertView;
     }
 
+    private void postFormData() {
+        okHttpClient = new OkHttpClient();
+        FormBody formBody = new FormBody.Builder()
+                .add("id", employeeId + "")
+                .build();
+        Request request = new Request.Builder()
+                .url(Constant.BASE_URL + "")
+                .post(formBody)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String string = response.body().string();
+                Employee employee = new Gson().fromJson(string, Employee.class);
+                String username = employee.getUsername();
+                Message message = new Message();
+                message.what = 1;
+                message.obj = username;
+                handler.sendMessage(message);
+            }
+        });
+    }
+
+
     private class ViewHolder {
-        public TextView tvName;
-        public TextView tvPhone;
-        public TextView tvAddress;
-        public TextView tvTime;
-        public TextView tvNumber;
-        public TextView tvStatus;
-        public ImageView ivStatus;
+        private TextView tvName;
+        private TextView tvPhone;
+        private TextView tvAddress;
+        private TextView tvTime;
+        private TextView tvNumber;
+        private TextView tvStatus;
+        private ImageView ivStatus;
+        private LinearLayout worker;
     }
 }

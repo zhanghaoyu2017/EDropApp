@@ -116,6 +116,7 @@
         android:layout_marginBottom="@dimen/size_10"
         android:orientation="horizontal">
         <LinearLayout
+            android:id="@+id/ll_worker"
             android:layout_width="@dimen/size_75"
             android:layout_height="match_parent"
             android:gravity="center"
