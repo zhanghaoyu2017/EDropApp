@@ -135,7 +135,7 @@ public class ShowOrderAdapter extends BaseAdapter {
                 employeeId = order.getEmployeeId();
                 postFormData();//发送id获取工作人员名
                 //添加消息列表
-                
+
                 //跳转到消息对话中
                 Intent intent = new Intent(context, ChatViewActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
