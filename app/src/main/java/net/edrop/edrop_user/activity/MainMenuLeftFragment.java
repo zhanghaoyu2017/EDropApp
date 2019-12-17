@@ -88,10 +88,10 @@ public class MainMenuLeftFragment extends Fragment {
                 intent.putExtra("orderjson", str);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-            }else if (msg.what == 666){
+            } else if (msg.what == 666) {
                 String json = (String) msg.obj;
-                Wallet wallet = new Gson().fromJson(json,Wallet.class);
-                tvMoney.setText("￥"+wallet.getMoney()+"");
+                Wallet wallet = new Gson().fromJson(json, Wallet.class);
+                tvMoney.setText("￥" + wallet.getMoney() + "");
 
             }
         }
@@ -303,7 +303,10 @@ public class MainMenuLeftFragment extends Fragment {
                     }
                     break;
                 case R.id.businessCooperation:
-                    Toast.makeText(getActivity(), "生意合作", Toast.LENGTH_SHORT).show();
+                    //跳转到商务合作的详细页面
+                    intent = new Intent(getContext(), CooperationActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                     break;
                 case R.id.aboutEDrop:
                     //跳转到详细介绍页面

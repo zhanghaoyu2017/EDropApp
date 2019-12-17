@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="#32BA88" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_50"
+        android:layout_marginTop="@dimen/size_25"
+        android:background="#32BA88">
+
+        <ImageView
+            android:layout_width="@dimen/size_30"
+            android:layout_height="@dimen/size_30"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_10"
+            android:src="@drawable/cooperation_left" />
+
+        <TextView
+            android:textColor="#fff"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="商务合作"
+            android:textSize="50px" />
+
+        <ImageView
+            android:layout_width="@dimen/size_35"
+            android:layout_height="@dimen/size_35"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/size_10"
+            android:src="@drawable/cooperation_share" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_75"
+        android:background="#F1F0F5">
+
+        <RelativeLayout
+            android:id="@+id/cooperation_relative"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="600px"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_cooperation" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_20"
+                android:layout_marginTop="180dp"
+                android:layout_marginRight="@dimen/size_20"
+                android:background="@drawable/cooperation_radius">
+
+                <Button
+                    android:layout_width="@dimen/size_200"
+                    android:layout_height="@dimen/size_50"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/size_30"
+                    android:background="@drawable/cooperation_item_radius"
+                    android:text="合作形式"
+                    android:textSize="@dimen/size_25" />
+
+                <!--VIP-->
+                <LinearLayout
+                    android:layout_width="280dp"
+                    android:layout_height="@dimen/size_100"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/size_110"
+                    android:background="@drawable/cooperation_radius_item">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/size_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="@dimen/size_50"
+                            android:layout_height="@dimen/size_50"
+                            android:layout_marginLeft="@dimen/size_10"
+                            android:layout_marginTop="@dimen/size_10"
+                            android:src="@drawable/vip_invitation" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="@dimen/size_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_20"
+                            android:layout_marginTop="@dimen/size_15"
+                            android:text="联合会员"
+                            android:textColor="#141414"
+                            android:textSize="50px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_20"
+                            android:layout_marginTop="@dimen/size_10"
+                            android:text="双侧会员结合互卖，一个价格两份利益。"
+                            android:textSize="30px" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <!--VIP-->
+                <!--异业-->
+                <LinearLayout
+                    android:layout_width="280dp"
+                    android:layout_height="@dimen/size_100"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="230dp"
+                    android:background="@drawable/cooperation_radius_item">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/size_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="@dimen/size_50"
+                            android:layout_height="@dimen/size_50"
+                            android:layout_marginLeft="@dimen/size_10"
+                            android:layout_marginTop="@dimen/size_10"
+                            android:src="@drawable/cooperation_fish" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="@dimen/size_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_20"
+                            android:layout_marginTop="@dimen/size_15"
+                            android:text="异业合作"
+                            android:textColor="#141414"
+                            android:textSize="50px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_20"
+                            android:layout_marginTop="@dimen/size_10"
+                            android:text="平台互补，资源互换，为双方产品带来拉新及品牌的提升。"
+                            android:textSize="30px" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <!--异业-->
+                <!--福利-->
+                <LinearLayout
+                    android:layout_width="280dp"
+                    android:layout_height="@dimen/size_100"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="350dp"
+                    android:background="@drawable/cooperation_radius_item">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/size_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="@dimen/size_50"
+                            android:layout_height="@dimen/size_50"
+                            android:layout_marginLeft="@dimen/size_10"
+                            android:layout_marginTop="@dimen/size_10"
+                            android:src="@drawable/cooperation_liwu" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="@dimen/size_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_20"
+                            android:layout_marginTop="@dimen/size_15"
+                            android:text="福利合作"
+                            android:textColor="#141414"
+                            android:textSize="50px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_20"
+                            android:layout_marginTop="@dimen/size_10"
+                            android:text="针对会员用户的福利权益合作，给予合作方的品牌权益在会员拉新、营
+                            销活动中的曝光及转化提升。"
+                            android:textSize="30px" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <!--福利-->
+                <!--其他-->
+                <LinearLayout
+                    android:layout_width="280dp"
+                    android:layout_height="@dimen/size_100"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="480dp"
+                    android:background="@drawable/cooperation_radius_item">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/size_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="@dimen/size_50"
+                            android:layout_height="@dimen/size_50"
+                            android:layout_marginLeft="@dimen/size_10"
+                            android:layout_marginTop="@dimen/size_10"
+                            android:src="@drawable/cooperation_dian" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="@dimen/size_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_20"
+                            android:layout_marginTop="@dimen/size_15"
+                            android:text="其他合作方式"
+                            android:textColor="#141414"
+                            android:textSize="50px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_20"
+                            android:layout_marginTop="@dimen/size_10"
+                            android:text="欢迎探讨更多的合作形式。"
+                            android:textSize="30px" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <!--其他-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_20"
+                    android:layout_marginTop="580dp"
+                    android:background="@drawable/cooperation_radius" />
+
+            </RelativeLayout>
+            <!--联系方式-->
+            <RelativeLayout
+                android:id="@+id/rl_lianxi"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/size_20"
+                android:layout_marginTop="800dp"
+                android:layout_marginRight="@dimen/size_20"
+                android:background="@drawable/cooperation_radius">
+
+                <Button
+                    android:id="@+id/btn_lianxi"
+                    android:layout_width="@dimen/size_200"
+                    android:layout_height="@dimen/size_50"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/size_30"
+                    android:background="@drawable/cooperation_item_radius"
+                    android:text="联系方式"
+                    android:textSize="@dimen/size_25" />
+
+                <!--邮箱-->
+                <LinearLayout
+                    android:layout_width="280dp"
+                    android:layout_height="@dimen/size_100"
+                    android:layout_below="@id/btn_lianxi"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/size_20">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/size_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="@dimen/size_50"
+                            android:layout_height="@dimen/size_50"
+                            android:layout_marginLeft="@dimen/size_10"
+                            android:layout_marginTop="@dimen/size_10"
+                            android:src="@drawable/cooperation_maill" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="@dimen/size_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_20"
+                            android:layout_marginTop="@dimen/size_15"
+                            android:text="599671256@qq.com"
+                            android:textColor="#141414"
+                            android:textSize="50px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_20"
+                            android:layout_marginTop="@dimen/size_10"
+                            android:text="联系时请在标题中标明企业名和合作需求。"
+                            android:textSize="30px" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <!--手机-->
+                <LinearLayout
+                    android:layout_width="280dp"
+                    android:layout_height="@dimen/size_100"
+                    android:layout_below="@id/btn_lianxi"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/size_80">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/size_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="@dimen/size_50"
+                            android:layout_height="@dimen/size_50"
+                            android:layout_marginLeft="@dimen/size_10"
+                            android:layout_marginTop="@dimen/size_10"
+                            android:src="@drawable/cooperation_phone" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="@dimen/size_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_20"
+                            android:layout_marginTop="@dimen/size_20"
+                            android:text="021-260569882"
+                            android:textColor="#141414"
+                            android:textSize="50px" />
+
+
+                    </LinearLayout>
+                    <!--底部-->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/size_20"
+                        android:layout_marginTop="240dp"
+                        android:background="#fff" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_50"
+                android:layout_below="@id/rl_lianxi"
+                android:background="#F1F0F5" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>
