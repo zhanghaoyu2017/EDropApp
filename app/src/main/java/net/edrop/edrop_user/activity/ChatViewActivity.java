@@ -134,10 +134,12 @@ public class ChatViewActivity extends AppCompatActivity implements EMMessageList
             @Override
             public void afterTextChanged(Editable s) {
                 content = s.toString().trim();
+                Log.e("dd",content);
             }
         });
     }
 
+    //隐藏键盘
     private void hideKeyBorad(View v) {
         InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm.isActive()) {
@@ -145,7 +147,7 @@ public class ChatViewActivity extends AppCompatActivity implements EMMessageList
         }
     }
 
-    //环信
+    //环信:接收消息
     @Override
     public void onMessageReceived(List<EMMessage> messages) {
         Observable.from(messages).subscribe(new Action1<EMMessage>() {

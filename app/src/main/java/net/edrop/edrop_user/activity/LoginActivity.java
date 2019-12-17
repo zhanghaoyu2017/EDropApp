@@ -212,31 +212,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btn_login:
                 username = edUserName.getText().toString().trim();
                 password = edPwd.getText().toString().trim();
-                if (username.equals("zs") && password.equals("123456")) {
-                    SharedPreferences.Editor editor = sharedPreferences.getEditor();
-                    editor.putString("username", username);
-                    editor.putString("password", password);
-                    editor.putBoolean("isAuto", true);
-                    login(username,password);
-                    editor.commit();
-                    Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    overridePendingTransition(0, 0);
-                } else if (username.equals("ls") && password.equals("123456")) {
-                    SharedPreferences.Editor editor = sharedPreferences.getEditor();
-                    editor.putString("username", username);
-                    editor.putString("password", password);
-                    editor.putBoolean("isAuto", true);
-                    login(username,password);
-                    editor.commit();
-                    Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    overridePendingTransition(0, 0);
-                } else if (isSelected) {
+                if (isSelected) {
                     username = edUserName.getText().toString();
                     password = edPwd.getText().toString();
+                    login(username,password);
                     OkHttpLogin(username, password);
                 } else {
                     Toast.makeText(LoginActivity.this, "请检查用户名或密码", Toast.LENGTH_SHORT).show();
