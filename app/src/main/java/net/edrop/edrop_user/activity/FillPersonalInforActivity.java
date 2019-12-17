@@ -51,7 +51,6 @@ import com.lljjcoder.style.citylist.Toast.ToastUtils;
 import com.lljjcoder.style.citypickerview.CityPickerView;
 
 import net.edrop.edrop_user.R;
-import net.edrop.edrop_user.adapter.MyPagerAdapter;
 import net.edrop.edrop_user.utils.Constant;
 import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 import net.edrop.edrop_user.utils.SystemTransUtil;
