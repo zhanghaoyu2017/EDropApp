@@ -10,9 +10,11 @@ import android.widget.Toast;
 
 
 import net.edrop.edrop_user.R;
+import net.edrop.edrop_user.utils.ShareAppToOther;
 import net.edrop.edrop_user.utils.SystemTransUtil;
 
 import static com.mob.MobSDK.getContext;
+import static net.edrop.edrop_user.activity.ServicePageFragment.drawableToBitmap;
 
 /**
  * Created by 李诗凡.
@@ -40,7 +42,8 @@ public class CooperationActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "已分享到你的朋友圈！", Toast.LENGTH_SHORT).show();
+                ShareAppToOther shareAppToOther = new ShareAppToOther(getContext());
+                shareAppToOther.shareWeChatFriendCircle("EDrop", "EDrop邀请您的参与", drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
             }
         });
         imageViewback.setOnClickListener(new View.OnClickListener() {
