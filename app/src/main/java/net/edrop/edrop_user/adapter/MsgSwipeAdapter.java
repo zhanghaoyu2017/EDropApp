@@ -107,7 +107,7 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter{
             @Override
             public boolean onLongClick(View view) {
                 Intent intent = new Intent(context, ChatViewActivity.class);
-                intent.putExtra("userId","zs");
+                intent.putExtra("userId","ls");
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(intent);
                 return false;
@@ -154,7 +154,7 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ChatViewActivity.class);
-                intent.putExtra("userId","zs");
+                intent.putExtra("userId","ls");
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(intent);
             }

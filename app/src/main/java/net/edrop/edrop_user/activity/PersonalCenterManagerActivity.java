@@ -162,7 +162,7 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
                     editor2.commit();
                     getLoginExit();
                     Intent intent2 = new Intent(PersonalCenterManagerActivity.this, LoginActivity.class);
-                    intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent2.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent2);
                     break;
                 case R.id.personal_back:
@@ -170,7 +170,7 @@ public class PersonalCenterManagerActivity extends AppCompatActivity {
                     break;
                 case R.id.tv_edit_info:
                     Intent intent = new Intent(PersonalCenterManagerActivity.this, FillPersonalInforActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);
                     break;
             }

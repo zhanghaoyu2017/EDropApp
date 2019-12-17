@@ -1,6 +1,7 @@
 package net.edrop.edrop_user.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,7 +10,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
+
 import net.edrop.edrop_user.R;
+import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 import net.edrop.edrop_user.utils.SystemTransUtil;
 
 /**
@@ -99,10 +104,45 @@ public class SettingActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.btn_setting_quit://退出账号
-                    Toast.makeText(SettingActivity.this, "退出账号", Toast.LENGTH_SHORT).show();
+                    SharedPreferencesUtils sharedPreferences = new SharedPreferencesUtils(SettingActivity.this, "loginInfo");
+                    sharedPreferences.removeValues("username");
+                    sharedPreferences.removeValues("password");
+                    sharedPreferences.removeValues("userId");
+                    SharedPreferences.Editor editor2 = sharedPreferences.getEditor();
+                    editor2.putBoolean("isAuto", false);
+                    editor2.commit();
+                    getLoginExit();
+                    Intent intent2 = new Intent(SettingActivity.this, LoginActivity.class);
+                    intent2.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent2);
                     break;
             }
         }
     }
 
+    /**
+     * 退出环信登录
+     */
+    private void getLoginExit() {
+        EMClient.getInstance().logout(true, new EMCallBack() {
+
+            @Override
+            public void onSuccess() {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+    }
 }
