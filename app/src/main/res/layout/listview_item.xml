@@ -44,12 +44,15 @@
             android:layout_weight="1">
 
             <TextView
+                android:textSize="@dimen/size_10"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="你的答案：" />
 
             <TextView
+                android:textSize="@dimen/size_10"
+                android:text="可回收垃圾"
                 android:id="@+id/tv_yourAnswer"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -64,16 +67,18 @@
             android:layout_weight="1">
 
             <TextView
+                android:textSize="@dimen/size_10"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="正确答案：" />
 
             <TextView
+                android:textSize="@dimen/size_10"
+                android:text="可回收垃圾"
                 android:id="@+id/tv_correctAnswer"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/size_5"
                 android:gravity="center"
                 android:textColor="#DD5246" />
 
