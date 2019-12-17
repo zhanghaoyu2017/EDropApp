@@ -16,6 +16,7 @@
         android:background="#32BA88">
 
         <ImageView
+            android:id="@+id/iv_cooperation_back"
             android:layout_width="@dimen/size_30"
             android:layout_height="@dimen/size_30"
             android:layout_centerVertical="true"
@@ -32,6 +33,7 @@
             android:textSize="50px" />
 
         <ImageView
+            android:id="@+id/iv_cooperation"
             android:layout_width="@dimen/size_35"
             android:layout_height="@dimen/size_35"
             android:layout_alignParentRight="true"

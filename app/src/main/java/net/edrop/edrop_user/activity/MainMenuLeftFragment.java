@@ -401,7 +401,7 @@ public class MainMenuLeftFragment extends Fragment {
         });
     }
 
-    private class popupDismissListener implements PopupWindow.OnDismissListener {
+    protected class popupDismissListener implements PopupWindow.OnDismissListener {
         @Override
         public void onDismiss() {
             setBackgroundAlpha(1f, myView.getContext());
