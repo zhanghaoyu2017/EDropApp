@@ -37,6 +37,7 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
+import net.edrop.edrop_user.utils.Constant;
 import net.edrop.edrop_user.utils.QQConfig;
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.entity.QQUser;
@@ -47,12 +48,17 @@ import net.edrop.edrop_user.utils.SystemTransUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import rx.Observable;
 import rx.Subscriber;
@@ -90,15 +96,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 9) {
-                com.alibaba.fastjson.JSONObject response = com.alibaba.fastjson.JSONObject.parseObject(String.valueOf(msg.obj));
-                Log.e("qq", "UserInfo:" + JSON.toJSONString(response));
-                QQUser user = com.alibaba.fastjson.JSONObject.parseObject(response.toJSONString(), QQUser.class);
-                if (user != null) {
-                    Log.e("qq", "userInfo:昵称：" + user.getNickname() + "  性别:" + user.getGender() + "  地址：" + user.getProvince() + user.getCity());
-                    Log.e("qq", "头像路径：" + user.getFigureurl_qq_2());
-                    Log.e("qq", "qquid：" + QQ_uid);
-
-                }
+                Toast.makeText(LoginActivity.this, "QQ登录成功", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
             }
             if (msg.what == PASSWORD_WRONG) {
                 Toast.makeText(LoginActivity.this, "密码错误，请重试!", Toast.LENGTH_SHORT).show();
@@ -215,7 +217,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (isSelected) {
                     username = edUserName.getText().toString();
                     password = edPwd.getText().toString();
-                    login(username,password);
+                    login(username, password);
                     OkHttpLogin(username, password);
                 } else {
                     Toast.makeText(LoginActivity.this, "请检查用户名或密码", Toast.LENGTH_SHORT).show();
@@ -239,16 +241,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     /**
      * 登录用户（异步）
      */
-    private void login(final String username, final String password){
+    private void login(final String username, final String password) {
         Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(final Subscriber<? super String> subscriber) {
-                EMClient.getInstance().login(username,password,new EMCallBack() {//回调
+                EMClient.getInstance().login(username, password, new EMCallBack() {//回调
                     @Override
                     public void onSuccess() {
                         EMClient.getInstance().groupManager().loadAllGroups();
                         EMClient.getInstance().chatManager().loadAllConversations();
-                        startActivity(new Intent(LoginActivity.this,Main2Activity.class));
+                        startActivity(new Intent(LoginActivity.this, Main2Activity.class));
                         subscriber.onNext("登录聊天服务器成功");
                     }
 
@@ -259,7 +261,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     @Override
                     public void onError(int code, String message) {
-                        subscriber.onNext("登录聊天服务器失败："+code);
+                        subscriber.onNext("登录聊天服务器失败：" + code);
                     }
                 });
             }
@@ -328,17 +330,68 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (mTencent != null && mTencent.isSessionValid()) {
                 IUiListener listener = new IUiListener() {
                     @Override
-                    public void onError(UiError e) { }
+                    public void onError(UiError e) {
+                    }
 
                     @Override
                     public void onComplete(final Object response) {
-                        Message msg = new Message();
-                        msg.obj = response;
-                        Log.e("qq", "................" + response.toString());
-                        msg.what = 9;
-                        mHandler.sendMessage(msg);
-                    }
+                        com.alibaba.fastjson.JSONObject response1 = com.alibaba.fastjson.JSONObject.parseObject(String.valueOf(response));
+                        Log.e("qq", "UserInfo:" + JSON.toJSONString(response));
+                        QQUser user = com.alibaba.fastjson.JSONObject.parseObject(response1.toJSONString(), QQUser.class);
+                        if (user != null) {
+                            Log.e("qq", "userInfo:昵称：" + user.getNickname() + "  性别:" + user.getGender() + "  地址：" + user.getProvince() + user.getCity());
+                            Log.e("qq", "头像路径：" + user.getFigureurl_qq_2());
+                            Log.e("qq", "qquid：" + QQ_uid);
+                            FormBody formBody = new FormBody.Builder()
+                                    .add("username", user.getNickname())
+                                    .add("password", "123456")
+                                    .add("qq", QQ_uid + "")
+                                    .add("gender", user.getGender())
+                                    .add("address", user.getProvince() + user.getCity())
+                                    .build();
+                            Request request = new Request.Builder()
+                                    .url(Constant.BASE_URL + "loginByQq")
+                                    .post(formBody)
+                                    .build();
+                            Call call = okHttpClient.newCall(request);
+                            call.enqueue(new Callback() {
+                                @Override
+                                public void onFailure(Call call, IOException e) {
+                                    e.printStackTrace();
+                                }
 
+                                @Override
+                                public void onResponse(Call call, Response response) throws IOException {
+                                    String string = response.body().string();
+                                    String user1 = null;
+                                    try {
+                                        JSONObject jsonObject= new JSONObject(string);
+                                        user1 = jsonObject.getString("user");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    User u = new Gson().fromJson(user1, User.class);
+                                    SharedPreferences.Editor editor = sharedPreferences.getEditor();
+                                    editor.putInt("userId", u.getId());
+                                    editor.putString("gender", u.getGender());
+                                    editor.putString("phone", u.getPhone());
+                                    editor.putString("username", u.getUsername());
+                                    editor.putString("password", u.getPassword());
+                                    editor.putString("imgName", u.getImgname());
+                                    editor.putString("imgPath", u.getImgpath());
+                                    editor.putString("address", u.getAddress());
+                                    editor.putString("detailAddress", u.getDetailAddress());
+                                    editor.putBoolean("isAuto", true);
+                                    editor.commit();
+                                    Message msg = new Message();
+                                    msg.obj = response;
+                                    Log.e("qq", "................" + response.toString());
+                                    msg.what = 9;
+                                    mHandler.sendMessage(msg);
+                                }
+                            });
+                        }
+                    }
                     @Override
                     public void onCancel() {
                         Log.e("qq", "登录取消..");
@@ -408,21 +461,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         //登录成功
                         String userJson = jsonObject.getString("user");
                         User user = new Gson().fromJson(userJson, User.class);
-
                         SharedPreferences.Editor editor = sharedPreferences.getEditor();
-                        editor.putInt("userId",user.getId());
-                        editor.putString("gender",user.getGender());
-                        editor.putString("phone",user.getPhone());
+                        editor.putInt("userId", user.getId());
+                        editor.putString("gender", user.getGender());
+                        editor.putString("phone", user.getPhone());
                         editor.putString("username", user.getUsername());
                         editor.putString("password", user.getPassword());
                         editor.putString("imgName", user.getImgname());
                         editor.putString("imgPath", user.getImgpath());
                         editor.putString("address", user.getAddress());
-                        editor.putString("detailAddress",user.getDetailAddress());
+                        editor.putString("detailAddress", user.getDetailAddress());
                         editor.putBoolean("isAuto", true);
                         editor.commit();
                         Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
 

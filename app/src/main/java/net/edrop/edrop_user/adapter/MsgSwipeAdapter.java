@@ -3,10 +3,13 @@ package net.edrop.edrop_user.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,14 +28,14 @@ import java.util.List;
  * Date: 2019/11/28
  * Time: 8:43
  */
-public class MsgSwipeAdapter extends BaseSwipeAdapter{
+public class MsgSwipeAdapter extends BaseSwipeAdapter {
     private Context context;
     private List<MsgItemBean> list;
     private int item_swipe_msg;
     private SwipeLayout swipeLayout;
 
-    public MsgSwipeAdapter(Context context, int item_swipe_msg ,List<MsgItemBean> list) {
-        this.item_swipe_msg=item_swipe_msg;
+    public MsgSwipeAdapter(Context context, int item_swipe_msg, List<MsgItemBean> list) {
+        this.item_swipe_msg = item_swipe_msg;
         this.context = context;
         this.list = list;
     }
@@ -51,6 +54,7 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter{
     /**
      * 绑定布局
      * 和item布局进行关联的，并在这里设置swipeLayout的相关属性。
+     *
      * @param position
      * @param parent
      * @return
@@ -117,26 +121,29 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter{
     /**
      * 绑定数据
      * 给item中的控件绑定数据，并根据需要设置事件等操作。
+     *
      * @param position
      * @param convertView
      */
     @Override
     public void fillValues(final int position, View convertView) {
-        ViewHolder viewHolder=null;
-        if (viewHolder==null){
-            viewHolder=new ViewHolder();
-            viewHolder.nickName=(TextView) convertView.findViewById(R.id.tv_nickname);
-            viewHolder.msg=(TextView) convertView.findViewById(R.id.tv_msg);
-            viewHolder.talkDate=(TextView) convertView.findViewById(R.id.tv_talk_date);
-            viewHolder.swipeOpen=(TextView) convertView.findViewById(R.id.swipe_open);
-            viewHolder.swipeDelete=(TextView) convertView.findViewById(R.id.swipe_delete);
+        ViewHolder viewHolder = null;
+        if (viewHolder == null) {
+            viewHolder = new ViewHolder();
+            viewHolder.nickName = (TextView) convertView.findViewById(R.id.tv_nickname);
+            viewHolder.msg = (TextView) convertView.findViewById(R.id.tv_msg);
+            viewHolder.headImg = convertView.findViewById(R.id.head_default_img);
+            viewHolder.talkDate = (TextView) convertView.findViewById(R.id.tv_talk_date);
+            viewHolder.swipeOpen = (TextView) convertView.findViewById(R.id.swipe_open);
+            viewHolder.swipeDelete = (TextView) convertView.findViewById(R.id.swipe_delete);
             convertView.setTag(viewHolder);
-        }else {
-            viewHolder= (ViewHolder) convertView.getTag();
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.nickName.setText(list.get(position).getNickName());
         viewHolder.msg.setText(list.get(position).getMsg());
         viewHolder.talkDate.setText(list.get(position).getDate());
+        viewHolder.headImg.setImageDrawable(list.get(position).getHeadImg().getDrawable());
 
         viewHolder.swipeDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,9 +180,10 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter{
         return i;
     }
 
-    private class ViewHolder{
+    private class ViewHolder {
         private TextView nickName;
         private TextView msg;
+        private ImageView headImg;
         private TextView talkDate;
         private TextView swipeDelete;
         private TextView swipeOpen;
