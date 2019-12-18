@@ -175,7 +175,7 @@
                 android:layout_marginTop="13dp"
                 android:layout_weight="4"
                 android:background="@null"
-                android:hint="请填写"
+                android:hint="选填"
                 android:textColor="#585858"
                 android:textCursorDrawable="@null"
                 android:textSize="40px" />
@@ -211,7 +211,7 @@
                 android:layout_marginTop="13dp"
                 android:layout_weight="4"
                 android:background="@null"
-                android:hint="请填写"
+                android:hint="选填"
                 android:textColor="#585858"
                 android:textCursorDrawable="@null"
                 android:textSize="40px" />
