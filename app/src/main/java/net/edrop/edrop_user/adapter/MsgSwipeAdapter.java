@@ -55,9 +55,6 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter {
     private int item_swipe_msg;
     private SwipeLayout swipeLayout;
     private int userId;
-    private int employeeId;
-    private String userName;
-    private String employeeName;
     private List<Contacts> listContacts;
     private Handler handler = new Handler(){
         @Override
@@ -68,12 +65,12 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter {
                 String json = (String) msg.obj;
                 listContacts= new Gson().fromJson(json, new TypeToken<List<Contacts>>() {}.getType());
                 for (int i = 0; i < listContacts.size(); i++) {
-                    userName=listContacts.get(i).getUser().getUsername();
-                    employeeName=listContacts.get(i).getEmployee().getUsername();
                     String imgname = listContacts.get(i).getEmployee().getImgname();
                     String imgpath = listContacts.get(i).getEmployee().getImgpath();
                     MsgItemBean itemBean = new MsgItemBean();
-                    itemBean.setNickName(employeeName);
+                    itemBean.setNickName(listContacts.get(i).getEmployee().getUsername());
+                    itemBean.setUserId(listContacts.get(i).getUser().getId());
+                    itemBean.setEmployeeId(listContacts.get(i).getEmployee().getId());
                     itemBean.setMsg("一起来交流吧");
                     itemBean.setHeadImg(BASE_URL.substring(0,BASE_URL.length()-1)+imgpath +"/"+ imgname);
                     itemBean.setDate(getDate());
@@ -211,7 +208,12 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter {
         swipeLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-
+                Intent intent = new Intent(context, ChatViewActivity.class);
+                intent.putExtra("employeeId",list.get(position).getEmployeeId());
+                intent.putExtra("employeeName",list.get(position).getNickName());
+                intent.putExtra("headImg",list.get(position).getHeadImg());
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                context.startActivity(intent);
                 return false;
             }
         });
@@ -262,10 +264,12 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter {
         viewHolder.swipeOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(context, ChatViewActivity.class);
-//                intent.putExtra("userId","ls");
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                context.startActivity(intent);
+                Intent intent = new Intent(context, ChatViewActivity.class);
+                intent.putExtra("employeeId",list.get(position).getEmployeeId());
+                intent.putExtra("employeeName",list.get(position).getNickName());
+                intent.putExtra("headImg",list.get(position).getHeadImg());
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                context.startActivity(intent);
             }
         });
     }

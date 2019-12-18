@@ -11,6 +11,8 @@ import android.widget.ImageView;
  * Time: 8:40
  */
 public class MsgItemBean {
+    private int userId;
+    private int employeeId;
     private String nickName;
     private String msg;
     private String date;
@@ -46,5 +48,21 @@ public class MsgItemBean {
 
     public void setHeadImg(String headImg) {
         this.headImg = headImg;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
     }
 }

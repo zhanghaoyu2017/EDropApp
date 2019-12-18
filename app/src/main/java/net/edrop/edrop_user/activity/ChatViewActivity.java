@@ -49,7 +49,7 @@ public class ChatViewActivity extends AppCompatActivity implements EMMessageList
     private TextView tvSend;
     private String content;
     private ImageView ivBack;
-    private String userId;
+    private String employeeName;
     private TextView chatNav;
     private Handler mHandler = new Handler(){
         @Override
@@ -77,8 +77,8 @@ public class ChatViewActivity extends AppCompatActivity implements EMMessageList
         recyclerView.setAdapter(adapter = new ChatAdapter());
         adapter.replaceAll(TestData.getTestAdData());// 测试用的
 
-        userId = getIntent().getExtras().getString("userId");
-        chatNav.setText(userId);
+        employeeName = getIntent().getExtras().getString("employeeName");
+        chatNav.setText(employeeName);
         EMClient.getInstance().chatManager().addMessageListener(this);
 
         initData();
@@ -90,7 +90,7 @@ public class ChatViewActivity extends AppCompatActivity implements EMMessageList
             @TargetApi(Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
-                EMMessage messagelay = EMMessage.createTxtSendMessage(content,userId);
+                EMMessage messagelay = EMMessage.createTxtSendMessage(content,employeeName);
                 EMClient.getInstance().chatManager().sendMessage(messagelay);
                 ArrayList<ItemModel> data = new ArrayList<>();
                 ChatModel model = new ChatModel();
