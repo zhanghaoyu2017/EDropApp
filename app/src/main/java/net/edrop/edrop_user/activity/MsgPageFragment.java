@@ -3,6 +3,7 @@ package net.edrop.edrop_user.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -87,7 +88,7 @@ public class MsgPageFragment extends Fragment {
                     String imgpath = listContacts.get(i).getEmployee().getImgpath();
                     MsgItemBean itemBean = new MsgItemBean();
                     itemBean.setNickName(employeeName);
-                    itemBean.setMsg("Message");
+                    itemBean.setMsg("一起来交流吧");
                     ImageView imageView= myView.findViewById(R.id.lalala);
                     RequestOptions options = new RequestOptions().centerCrop();
                     Glide.with(myView.getContext())
@@ -190,10 +191,10 @@ public class MsgPageFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(myView.getContext(), ChatViewActivity.class);
-                intent.putExtra("userId","ls");
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+//                Intent intent = new Intent(myView.getContext(), ChatViewActivity.class);
+//                intent.putExtra("userId","ls");
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(intent);
             }
         });
     }
@@ -209,7 +210,6 @@ public class MsgPageFragment extends Fragment {
     private void initData() {
         SharedPreferencesUtils loginInfo = new SharedPreferencesUtils(myView.getContext(), "loginInfo");
         userId = loginInfo.getInt("userId");
-
     }
 
     private String getDate() {

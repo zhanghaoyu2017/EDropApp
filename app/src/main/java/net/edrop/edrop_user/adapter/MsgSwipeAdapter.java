@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
@@ -132,7 +133,7 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter {
             viewHolder = new ViewHolder();
             viewHolder.nickName = (TextView) convertView.findViewById(R.id.tv_nickname);
             viewHolder.msg = (TextView) convertView.findViewById(R.id.tv_msg);
-            viewHolder.headImg = convertView.findViewById(R.id.head_default_img);
+            viewHolder.headImg = (ImageView) convertView.findViewById(R.id.head_default_img);
             viewHolder.talkDate = (TextView) convertView.findViewById(R.id.tv_talk_date);
             viewHolder.swipeOpen = (TextView) convertView.findViewById(R.id.swipe_open);
             viewHolder.swipeDelete = (TextView) convertView.findViewById(R.id.swipe_delete);
@@ -143,6 +144,7 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter {
         viewHolder.nickName.setText(list.get(position).getNickName());
         viewHolder.msg.setText(list.get(position).getMsg());
         viewHolder.talkDate.setText(list.get(position).getDate());
+//        viewHolder.headImg.setImageDrawable(list.get(position).getHeadImg().getDrawable());
         viewHolder.headImg.setImageDrawable(list.get(position).getHeadImg().getDrawable());
 
         viewHolder.swipeDelete.setOnClickListener(new View.OnClickListener() {
