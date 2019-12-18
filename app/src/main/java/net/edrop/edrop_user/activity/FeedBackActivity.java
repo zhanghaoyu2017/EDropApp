@@ -78,6 +78,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
     private GridImageAdapter adapter;
     private PopupWindow pop;
     private RecyclerView mRecyclerView;
+    private EmojiconEditText emojiconEditText;
 
 
     @Override
@@ -114,6 +115,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
         linearLayout = findViewById(R.id.ll_feedback);
         imageViewback = findViewById(R.id.iv_feedback_back);
         mRecyclerView = findViewById(R.id.rl_feedback_recycler);
+        emojiconEditText=findViewById(R.id.et_feedback);
     }
 
 
@@ -141,6 +143,8 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
                 hasClick = !hasClick;
                 break;
             case R.id.btn_feedback:
+                emojiconEditText.setText("");
+                textView.setText("");
                 Toast.makeText(this, "反馈已提交，请耐心等待结果！！", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iv_feedback_back:
