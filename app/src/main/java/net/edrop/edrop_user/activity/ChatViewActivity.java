@@ -50,6 +50,8 @@ public class ChatViewActivity extends AppCompatActivity implements EMMessageList
     private String content;
     private ImageView ivBack;
     private String employeeName;
+    private String employeeHeadImg;
+    private String userHeadImg;
     private TextView chatNav;
     private Handler mHandler = new Handler(){
         @Override
@@ -58,7 +60,7 @@ public class ChatViewActivity extends AppCompatActivity implements EMMessageList
                 ArrayList<ItemModel> data = new ArrayList<>();
                 ChatModel model = new ChatModel();
                 model.setContent(new Gson().fromJson((String) msg.obj,String.class));
-                model.setIcon("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1575200975280&di=013453a7f9804cfa5ca5966f3d4ec05e&imgtype=0&src=http%3A%2F%2Fwww.uimaker.com%2Fuploads%2Fallimg%2F20140731%2F1406774235170879.png");
+                model.setIcon(employeeHeadImg);
                 data.add(new ItemModel(ItemModel.CHAT_A, model));
                 adapter.notifyDataSetChanged();
                 adapter.addAll(data);
@@ -75,9 +77,11 @@ public class ChatViewActivity extends AppCompatActivity implements EMMessageList
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter = new ChatAdapter());
-        adapter.replaceAll(TestData.getTestAdData());// 测试用的
+        adapter.replaceAll(TestData.getTestAdData(employeeHeadImg,userHeadImg));// 测试用的
 
         employeeName = getIntent().getExtras().getString("employeeName");
+        userHeadImg = getIntent().getExtras().getString("userHeadImg");
+        employeeHeadImg = getIntent().getExtras().getString("employeeHeadImg");
         chatNav.setText(employeeName);
         EMClient.getInstance().chatManager().addMessageListener(this);
 
@@ -94,7 +98,7 @@ public class ChatViewActivity extends AppCompatActivity implements EMMessageList
                 EMClient.getInstance().chatManager().sendMessage(messagelay);
                 ArrayList<ItemModel> data = new ArrayList<>();
                 ChatModel model = new ChatModel();
-                model.setIcon("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1575190893&di=186b0e34b0f1e51535794dedcbe0465e&src=http://b-ssl.duitang.com/uploads/item/201106/04/20110604152619_AaY5P.thumb.700_0.jpg");
+                model.setIcon(userHeadImg);
                 model.setContent(content);
                 data.add(new ItemModel(ItemModel.CHAT_B, model));
                 adapter.notifyDataSetChanged();
@@ -134,7 +138,6 @@ public class ChatViewActivity extends AppCompatActivity implements EMMessageList
             @Override
             public void afterTextChanged(Editable s) {
                 content = s.toString().trim();
-                Log.e("dd",content);
             }
         });
     }

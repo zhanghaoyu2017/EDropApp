@@ -1,9 +1,5 @@
 package net.edrop.edrop_user.entity;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.widget.ImageView;
-
 /**
  * Created by mysterious
  * User: mysterious
@@ -16,7 +12,8 @@ public class MsgItemBean {
     private String nickName;
     private String msg;
     private String date;
-    private String headImg;
+    private String employeeHeadImg;
+    private String userHeadImg;
 
     public String getDate() {
         return date;
@@ -42,14 +39,6 @@ public class MsgItemBean {
         this.msg = msg;
     }
 
-    public String getHeadImg() {
-        return headImg;
-    }
-
-    public void setHeadImg(String headImg) {
-        this.headImg = headImg;
-    }
-
     public int getUserId() {
         return userId;
     }
@@ -64,5 +53,21 @@ public class MsgItemBean {
 
     public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
+    }
+
+    public String getEmployeeHeadImg() {
+        return employeeHeadImg;
+    }
+
+    public void setEmployeeHeadImg(String employeeHeadImg) {
+        this.employeeHeadImg = employeeHeadImg;
+    }
+
+    public String getUserHeadImg() {
+        return userHeadImg;
+    }
+
+    public void setUserHeadImg(String userHeadImg) {
+        this.userHeadImg = userHeadImg;
     }
 }
