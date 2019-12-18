@@ -16,9 +16,4 @@
         android:scrollbars="none"
         android:overScrollMode="never"/>
 
-    <ImageView
-        android:id="@+id/lalala"
-        android:src="@drawable/default_head_img2"
-        android:layout_width="1dp"
-        android:layout_height="1dp" />
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

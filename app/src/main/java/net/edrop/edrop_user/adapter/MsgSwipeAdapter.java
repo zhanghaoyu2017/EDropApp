@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +16,31 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import net.edrop.edrop_user.R;
 import net.edrop.edrop_user.activity.ChatViewActivity;
+import net.edrop.edrop_user.entity.Contacts;
 import net.edrop.edrop_user.entity.MsgItemBean;
+import net.edrop.edrop_user.utils.SharedPreferencesUtils;
 
+import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import static net.edrop.edrop_user.utils.Constant.BASE_URL;
 
 /**
  * Created by mysterious
@@ -30,15 +49,96 @@ import java.util.List;
  * Time: 8:43
  */
 public class MsgSwipeAdapter extends BaseSwipeAdapter {
+    private OkHttpClient okHttpClient=new OkHttpClient();
     private Context context;
     private List<MsgItemBean> list;
     private int item_swipe_msg;
     private SwipeLayout swipeLayout;
+    private int userId;
+    private int employeeId;
+    private String userName;
+    private String employeeName;
+    private List<Contacts> listContacts;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what==1){
+                list.clear();
+                notifyDataSetChanged();
+                String json = (String) msg.obj;
+                listContacts= new Gson().fromJson(json, new TypeToken<List<Contacts>>() {}.getType());
+                for (int i = 0; i < listContacts.size(); i++) {
+                    userName=listContacts.get(i).getUser().getUsername();
+                    employeeName=listContacts.get(i).getEmployee().getUsername();
+                    String imgname = listContacts.get(i).getEmployee().getImgname();
+                    String imgpath = listContacts.get(i).getEmployee().getImgpath();
+                    MsgItemBean itemBean = new MsgItemBean();
+                    itemBean.setNickName(employeeName);
+                    itemBean.setMsg("一起来交流吧");
+                    itemBean.setHeadImg(BASE_URL.substring(0,BASE_URL.length()-1)+imgpath +"/"+ imgname);
+                    itemBean.setDate(getDate());
+                    list.add(itemBean);
+                    notifyDataSetChanged();
+                }
+            }
+        }
+    };
 
     public MsgSwipeAdapter(Context context, int item_swipe_msg, List<MsgItemBean> list) {
         this.item_swipe_msg = item_swipe_msg;
         this.context = context;
         this.list = list;
+    }
+
+    private String getDate() {
+        String hour;
+        String minute;
+        Calendar c = Calendar.getInstance();//可以对每个时间域单独修改
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int date = c.get(Calendar.DATE);
+        if (c.get(Calendar.HOUR_OF_DAY)<10){
+            hour="0"+c.get(Calendar.HOUR_OF_DAY);
+        }else {
+            hour = String.valueOf(c.get(Calendar.HOUR_OF_DAY));
+        }
+        if (c.get(Calendar.MINUTE)<10){
+            minute="0"+c.get(Calendar.MINUTE);
+        }else {
+            minute = String.valueOf(c.get(Calendar.MINUTE));
+        }
+        int second = c.get(Calendar.SECOND);
+        return hour+":"+minute;
+    }
+
+    public void updataData(){
+        SharedPreferencesUtils loginInfo = new SharedPreferencesUtils(context, "loginInfo");
+        userId = loginInfo.getInt("userId");
+        //刷新信息栏
+        FormBody formBody = new FormBody.Builder()
+                .add("employeeId", "")
+                .add("userId", userId + "")
+                .build();
+        Request request = new Request.Builder()
+                .url(BASE_URL + "getContactsById")
+                .post(formBody)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String string = response.body().string();
+                Message message = new Message();
+                message.what = 1;
+                message.obj = string;
+                handler.sendMessage(message);
+            }
+        });
     }
 
     /**
@@ -144,8 +244,11 @@ public class MsgSwipeAdapter extends BaseSwipeAdapter {
         viewHolder.nickName.setText(list.get(position).getNickName());
         viewHolder.msg.setText(list.get(position).getMsg());
         viewHolder.talkDate.setText(list.get(position).getDate());
-//        viewHolder.headImg.setImageDrawable(list.get(position).getHeadImg().getDrawable());
-        viewHolder.headImg.setImageDrawable(list.get(position).getHeadImg().getDrawable());
+        RequestOptions options = new RequestOptions().circleCrop();
+        Glide.with(context)
+                .load(list.get(position).getHeadImg())
+                .apply(options)
+                .into(viewHolder.headImg);
 
         viewHolder.swipeDelete.setOnClickListener(new View.OnClickListener() {
             @Override

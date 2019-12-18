@@ -61,51 +61,13 @@ import static net.edrop.edrop_user.utils.Constant.BASE_URL;
  * Time: 16:40
  */
 public class MsgPageFragment extends Fragment {
-    private OkHttpClient okHttpClient;
+    private int userId;
     private SmartRefreshLayout refeshLayout;
     private ListView listView;
     private List<MsgItemBean> datas = new ArrayList<>();
     private MsgSwipeAdapter swipeAdapter;
     private View myView;
-    private int userId;
-    private int employeeId;
-    private String userName;
-    private String employeeName;
-    private List<Contacts> listContacts;
     private static final String SECTION_STRING = "fragment_string";
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what==1){
-                datas.clear();
-                swipeAdapter.notifyDataSetChanged();
-                String json = (String) msg.obj;
-                listContacts= new Gson().fromJson(json, new TypeToken<List<Contacts>>() {}.getType());
-                for (int i = 0; i < listContacts.size(); i++) {
-                    userName=listContacts.get(i).getUser().getUsername();
-                    employeeName=listContacts.get(i).getEmployee().getUsername();
-                    String imgname = listContacts.get(i).getEmployee().getImgname();
-                    String imgpath = listContacts.get(i).getEmployee().getImgpath();
-                    MsgItemBean itemBean = new MsgItemBean();
-                    itemBean.setNickName(employeeName);
-                    itemBean.setMsg("一起来交流吧");
-                    ImageView imageView= myView.findViewById(R.id.lalala);
-                    RequestOptions options = new RequestOptions().centerCrop();
-                    Glide.with(myView.getContext())
-                            .load(BASE_URL.substring(0,BASE_URL.length()-1)+imgpath +"/"+ imgname)
-                            .apply(options)
-                            .into(imageView);
-//                    Bitmap bitmap= ImageTools.getIcon(BASE_URL.substring(0,BASE_URL.length()-1)+imgpath +"/"+ imgname);
-//                    Bitmap roundBitmap = ImageTools.toRoundBitmap(bitmap);
-//                    imageView.setImageBitmap(roundBitmap);
-                    itemBean.setHeadImg(imageView);
-                    itemBean.setDate(getDate());
-                    datas.add(itemBean);
-                    swipeAdapter.notifyDataSetChanged();
-                }
-            }
-        }
-    };
 
     public static MsgPageFragment newInstance(String sectionNumber) {
         MsgPageFragment fragment = new MsgPageFragment();
@@ -160,32 +122,10 @@ public class MsgPageFragment extends Fragment {
         refeshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
-                //刷新信息栏
-                FormBody formBody = new FormBody.Builder()
-                        .add("employeeId", "")
-                        .add("userId", userId + "")
-                        .build();
-                Request request = new Request.Builder()
-                        .url(BASE_URL + "getContactsById")
-                        .post(formBody)
-                        .build();
-                Call call = okHttpClient.newCall(request);
-                call.enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        String string = response.body().string();
-                        refreshLayout.finishRefresh();//结束加载更多的动画
-                        Message message = new Message();
-                        message.what = 1;
-                        message.obj = string;
-                        handler.sendMessage(message);
-                    }
-                });
+                datas.clear();
+                swipeAdapter.updataData();
+                swipeAdapter.notifyDataSetChanged();
+                refeshLayout.finishRefresh();
             }
         });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -210,28 +150,10 @@ public class MsgPageFragment extends Fragment {
     private void initData() {
         SharedPreferencesUtils loginInfo = new SharedPreferencesUtils(myView.getContext(), "loginInfo");
         userId = loginInfo.getInt("userId");
+        swipeAdapter.updataData();
+        swipeAdapter.notifyDataSetChanged();
     }
 
-    private String getDate() {
-        String hour;
-        String minute;
-        Calendar c = Calendar.getInstance();//可以对每个时间域单独修改
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int date = c.get(Calendar.DATE);
-        if (c.get(Calendar.HOUR_OF_DAY)<10){
-            hour="0"+c.get(Calendar.HOUR_OF_DAY);
-        }else {
-            hour = String.valueOf(c.get(Calendar.HOUR_OF_DAY));
-        }
-        if (c.get(Calendar.MINUTE)<10){
-            minute="0"+c.get(Calendar.MINUTE);
-        }else {
-            minute = String.valueOf(c.get(Calendar.MINUTE));
-        }
-        int second = c.get(Calendar.SECOND);
-        return hour+":"+minute;
-    }
 
     private void initView() {
         //获取智能刷新布局
@@ -239,6 +161,5 @@ public class MsgPageFragment extends Fragment {
         listView = myView.findViewById(R.id.lv_main);
         swipeAdapter = new MsgSwipeAdapter(getContext(), R.layout.item_swipe_msg ,datas);
         listView.setAdapter(swipeAdapter);
-        okHttpClient = new OkHttpClient();
     }
 }
