@@ -165,7 +165,7 @@ public class ServicePageFragment extends Fragment {
                 case R.id.ll_service_wallet:
                     Intent intent3 = new Intent(view.getContext(), MyMoneyActivity.class);
                     intent3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    
+
                     startActivity(intent3);
                     break;
                 case R.id.ll_service_ticket:
