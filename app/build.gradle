@@ -9,6 +9,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //开启多Dex
+        multiDexEnabled true
     }
     lintOptions {
 
@@ -30,6 +32,11 @@ android {
             jniLibs.srcDir 'libs'
         }
     }
+    //处理所有报META-INF/*'的错误
+    packagingOptions {
+        pickFirst 'META-INF/*'
+    }
+
 }
 buildscript {
     repositories {
@@ -49,6 +56,8 @@ MobSDK {
 dependencies {
     /*添加emoji表情包的依赖*/
     implementation 'io.github.rockerhieu:emojicon:1.4.1'
+    /*反馈picture的依赖*/
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
     //TextInputLayout的依赖
     implementation 'com.android.support:design:27.1.1'
     //DrawerLayout侧边栏中动画效果用到的
