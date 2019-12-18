@@ -330,17 +330,20 @@ public class MainMenuLeftFragment extends Fragment {
 
     public void shareQQ(View view) {
         ShareAppToOther shareAppToOther = new ShareAppToOther(myView.getContext());
-        shareAppToOther.shareQQFriend("EDrop", "EDrop邀请您的参与,下载地址为：--------", ShareAppToOther.TEXT, drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
+        shareAppToOther.shareQQFriend("EDrop", "EDrop邀请您的参与,下载地址为：https://www.lanzous.com/b0aqeodib \n" +
+                "密码:90rv", ShareAppToOther.TEXT, drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
     }
 
     public void shareWechat(View view) {
         ShareAppToOther shareAppToOther = new ShareAppToOther(myView.getContext());
-        shareAppToOther.shareWeChatFriend("EDrop", "EDrop邀请您的参与", ShareAppToOther.TEXT, drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
+        shareAppToOther.shareWeChatFriend("EDrop", "EDrop邀请您的参与,下载地址为：https://www.lanzous.com/b0aqeodib \n" +
+                "密码:90rv", ShareAppToOther.TEXT, drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
     }
 
     public void shareWechatQzene(View view) {
         ShareAppToOther shareAppToOther = new ShareAppToOther(myView.getContext());
-        shareAppToOther.shareWeChatFriendCircle("EDrop", "EDrop邀请您的参与", drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
+        shareAppToOther.shareWeChatFriendCircle("EDrop", "EDrop邀请您的参与,下载地址为：https://www.lanzous.com/b0aqeodib \n" +
+                "密码:90rv", drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
     }
 
     /**

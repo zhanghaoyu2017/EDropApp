@@ -43,7 +43,8 @@ public class CooperationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ShareAppToOther shareAppToOther = new ShareAppToOther(getContext());
-                shareAppToOther.shareWeChatFriendCircle("EDrop", "EDrop邀请您的参与", drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
+                shareAppToOther.shareWeChatFriendCircle("EDrop", "EDrop邀请您的参与,下载地址为：https://www.lanzous.com/b0aqeodib \n" +
+                        "密码:90rv", drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
             }
         });
         imageViewback.setOnClickListener(new View.OnClickListener() {

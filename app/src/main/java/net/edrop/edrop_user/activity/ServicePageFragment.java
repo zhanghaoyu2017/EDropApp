@@ -176,7 +176,8 @@ public class ServicePageFragment extends Fragment {
                     break;
                 case R.id.ll_service_share:
                     ShareAppToOther shareAppToOther = new ShareAppToOther(view.getContext());
-                    shareAppToOther.shareWeChatFriend("EDrop", "EDrop邀请您参与", ShareAppToOther.TEXT, drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
+                    shareAppToOther.shareWeChatFriend("EDrop", "EDrop邀请您参与，下载地址：https://www.lanzous.com/b0aqeodib \n" +
+                            "密码:90rv", ShareAppToOther.TEXT, drawableToBitmap(getResources().getDrawable(R.drawable.logo)));
                     break;
                 case R.id.ll_service_info:
                     Intent intent2 = new Intent(getActivity(), IntroductionEDropActivity.class);
