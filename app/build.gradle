@@ -10,7 +10,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //开启多Dex
-        multiDexEnabled true
+//        multiDexEnabled true
     }
     lintOptions {
 
