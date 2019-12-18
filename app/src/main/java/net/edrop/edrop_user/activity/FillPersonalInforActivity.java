@@ -101,11 +101,11 @@ public class FillPersonalInforActivity extends AppCompatActivity implements Easy
     //三级联动
     private CityPickerView mPicker = new CityPickerView();
     private TextView tvSelect;
-    private EditText etChangePhone;
-    private TextView tvDetailAddress;
+    private EditText etChangePhone;//手机号
+    private TextView tvDetailAddress;//详细地址
     private Button btnUpdata;
     private String strSex;
-    private EditText tvUserName;
+    private EditText tvUserName;//用户名
     //照片
     private String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private Button btnSelectImg;
