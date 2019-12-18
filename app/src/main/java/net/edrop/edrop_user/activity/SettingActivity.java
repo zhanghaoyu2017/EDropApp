@@ -35,7 +35,7 @@ public class SettingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        new SystemTransUtil().transform(SettingActivity.this);
+        new SystemTransUtil().trans(SettingActivity.this);
         super.onCreate(savedInstanceState);
         //去掉顶部标题
         setContentView(R.layout.activity_setting_main);
